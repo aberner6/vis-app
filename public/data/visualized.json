@@ -1,0 +1,6 @@
+{
+  "visualized_1": { "age":24, "gender":"Male", "ethnicity":"White", "Location":"Lynbrook"},
+  "visualized_2": { "age":39, "gender":"Male", "ethnicity":"White", "Location":"San Francisco"},
+  "visualized_3": { "age":34, "gender":"Male", "ethnicity":"White", "Location":"London"},
+  "visualized_4": { "age":30, "gender":"Female", "ethnicity":"Multiethnic", "Location":"London"}
+}

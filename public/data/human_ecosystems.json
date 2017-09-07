@@ -1,0 +1,4 @@
+{
+  "human_1": { "age":43, "gender":"Male", "ethnicity":"Other", "Location":"Roma"},
+  "human_2": { "age":37, "gender":"Female", "ethnicity":"Other", "Location":"Roma"}
+}

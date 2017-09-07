@@ -1,0 +1,18 @@
+{
+  "accurat_1": { "age":28, "gender":"Male", "ethnicity":"White", "Location":"Italy"},
+  "accurat_2": { "age":28, "gender":"Female", "ethnicity":"White", "Location":"Milan, Italy"},
+  "accurat_3": { "age":28, "gender":"Male", "ethnicity":"White", "Location":"Brembate, Italy"},
+  "accurat_4": { "age":36, "gender":"Male", "ethnicity":"White", "Location":"Milano"},
+  "accurat_5": { "age":33, "gender":"Male", "ethnicity":"White", "Location":""},
+  "accurat_6": { "age":29, "gender":"Female", "ethnicity":"White", "Location":"Milan"},
+  "accurat_7": { "age":24, "gender":"Male", "ethnicity":"White", "Location":"Brescia"},
+  "accurat_8": { "age":24, "gender":"Male", "ethnicity":"White", "Location":"Milan"},
+  "accurat_9": { "age":29, "gender":"Male", "ethnicity":"White", "Location":"Milan"},
+  "accurat_10": { "age":27, "gender":"Male", "ethnicity":"White", "Location":"Milano"},
+  "accurat_11": { "age":29, "gender":"Male", "ethnicity":"Hispanic", "Location":"Milano"},
+  "accurat_12": { "age":25, "gender":"Female", "ethnicity":"White", "Location":"Milano"},
+  "accurat_13": { "age":32, "gender":"Female", "ethnicity":"Do not wish to disclose", "Location":"Milano"},
+  "accurat_14": { "age":27, "gender":"Male", "ethnicity":"White", "Location":"Milan"},
+  "accurat_15": { "age":30, "gender":"Male", "ethnicity":"White", "Location":"Umbertide"},
+  "accurat_16": { "age":34, "gender":"Male", "ethnicity":"White", "Location":"Milan"}
+}

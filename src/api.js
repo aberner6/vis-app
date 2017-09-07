@@ -1,0 +1,126 @@
+import firebase from 'firebase'
+import { GENDERS, ETHNICITY } from './CONSTANTS'
+import axios from 'axios'
+import map from 'lodash/map'
+
+const FIREBASE_CONFIG = {
+  apiKey: 'AIzaSyCUze-OB8XjFv6S3tLtZuo9x1TBgFqekDQ',
+  authDomain: 'dowe-demo.firebaseapp.com',
+  databaseURL: 'https://dowe-demo.firebaseio.com',
+  storageBucket: 'dowe-demo.appspot.com',
+  messagingSenderId: '560959496299',
+}
+// const FIREBASE_CONFIG = {
+//     apiKey: "AIzaSyBMlBEUlxHqwSlKtpMQiCY4NRJRng92jb0",
+//     authDomain: "visu-passport.firebaseapp.com",
+//     databaseURL: "https://visu-passport.firebaseio.com",
+//     projectId: "visu-passport",
+//     storageBucket: "visu-passport.appspot.com",
+//     messagingSenderId: "845369147598"
+//   };
+
+firebase.initializeApp(FIREBASE_CONFIG)
+const participants = firebase.database().ref('participants')
+const looping = firebase.database().ref('looping')
+
+// this function takes the object returned from firebase and transforms it into an array with every element having an id
+function normalize(data) {
+  return map(data, (el, id) => {
+    return {
+      ...el,
+      id,
+    }
+  })
+}
+
+export function fetchUsers() {
+  return new Promise((resolve, reject) => {
+    participants.once('value', (snap) => resolve(normalize(snap.val())))
+  })
+}
+
+export function listenForNewUsers(startAt, callback) {
+  // filter out the elements created before now
+  participants.orderByChild('created').startAt(startAt).on('child_added', (data) => {
+    console.log('listenForNewUsers child_added', data.getKey(), data.val().created)
+    callback({
+      ...data.val(),
+      id: data.getKey(),
+    })
+  })
+}
+export function listenForUpdatedUsers(callback) {
+  // filter out the elements created before now
+  participants.on('child_changed', (data) => {
+    console.log('child_changed', data.val())
+    callback({
+      ...data.val(),
+      id: data.getKey(),
+    })
+  })
+}
+
+export function stopListeningForNewUsers() {
+  participants.off('child_added')
+}
+export function stopListeningForUpdatedUsers() {
+  participants.off('child_changed')
+}
+
+export function saveUser(gender, ethnicity, age) {
+  return new Promise((resolve, reject) => {
+    const timestamp = Date.now()
+    const user = {
+      created: timestamp,
+      updated: timestamp,
+      gender,
+      ethnicity,
+      age,
+    }
+    participants.push(user).then((data) => resolve(data.key))
+  })
+}
+export function trackMyLine(currentUserId) {
+  return new Promise((resolve, reject) => {
+    participants.child(currentUserId).update({
+      updated: Date.now(),
+    }).then((data) => resolve())
+  })
+}
+
+export function loadJSON(fileName) {
+  return new Promise((resolve, reject) => {
+    axios.get(`data/${fileName}.json`)
+      .then(({ data: json }) => resolve(normalize(json)))
+  })
+}
+
+export function listenForLooping(callback) {
+  looping.on('value', (data) => {
+    callback(data.val())
+  })
+}
+
+export function setLooping(loopingValue) {
+  looping.set(loopingValue)
+}
+
+// TODO remove this outside of development
+export function addRandom() {
+  const timestamp = Date.now()
+  const random = {
+    created: timestamp,
+    updated: timestamp,
+    age: Math.floor(Math.random() * 99) + 1, // random between 1 and 99
+    gender: GENDERS[Math.floor(Math.random() * GENDERS.length)].name,
+    ethnicity: ETHNICITY[Math.floor(Math.random() * ETHNICITY.length)].name,
+  }
+
+  participants.push(random)
+}
+
+// TODO remove this outside of development
+export function clear() {
+  participants.remove()
+  addRandom()
+}

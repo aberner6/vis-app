@@ -1,0 +1,21 @@
+{
+  "density_design_1": { "age":24, "gender":"Male", "ethnicity":"White", "Location":"Monza"},
+  "density_design_2": { "age":25, "gender":"Male", "ethnicity":"White", "Location":"Milan"},
+  "density_design_3": { "age":25, "gender":"Female", "ethnicity":"Asian", "Location":"milan"},
+  "density_design_4": { "age":25, "gender":"Male", "ethnicity":"White", "Location":"Italy"},
+  "density_design_5": { "age":23, "gender":"Female", "ethnicity":"White", "Location":"Milan"},
+  "density_design_6": { "age":24, "gender":"Female", "ethnicity":"White", "Location":"Milan, Italy"},
+  "density_design_7": { "age":23, "gender":"Female", "ethnicity":"White", "Location":"Lecco"},
+  "density_design_8": { "age":23, "gender":"Male", "ethnicity":"White", "Location":"Milan"},
+  "density_design_9": { "age":23, "gender":"Female", "ethnicity":"White", "Location":"Crema"},
+  "density_design_10": { "age":23, "gender":"Non Binary", "ethnicity":"White", "Location":"Milan"},
+  "density_design_11": { "age":0, "gender":"Female", "ethnicity":"Do not wish to disclose", "Location":"Milan"},
+  "density_design_12": { "age":24, "gender":"Male", "ethnicity":"White", "Location":"Milan"},
+  "density_design_13": { "age":23, "gender":"Male", "ethnicity":"White", "Location":"Milan"},
+  "density_design_14": { "age":27, "gender":"Male", "ethnicity":"White", "Location":"Milan"},
+  "density_design_15": { "age":23, "gender":"Female", "ethnicity":"White", "Location":"Milan, Italy"},
+  "density_design_16": { "age":24, "gender":"Female", "ethnicity":"White", "Location":"Milan"},
+  "density_design_17": { "age":23, "gender":"Male", "ethnicity":"White", "Location":"Milano"},
+  "density_design_18": { "age":23, "gender":"Male", "ethnicity":"White", "Location":"Milan"},
+  "density_design_19": { "age":0, "gender":"Female", "ethnicity":"White", "Location":"Gorgonzola"}
+}

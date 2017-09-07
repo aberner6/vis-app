@@ -1,0 +1,9 @@
+{
+  "isi_foundation_1": { "age":46, "gender":"Male", "ethnicity":"White", "Location":"Torino"},
+  "isi_foundation_2": { "age":28, "gender":"Female", "ethnicity":"White", "Location":"Druento"},
+  "isi_foundation_3": { "age":33, "gender":"Male", "ethnicity":"White", "Location":"Turin"},
+  "isi_foundation_4": { "age":33, "gender":"Male", "ethnicity":"White", "Location":"turin"},
+  "isi_foundation_5": { "age":33, "gender":"Male", "ethnicity":"White", "Location":"Torino, Italy"},
+  "isi_foundation_6": { "age":43, "gender":"Female", "ethnicity":"White", "Location":"Turin, Italy"},
+  "isi_foundation_7": { "age":37, "gender":"Male", "ethnicity":"White", "Location":"Milano"}
+}

@@ -1,0 +1,5 @@
+{
+  "dd_1": { "age":26, "gender":"Do not wish to disclose", "ethnicity":"White", "Location":"Europe"},
+  "dd_2": { "age":45, "gender":"Male", "ethnicity":"White", "Location":"Milano"},
+  "dd_3": { "age":24, "gender":"Male", "ethnicity":"Asian", "Location":"Milan"}
+}

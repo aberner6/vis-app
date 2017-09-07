@@ -1,0 +1,8 @@
+{
+  "visual_agency_1": { "age":28, "gender":"Male", "ethnicity":"White", "Location":"Cislago"},
+  "visual_agency_2": { "age":32, "gender":"Female", "ethnicity":"Asian", "Location":"NEW YORK"},
+  "visual_agency_3": { "age":30, "gender":"Female", "ethnicity":"White", "Location":"Milan"},
+  "visual_agency_4": { "age":27, "gender":"Male", "ethnicity":"Multiethnic", "Location":"milano"},
+  "visual_agency_5": { "age":56, "gender":"Male", "ethnicity":"White", "Location":"Milano"},
+  "visual_agency_6": { "age":25, "gender":"Male", "ethnicity":"White", "Location":"Milan"}
+}

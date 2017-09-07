@@ -1,0 +1,7 @@
+{
+  "frong_1": { "age":29, "gender":"Female", "ethnicity":"White", "Location":"milano"},
+  "frong_2": { "age":26, "gender":"Male", "ethnicity":"White", "Location":"Milan"},
+  "frong_3": { "age":26, "gender":"Male", "ethnicity":"White", "Location":"Milan"},
+  "frong_4": { "age":26, "gender":"Male", "ethnicity":"White", "Location":"Milan"},
+  "frong_5": { "age":29, "gender":"Female", "ethnicity":"Arab", "Location":"Milan"}
+}

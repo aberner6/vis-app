@@ -1,0 +1,20 @@
+{
+  "sketchin_1": { "age":31, "gender":"Male", "ethnicity":"White", "Location":""},
+  "sketchin_2": { "age":32, "gender":"Female", "ethnicity":"White", "Location":""},
+  "sketchin_3": { "age":31, "gender":"Non Binary", "ethnicity":"Do not wish to disclose", "Location":"Milan"},
+  "sketchin_4": { "age":35, "gender":"Male", "ethnicity":"White", "Location":""},
+  "sketchin_5": { "age":36, "gender":"Male", "ethnicity":"White", "Location":"Como"},
+  "sketchin_6": { "age":30, "gender":"Male", "ethnicity":"White", "Location":"Como"},
+  "sketchin_7": { "age":18, "gender":"Do not wish to disclose", "ethnicity":"White", "Location":"Como"},
+  "sketchin_8": { "age":43, "gender":"Male", "ethnicity":"Do not wish to disclose", "Location":"Milan"},
+  "sketchin_9": { "age":30, "gender":"Male", "ethnicity":"White", "Location":"Como"},
+  "sketchin_10": { "age":39, "gender":"Female", "ethnicity":"White", "Location":"Lugano, Switzerland"},
+  "sketchin_11": { "age":30, "gender":"Female", "ethnicity":"White", "Location":"Como"},
+  "sketchin_12": { "age":28, "gender":"Female", "ethnicity":"White", "Location":"Como"},
+  "sketchin_13": { "age":31, "gender":"Male", "ethnicity":"White", "Location":"Como"},
+  "sketchin_14": { "age":49, "gender":"Male", "ethnicity":"White", "Location":"Milano"},
+  "sketchin_15": { "age":37, "gender":"Female", "ethnicity":"White", "Location":"Uggiate Trevano"},
+  "sketchin_16": { "age":26, "gender":"Female", "ethnicity":"White", "Location":""},
+  "sketchin_17": { "age":32, "gender":"Female", "ethnicity":"White", "Location":""},
+  "sketchin_18": { "age":29, "gender":"Female", "ethnicity":"Multiethnic", "Location":"Como"}
+}

@@ -13,6 +13,8 @@ function fetchLocalStorageData(key = null) {
 export default class CurrentUserState {
   @observable num = fetchLocalStorageData('num')
 
+  @observable uID = fetchLocalStorageData('uID')
+
   @observable id = fetchLocalStorageData('id')
   @observable gender = fetchLocalStorageData('gender')
   @observable ethnicity = fetchLocalStorageData('ethnicity')
@@ -20,6 +22,11 @@ export default class CurrentUserState {
 
   @observable surveyCompletitionIndex = 0
   @observable surveyCompleted = Boolean(localStorage.getItem('currentUserData'))
+
+  @action.bound
+  updateuID(num) {
+    this.uID = num
+  }
 
   @action.bound
   updateNum(num) {
@@ -52,8 +59,8 @@ export default class CurrentUserState {
 
   @action.bound
   nextSurveyQuestion() {
+    saveUser(num, gender, ethnicity, age)
     this.surveyCompletitionIndex++
-    // TODO push partial data to firebase for current user -- "queueUser" from AllUsersState?
   }
 
   @action.bound

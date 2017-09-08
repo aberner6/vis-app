@@ -12,11 +12,20 @@ import SliderInput from '../ui/SliderInput'
 import YearInput from '../ui/YearInput'
 import Button from '../ui/Button'
 import { Q1, ETHNICITY, GENDERS } from '../CONSTANTS'
-import { saveUser } from '../api'
+import { saveUser, newUser } from '../api'
 
 @inject('currentUserState')
 @observer
 export default class Survey extends Component {
+
+  componentWillMount() {
+    const currentUserState = this.props.currentUserState
+    if (!currentUserState.surveyCompleted) {
+      currentUserState.uID = newUser()
+      console.log(currentUserState.uID)
+    }
+  }
+
   componentWillUnmount() {
     const { surveyCompleted, emptySurveyData } = this.props.currentUserState
 
@@ -34,7 +43,7 @@ export default class Survey extends Component {
 
   render() {
     const currentUserState = this.props.currentUserState
-
+    console.log(currentUserState.uID)
     return (
       <div className="survey flex h-100">
 

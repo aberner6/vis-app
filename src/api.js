@@ -12,14 +12,6 @@ const FIREBASE_CONFIG = {
     storageBucket: "cohere-d61af.appspot.com",
     messagingSenderId: "256182960111"
 }
-// const FIREBASE_CONFIG = {
-//     apiKey: "AIzaSyBMlBEUlxHqwSlKtpMQiCY4NRJRng92jb0",
-//     authDomain: "visu-passport.firebaseapp.com",
-//     databaseURL: "https://visu-passport.firebaseio.com",
-//     projectId: "visu-passport",
-//     storageBucket: "visu-passport.appspot.com",
-//     messagingSenderId: "845369147598"
-//   };
 
 firebase.initializeApp(FIREBASE_CONFIG)
 const participants = firebase.database().ref('participants')
@@ -35,9 +27,19 @@ function normalize(data) {
   })
 }
 
+export function newUser() {
+  return participants.push().key;
+}
+
 export function fetchUsers() {
   return new Promise((resolve, reject) => {
     participants.once('value', (snap) => resolve(normalize(snap.val())))
+  })
+}
+
+export function fetchUser(userId) {
+  return new Promise((resolve, reject) => {
+    participants.ref(userId).on('value', (snap) => resolve(normalize(snap.val())))
   })
 }
 

@@ -9,7 +9,8 @@
   "dependencies": {
     "axios": "^0.15.3",
     "babel-polyfill": "^6.23.0",
-    "d3": "^4.5.0",
+    "d3": "^4.10.2",
+    "d3-selection": "^1.1.0",
     "firebase": "^3.6.8",
     "gsap": "^1.19.1",
     "lodash": "^4.17.4",

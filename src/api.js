@@ -27,7 +27,6 @@ const looping = firebase.database().ref('looping')
 
 // this function takes the object returned from firebase and transforms it into an array with every element having an id
 function normalize(data) {
-  console.log(data)
   return map(data, (el, id) => {
     return {
       ...el,
@@ -45,10 +44,10 @@ export function fetchUsers() {
 export function listenForNewUsers(startAt, callback) {
   // filter out the elements created before now
   participants.orderByChild('created').startAt(startAt).on('child_added', (data) => {
-    console.log('listenForNewUsers child_added', data.getKey(), data.val().created)
+    console.log('listenForNewUsers child_added', data.key, data.val().created)
     callback({
       ...data.val(),
-      id: data.getKey(),
+      id: data.key,
     })
   })
 }
@@ -58,7 +57,7 @@ export function listenForUpdatedUsers(callback) {
     console.log('child_changed', data.val())
     callback({
       ...data.val(),
-      id: data.getKey(),
+      id: data.key,
     })
   })
 }
@@ -93,7 +92,6 @@ export function trackMyLine(currentUserId) {
 }
 
 export function loadJSON(fileName) {
-  console.log("LOADING - "+fileName)
   return new Promise((resolve, reject) => {
     axios.get(`data/${fileName}.json`)
       .then(({ data: json }) => resolve(normalize(json)))
@@ -112,7 +110,6 @@ export function setLooping(loopingValue) {
 
 // TODO remove this outside of development
 export function addRandom() {
-  console.log("RAND")
   const timestamp = Date.now()
   const random = {
     created: timestamp,

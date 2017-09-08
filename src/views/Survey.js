@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 import SurveyCard from '../containers/SurveyCard'
-import UserLine from '../containers/UserLine'
+// import UserLine from '../containers/UserLine'
 import SurveyRecap from '../containers/SurveyRecap'
 import AnimatedBackground from '../ui/AnimatedBackground'
 import RadioInput from '../ui/RadioInput'
@@ -38,23 +38,16 @@ export default class Survey extends Component {
     return (
       <div className="survey flex h-100">
 
-        <div className="survey-first-half flex-auto flex-auto-50 flex flex-column justify-center overflow-hidden">
-          <div className="w-50 center m-25">
-            <UserLine/>
-          </div>
-
-          <SurveyRecap className={`dn-landscape f5 mt3 transition-standard transition-delay-big ${currentUserState.num === null ? '0' : ''}`}/>
-        </div>
-
         <div className="survey-second-half flex-auto flex-auto-50 relative">
+        <SurveyRecap className={`dn-landscape f5 mt3 transition-standard transition-delay-big ${currentUserState.num === null ? '0' : ''}`}/>
 
           <AnimatedBackground activeColor={currentUserState.currentUserColor} className={currentUserState.num === null ? 'survey-canvas-expanded' : ''}/>
 
-          <SurveyRecap className={`dn-portrait w-60 absolute bb b--white-opacity ttu f6 f5-l pb2 transition-standard transition-delay-standard  ${currentUserState.num === null ? 'o-0' : ''}`} style={{ top: '10%', left: '20%' }}/>
+          <SurveyRecap className={`dn-portrait w-60 absolute bb b--white-opacity ttu f6 f5-l pb2 transition-standard transition-delay-standard`} style={{ top: '10%', left: '20%' }}/>
 
           <div className="absolute absolute--fill h-100 w-100">
 
-            <ReactCSSTransitionGroup component="div" className={`h-100 flex flex-column justify-center items-center  overflow-scrolling-touch transition-slow will-change-transform ${currentUserState.num === null ? 'survey-centered' : 'overflow-y-auto'}`} transitionName="fade-in-up" transitionEnterTimeout={300} transitionLeaveTimeout={300}>
+            <ReactCSSTransitionGroup component="div" className={`h-100 flex flex-column justify-center items-center  overflow-scrolling-touch transition-slow will-change-transform`} transitionName="fade-in-up" transitionEnterTimeout={300} transitionLeaveTimeout={300}>
 
               {currentUserState.surveyCompletitionIndex === 0 &&
                 <SurveyCard title="Which number do you identify with?" validateOnSubmit={currentUserState.num} key="0">

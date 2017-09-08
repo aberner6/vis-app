@@ -22,16 +22,6 @@ export default class VisualizedProjection extends Component {
         this.setState({ loopingIndex: 0 })
       }
     })
-
-    // TODO put this in index.js when we have an archive page
-    // const { loadStaticData } = this.props.allUsersState
-    // this.dataList = [
-    //   {
-    //     fileName: 'accurat',
-    //     title: 'Accurat'
-    //   }
-    // ]
-    // this.dataList.forEach((el) => loadStaticData(el.fileName))
   }
 
   componentWillUnmount() {
@@ -73,16 +63,6 @@ export default class VisualizedProjection extends Component {
             trackUsers={true}
             data={activeData}>
           </LinesGridFirebase>
-        </div>
-
-        <h3 className="f3">
-          {loopingIndex > 0 ? activeDataTitle : 'Real-time Visualized' }
-        </h3>
-
-        <div className="pa3 pt5 pb5 fw4 f5 lh-copy">
-          Go to <u>verso.accurat.io</u>
-          <br/>
-          to include yourself in the Visualized diversity census
         </div>
 
       </div>

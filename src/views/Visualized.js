@@ -24,14 +24,8 @@ export default class Visualized extends Component {
     return (
       <div className="flex flex-column h-100 tc user-select-none" onClick={surveyCompleted ? this.trackMe : null} >
 
-        {!surveyCompleted &&
-          <ModalSurvey/>
-        }
-
-        <h2>#VisualizedMilan</h2>
-
         <div className="relative flex-auto flex ma4">
-          <LinesGridFirebase trackUsers={false} isStatic={false} />
+          <LinesGridFirebase trackUsers={false} isStatic={false} currentUser={true} />
         </div>
 
         {surveyCompleted &&

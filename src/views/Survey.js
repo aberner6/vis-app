@@ -92,7 +92,9 @@ export default class Survey extends Component {
               }
 
               {currentUserState.surveyCompleted &&
-                <Redirect push to="/"/>
+                <div key="finished">
+                  <h3>Finished</h3>
+                </div>
               }
 
             </ReactCSSTransitionGroup>

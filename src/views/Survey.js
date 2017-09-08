@@ -11,7 +11,7 @@ import RadioInput from '../ui/RadioInput'
 import SliderInput from '../ui/SliderInput'
 import YearInput from '../ui/YearInput'
 import Button from '../ui/Button'
-import { NUMS, ETHNICITY, GENDERS } from '../CONSTANTS'
+import { Q1, ETHNICITY, GENDERS } from '../CONSTANTS'
 import { saveUser } from '../api'
 
 @inject('currentUserState')
@@ -59,7 +59,7 @@ export default class Survey extends Component {
               {currentUserState.surveyCompletitionIndex === 0 &&
                 <SurveyCard title="Which number do you identify with?" validateOnSubmit={currentUserState.num} key="0">
                   {
-                    NUMS.map((el, i) => (
+                    Q1.map((el, i) => (
                       <SliderInput key={i} name="num" data={el} value={currentUserState.num} onChange={currentUserState.updateNum}/>
                     ))
                   }

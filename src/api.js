@@ -27,6 +27,7 @@ const looping = firebase.database().ref('looping')
 
 // this function takes the object returned from firebase and transforms it into an array with every element having an id
 function normalize(data) {
+  console.log(data)
   return map(data, (el, id) => {
     return {
       ...el,
@@ -69,12 +70,13 @@ export function stopListeningForUpdatedUsers() {
   participants.off('child_changed')
 }
 
-export function saveUser(gender, ethnicity, age) {
+export function saveUser(num, gender, ethnicity, age) {
   return new Promise((resolve, reject) => {
     const timestamp = Date.now()
     const user = {
       created: timestamp,
       updated: timestamp,
+      num,
       gender,
       ethnicity,
       age,
@@ -91,6 +93,7 @@ export function trackMyLine(currentUserId) {
 }
 
 export function loadJSON(fileName) {
+  console.log("LOADING - "+fileName)
   return new Promise((resolve, reject) => {
     axios.get(`data/${fileName}.json`)
       .then(({ data: json }) => resolve(normalize(json)))
@@ -109,6 +112,7 @@ export function setLooping(loopingValue) {
 
 // TODO remove this outside of development
 export function addRandom() {
+  console.log("RAND")
   const timestamp = Date.now()
   const random = {
     created: timestamp,

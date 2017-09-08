@@ -17,14 +17,12 @@ export const GENDERS = [
   },
 ]
 
-export const NUMS = [
+
+
+export const Q1 = [
   {
-    name: 'None',
-    angle: 0,
-  },
-  {
-    name: 'Some',
-    angle: 90,
+    name: 'Question Name',
+    color: '#EE575A',
   },
 ]
 

@@ -53,6 +53,7 @@ export default class CurrentUserState {
   @action.bound
   nextSurveyQuestion() {
     this.surveyCompletitionIndex++
+    // TODO push partial data to firebase for current user -- "queueUser" from AllUsersState?
   }
 
   @action.bound

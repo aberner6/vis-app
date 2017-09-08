@@ -13,8 +13,8 @@ function onResizeWindow(fn) {
 @inject('allUsersState')
 export default class LinesGridFirebase extends Component {
   static defaultProps = {
-    trackUsers: false,
-    isStatic: true,
+    trackUsers: true,
+    isStatic: false,
     oneShotFetch: false,
     data: [],
     renderDelay: 0,
@@ -72,7 +72,7 @@ export default class LinesGridFirebase extends Component {
       .then(users => {
         allUsersState.addUsers(users)
         console.info(`Fetched ${users.length} users...`)
-
+        console.log(allUsersState)
         this.setState({ loading: false })
         renderChart(allUsersState.allUsersSorted, this.props.renderDelay, true)
         if (this.props.oneShotFetch) {

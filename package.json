@@ -25,8 +25,7 @@
     "react-router-dom": "^4.0.0",
     "semver": "^5.4.1",
     "tachyons": "^4.6.2",
-    "webpack": "^3.5.6",
-    "webpack-preset-accurapp": "^3.1.1"
+    "webpack": "^1.13.2"
   },
   "scripts": {
     "start": "accurapp-scripts start",

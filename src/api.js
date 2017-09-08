@@ -4,11 +4,13 @@ import axios from 'axios'
 import map from 'lodash/map'
 
 const FIREBASE_CONFIG = {
-  apiKey: 'AIzaSyCUze-OB8XjFv6S3tLtZuo9x1TBgFqekDQ',
-  authDomain: 'dowe-demo.firebaseapp.com',
-  databaseURL: 'https://dowe-demo.firebaseio.com',
-  storageBucket: 'dowe-demo.appspot.com',
-  messagingSenderId: '560959496299',
+  // Initialize Firebase
+    apiKey: "AIzaSyAE5i_pa3vZCw0asuAYJYJfT436MG9BZKg",
+    authDomain: "cohere-d61af.firebaseapp.com",
+    databaseURL: "https://cohere-d61af.firebaseio.com",
+    projectId: "cohere-d61af",
+    storageBucket: "cohere-d61af.appspot.com",
+    messagingSenderId: "256182960111"
 }
 // const FIREBASE_CONFIG = {
 //     apiKey: "AIzaSyBMlBEUlxHqwSlKtpMQiCY4NRJRng92jb0",

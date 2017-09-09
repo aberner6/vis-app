@@ -1,8 +1,19 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-// import { observer, inject } from 'mobx-react'
-// import { Redirect } from 'react-router-dom'
 import ReactAudioPlayer from 'react-audio-player'
+import CurrentUserState from '../state/CurrentUserState'
+
+import { observer, inject } from 'mobx-react'
+import { Link } from 'react-router-dom'
+
+// import { trackMyLine } from '../api'
+const currentUserState = new CurrentUserState()
+
+const userData = JSON.parse(localStorage.getItem('currentUserData'))
+
+
+@inject('currentUserState')
+@observer
 
 export default class Sounds extends Component {
     render() {
@@ -12,5 +23,11 @@ export default class Sounds extends Component {
         </div>
         )
     }
+	soundThis = () => {
+		console.log(userData.age)
+		if(userData.age>0){
+			console.log("whats up")
+			$('audio.react-audio-player').play()
+		}
+	}
 }
-

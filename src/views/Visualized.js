@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
-import { Link } from 'react-router-dom'
 
 import UserLineFirebase from '../containers/UserLineFirebase'
 import SurveyRecap from '../containers/SurveyRecap'
-import ModalSurvey from '../ui/ModalSurvey'
 import { highlightElement } from '../renderChart'
 
 import { trackMyLine } from '../api'
@@ -19,8 +17,8 @@ export default class Visualized extends Component {
   }
 
   render() {
-    const { surveyCompleted, currentUserColor } = this.props.currentUserState
-
+    const { surveyCompleted } = this.props.currentUserState
+    // currentUserColor
     return (
       <div className="flex flex-column h-100 tc user-select-none" onClick={surveyCompleted ? this.trackMe : null} >
 

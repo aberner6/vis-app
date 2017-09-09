@@ -35,15 +35,11 @@ export default class Survey extends Component {
   }
 
   submitSurvey = (e) => {
-    const { num, gender, ethnicity, age, completeSurvey } = this.props.currentUserState
-
-    saveUser(num, gender, ethnicity, age)
-    .then((userId) => completeSurvey(userId))
+    completeSurvey()
   }
 
   render() {
     const currentUserState = this.props.currentUserState
-    console.log(currentUserState.uID)
     return (
       <div className="survey flex h-100">
 

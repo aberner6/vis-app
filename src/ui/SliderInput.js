@@ -7,28 +7,23 @@ import Slider, { Range } from 'rc-slider'
 import 'rc-slider/assets/index.css'
 
 export default class SliderInput extends Component {
-  // TODO add proptypes here
-  // updateSliderValue(e){
+
+  delayEvent = _.debounce((e) => {
+    console.log(e)
+    this.props.onChange(e.target.value)
+  },200)
+
   handleChange = (e) => {
-      console.log(e.target.value)
-        // console.log(($slider).val())
-      this.props.onChange(e.target.value)
-    // this.props.onChange(e.target.value)
+      e.persist()
+      this.delayEvent(e)
   }
 
   render() {
     const { name, data, value } = this.props
 
     return (
-// <input type="range" **defaultValue="10" name="answer"** id="slider" min="10" max="200" onload="updateSliderValue(this.value)" onchange="updateSliderValue(this.value)"   />
-        // <input className="dn" type="range" id="slider" name={name} value={this.value} onChange={this.updateSliderValue}/>
-
       <label className="slider relative db tc ttu fw4 f6 f5-l pa2 pa3-l pr3 pl3 truncate pointer bg-transparent z-1 user-select-none">
         <input type="range" id="slider" value={this.value} onChange={this.handleChange}   />
-        <div>
-          <Slider />
-          // <Range />
-        </div>
       </label>
     )
   }

@@ -1,5 +1,5 @@
 import { observable, computed, action } from 'mobx'
-import { ETHNICITY, GENDERS } from '../CONSTANTS'
+import { IDENTITY, VALUES, COLLECTIVE } from '../CONSTANTS'
 import { updateUser } from '../api'
 
 function fetchLocalStorageData(key = null) {
@@ -24,7 +24,6 @@ export default class CurrentUserState {
   @observable Q8 = fetchLocalStorageData('Q8')
   @observable Q9 = fetchLocalStorageData('Q9')
 
-
   @observable surveyCompletitionIndex = 0
   @observable surveyCompleted = Boolean(localStorage.getItem('currentUserData'))
 
@@ -43,15 +42,15 @@ export default class CurrentUserState {
 
   @action.bound
   emptySurveyData() {
-    this.Q1 = 0
-    this.Q2 = 0
-    this.Q3 = 0
-    this.Q4 = 0
-    this.Q5 = 0
-    this.Q6 = 0
-    this.Q7 = 0
-    this.Q8 = 0
-    this.Q9 = 0
+    IDENTITY.map((el, i) => (
+      this[el.name] = 0
+    ))
+    VALUES.map((el, i) => (
+      this[el.name] = 0
+    ))
+    COLLECTIVE.map((el, i) => (
+      this[el.name] = 0
+    ))
   }
 
   @action.bound

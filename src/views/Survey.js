@@ -35,7 +35,7 @@ export default class Survey extends Component {
   }
 
   submitSurvey = (e) => {
-    completeSurvey()
+    this.props.currentUserState.surveyCompleted = true
   }
 
   render() {
@@ -55,7 +55,7 @@ export default class Survey extends Component {
             <ReactCSSTransitionGroup component="div" className={`h-100 flex flex-column justify-center items-center  overflow-scrolling-touch transition-slow will-change-transform`} transitionName="fade-in-up" transitionEnterTimeout={300} transitionLeaveTimeout={300}>
 
               {currentUserState.surveyCompletitionIndex === 0 &&
-                <SurveyCard title="Which number do you identify with?" validateOnSubmit={currentUserState.num} key="0">
+                <SurveyCard title="Which number do you identify with?" button="Next" name="identity">
                   {
                     IDENTITY.map((el, i) => (
                       <SliderInput key={i} data={el} value={currentUserState[el.name]} onChange={currentUserState.updateValue}/>
@@ -64,9 +64,9 @@ export default class Survey extends Component {
                 </SurveyCard>
               }
               {currentUserState.surveyCompletitionIndex === 1 &&
-                <SurveyCard title="Which number do you identify with?" validateOnSubmit={currentUserState.num} key="0">
+                <SurveyCard title="Which number do you identify with?" button="Next" name="values">
                   {
-                    VLUES.map((el, i) => (
+                    VALUES.map((el, i) => (
                       <SliderInput key={i} data={el} value={currentUserState[el.name]} onChange={currentUserState.updateValue}/>
                     ))
                   }
@@ -74,7 +74,7 @@ export default class Survey extends Component {
               }
 
               {currentUserState.surveyCompletitionIndex === 2 &&
-                <SurveyCard title="Which number do you identify with?" validateOnSubmit={currentUserState.num} key="0">
+                <SurveyCard title="Which number do you identify with?" button="Next" name="collective">
                   {
                     COLLECTIVE.map((el, i) => (
                       <SliderInput key={i} data={el} value={currentUserState[el.name]} onChange={currentUserState.updateValue}/>
@@ -84,10 +84,8 @@ export default class Survey extends Component {
               }
 
               {currentUserState.surveyCompletitionIndex === 3 &&
-                <div key="3">
-                  <h3 className="tc f5 f4-l fw4">Thank you for your participation</h3>
-                  <Button onClick={this.submitSurvey}>ADD YOURSELF</Button>
-                </div>
+                <SurveyCard title="Thank you for your participation" button="Finish Survey" name="complete">
+                </SurveyCard>
               }
 
               {currentUserState.surveyCompleted &&

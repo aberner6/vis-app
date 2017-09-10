@@ -30,7 +30,9 @@ export default class SurveyCard extends Component {
           <div className="pt1 pb1 pt3-l pb3-l">
             {children}
           </div>
+          {button &&
           <Button type="submit" className={`mt3 mb3 transition-standard ${validateOnSubmit === null ? '0' : ''}`}>{button}</Button>
+          }
         </form>
       </div>
     )

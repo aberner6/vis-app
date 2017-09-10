@@ -2,9 +2,8 @@ import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 import { Redirect } from 'react-router-dom'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
-
 import SurveyCard from '../containers/SurveyCard'
-// import UserLine from '../containers/UserLine'
+import UserLine from '../containers/UserLine'
 import SurveyRecap from '../containers/SurveyRecap'
 import AnimatedBackground from '../ui/AnimatedBackground'
 import RadioInput from '../ui/RadioInput'
@@ -41,7 +40,17 @@ export default class Survey extends Component {
   render() {
     const currentUserState = this.props.currentUserState
     return (
-      <div className="survey flex h-100">
+
+      <div className={`survey ${currentUserState.surveyCompleted ? 'survey-complete' : ''} flex h-100`}>
+
+        <div className="survey-viz-results flex-auto flex-auto-50 flex flex-column justify-center overflow-hidden">
+          <div className="w-50 center m-25">
+            <UserLine/>
+          </div>
+
+          <SurveyRecap className={`dn-landscape f5 mt3 transition-standard transition-delay-big ${currentUserState.num === null ? '0' : ''}`}/>
+        </div>
+
 
         <div className="survey-second-half flex-auto flex-auto-50 relative">
         <SurveyRecap className={`dn-landscape f5 mt3 transition-standard transition-delay-big ${currentUserState.num === null ? '0' : ''}`}/>
@@ -83,15 +92,14 @@ export default class Survey extends Component {
                 </SurveyCard>
               }
 
-              {currentUserState.surveyCompletitionIndex === 3 &&
+              {currentUserState.surveyCompletitionIndex === 3 && !currentUserState.surveyCompleted &&
                 <SurveyCard title="Thank you for your participation" button="Finish Survey" name="complete">
                 </SurveyCard>
               }
 
               {currentUserState.surveyCompleted &&
-                <div key="finished">
-                  <h3>Finished</h3>
-                </div>
+                <SurveyCard title="Finished" name="completed">
+                </SurveyCard>
               }
 
             </ReactCSSTransitionGroup>

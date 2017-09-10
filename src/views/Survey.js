@@ -58,7 +58,7 @@ export default class Survey extends Component {
                 <SurveyCard title="Which number do you identify with?" validateOnSubmit={currentUserState.num} key="0">
                   {
                     IDENTITY.map((el, i) => (
-                      <SliderInput key={i} data={el} value={currentUserState.q1} onChange={currentUserState.updateNum}/>
+                      <SliderInput key={i} data={el} value={currentUserState[el.name]} onChange={currentUserState.updateValue}/>
                     ))
                   }
                 </SurveyCard>
@@ -67,7 +67,7 @@ export default class Survey extends Component {
                 <SurveyCard title="Which number do you identify with?" validateOnSubmit={currentUserState.num} key="0">
                   {
                     VLUES.map((el, i) => (
-                      <SliderInput key={i} data={el} value={currentUserState.q1} onChange={currentUserState.updateNum}/>
+                      <SliderInput key={i} data={el} value={currentUserState[el.name]} onChange={currentUserState.updateValue}/>
                     ))
                   }
                 </SurveyCard>
@@ -77,7 +77,7 @@ export default class Survey extends Component {
                 <SurveyCard title="Which number do you identify with?" validateOnSubmit={currentUserState.num} key="0">
                   {
                     COLLECTIVE.map((el, i) => (
-                      <SliderInput key={i} data={el} value={currentUserState.q1} onChange={currentUserState.updateNum}/>
+                      <SliderInput key={i} data={el} value={currentUserState[el.name]} onChange={currentUserState.updateValue}/>
                     ))
                   }
                 </SurveyCard>

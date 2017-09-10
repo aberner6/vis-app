@@ -7,11 +7,11 @@ const currentUserState = new CurrentUserState()
 
 const userData = JSON.parse(localStorage.getItem('currentUserData'))
 
-console.log(userData.age)
-if(userData.age>0){
-	console.log("whats up")
-	// $('audio.react-audio-player').play()
-}
+// console.log(userData.age)
+// if(userData.age>0){
+// 	console.log("whats up")
+// 	// $('audio.react-audio-player').play()
+// }
 export default class Sounds extends Component {
     render() {
         return (

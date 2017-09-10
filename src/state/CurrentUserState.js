@@ -12,14 +12,18 @@ function fetchLocalStorageData(key = null) {
 }
 
 export default class CurrentUserState {
-  @observable num = fetchLocalStorageData('num')
-
   @observable uID = fetchLocalStorageData('uID')
 
-  @observable id = fetchLocalStorageData('id')
-  @observable gender = fetchLocalStorageData('gender')
-  @observable ethnicity = fetchLocalStorageData('ethnicity')
-  @observable age = fetchLocalStorageData('age')
+  @observable Q1 = fetchLocalStorageData('Q1')
+  @observable Q2 = fetchLocalStorageData('Q2')
+  @observable Q3 = fetchLocalStorageData('Q3')
+  @observable Q4 = fetchLocalStorageData('Q4')
+  @observable Q5 = fetchLocalStorageData('Q5')
+  @observable Q6 = fetchLocalStorageData('Q6')
+  @observable Q7 = fetchLocalStorageData('Q7')
+  @observable Q8 = fetchLocalStorageData('Q8')
+  @observable Q9 = fetchLocalStorageData('Q9')
+
 
   @observable surveyCompletitionIndex = 0
   @observable surveyCompleted = Boolean(localStorage.getItem('currentUserData'))
@@ -36,7 +40,7 @@ export default class CurrentUserState {
   }
 
   @action.bound
-  emptySurveyData(age) {
+  emptySurveyData() {
     this.Q1 = 0
     this.Q2 = 0
     this.Q3 = 0

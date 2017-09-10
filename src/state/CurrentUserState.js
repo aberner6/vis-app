@@ -1,5 +1,6 @@
 import { observable, computed, action } from 'mobx'
 import { ETHNICITY, GENDERS } from '../CONSTANTS'
+import { updateUser } from '../api'
 
 function fetchLocalStorageData(key = null) {
   if (localStorage.getItem('currentUserData') === null) {
@@ -13,6 +14,8 @@ function fetchLocalStorageData(key = null) {
 export default class CurrentUserState {
   @observable num = fetchLocalStorageData('num')
 
+  @observable uID = fetchLocalStorageData('uID')
+
   @observable id = fetchLocalStorageData('id')
   @observable gender = fetchLocalStorageData('gender')
   @observable ethnicity = fetchLocalStorageData('ethnicity')
@@ -22,13 +25,20 @@ export default class CurrentUserState {
   @observable surveyCompleted = Boolean(localStorage.getItem('currentUserData'))
 
   @action.bound
+  updateuID(id) {
+    this.uID = id
+  }
+
+  @action.bound
   updateNum(num) {
     this.num = num
+    updateUser(this.uID, { num: num })
   }
 
   @action.bound
   updateGender(gender) {
     this.gender = gender
+    updateUser(this.uID, { gender: gender })
   }
 
   @action.bound
@@ -53,25 +63,10 @@ export default class CurrentUserState {
   @action.bound
   nextSurveyQuestion() {
     this.surveyCompletitionIndex++
-    // TODO push partial data to firebase for current user -- "queueUser" from AllUsersState?
   }
 
   @action.bound
-  completeSurvey(userId) {
-    this.id = userId
-
-    const userData = {
-      num: this.num,
-      id: this.id,
-      gender: this.gender,
-      ethnicity: this.ethnicity,
-      age: this.age,
-    }
-
-    try {
-      localStorage.setItem('currentUserData', JSON.stringify(userData))
-    } catch (e) {}
-
+  completeSurvey() {
     this.surveyCompleted = true
   }
 

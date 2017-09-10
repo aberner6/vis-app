@@ -17,8 +17,6 @@ export const GENDERS = [
   },
 ]
 
-
-
 export const Q1 = [
   {
     name: 'Question Name',

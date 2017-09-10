@@ -5,21 +5,13 @@ import map from 'lodash/map'
 
 const FIREBASE_CONFIG = {
   // Initialize Firebase
-    apiKey: "AIzaSyAE5i_pa3vZCw0asuAYJYJfT436MG9BZKg",
-    authDomain: "cohere-d61af.firebaseapp.com",
-    databaseURL: "https://cohere-d61af.firebaseio.com",
-    projectId: "cohere-d61af",
-    storageBucket: "cohere-d61af.appspot.com",
-    messagingSenderId: "256182960111"
+  apiKey: 'AIzaSyAE5i_pa3vZCw0asuAYJYJfT436MG9BZKg',
+  authDomain: 'cohere-d61af.firebaseapp.com',
+  databaseURL: 'https://cohere-d61af.firebaseio.com',
+  projectId: 'cohere-d61af',
+  storageBucket: 'cohere-d61af.appspot.com',
+  messagingSenderId: '256182960111'
 }
-// const FIREBASE_CONFIG = {
-//     apiKey: "AIzaSyBMlBEUlxHqwSlKtpMQiCY4NRJRng92jb0",
-//     authDomain: "visu-passport.firebaseapp.com",
-//     databaseURL: "https://visu-passport.firebaseio.com",
-//     projectId: "visu-passport",
-//     storageBucket: "visu-passport.appspot.com",
-//     messagingSenderId: "845369147598"
-//   };
 
 firebase.initializeApp(FIREBASE_CONFIG)
 const participants = firebase.database().ref('participants')
@@ -35,9 +27,34 @@ function normalize(data) {
   })
 }
 
+export function newUser() {
+  const newKey = participants.push().key;
+
+  const timestamp = Date.now()
+  const user = {
+    created: timestamp,
+    updated: timestamp,
+    num: 0,
+    gender: 0,
+    ethnicity: 0,
+    age: 0,
+  }
+
+  firebase.database().ref('participants/'+newKey).set(user)
+
+  return newKey
+}
+
 export function fetchUsers() {
   return new Promise((resolve, reject) => {
     participants.once('value', (snap) => resolve(normalize(snap.val())))
+  })
+}
+
+export function fetchUser(uID) {
+  return new Promise((resolve, reject) => {
+    console.log('participants/'+uID)
+    firebase.database().ref('/participants/'+uID).on('value', (snap) => resolve(normalize(snap.val())))
   })
 }
 
@@ -51,6 +68,7 @@ export function listenForNewUsers(startAt, callback) {
     })
   })
 }
+
 export function listenForUpdatedUsers(callback) {
   // filter out the elements created before now
   participants.on('child_changed', (data) => {
@@ -83,6 +101,16 @@ export function saveUser(num, gender, ethnicity, age) {
     participants.push(user).then((data) => resolve(data.key))
   })
 }
+
+export function updateUser(uID, data) {
+  return new Promise((resolve, reject) => {
+    console.log("updates- "+uID)
+    const userData = data
+    userData.updated = Date.now()
+    firebase.database().ref('/participants/'+uID).update(userData)
+  })
+}
+
 export function trackMyLine(currentUserId) {
   return new Promise((resolve, reject) => {
     participants.child(currentUserId).update({

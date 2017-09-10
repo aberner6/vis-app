@@ -35,8 +35,10 @@ export default class CurrentUserState {
 
   @action.bound
   updateValue(qNum, val) {
+    const data = new Object()
     this[qNum] = val
-    updateUser(this.uID, { qNum: val })
+    data[qNum] = val
+    updateUser(this.uID, data)
   }
 
   @action.bound

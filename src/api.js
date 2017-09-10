@@ -105,7 +105,7 @@ export function saveUser(data) {
 
 export function updateUser(uID, data) {
   return new Promise((resolve, reject) => {
-    console.log("updates- "+uID)
+    console.log("updates- "+uID, data)
     const userData = data
     userData.updated = Date.now()
     firebase.database().ref('/participants/'+uID).update(userData)

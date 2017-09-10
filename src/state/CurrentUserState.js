@@ -30,34 +30,22 @@ export default class CurrentUserState {
   }
 
   @action.bound
-  updateNum(num) {
-    this.num = num
-    updateUser(this.uID, { num: num })
-  }
-
-  @action.bound
-  updateGender(gender) {
-    this.gender = gender
-    updateUser(this.uID, { gender: gender })
-  }
-
-  @action.bound
-  updateEthnicity(ethnicity) {
-    this.ethnicity = ethnicity
-  }
-
-  @action.bound
-  updateAge(age) {
-    this.age = age
+  updateValue(qNum, val) {
+    this[qNum] = val
+    updateUser(this.uID, { qNum: val })
   }
 
   @action.bound
   emptySurveyData(age) {
-    this.num = null
-    this.gender = null
-    this.ethnicity = null
-    this.age = null
-    this.surveyCompletitionIndex = 0
+    this.Q1 = 0
+    this.Q2 = 0
+    this.Q3 = 0
+    this.Q4 = 0
+    this.Q5 = 0
+    this.Q6 = 0
+    this.Q7 = 0
+    this.Q8 = 0
+    this.Q9 = 0
   }
 
   @action.bound
@@ -72,26 +60,30 @@ export default class CurrentUserState {
 
   // get the displayable data of the current user
   @computed get currentUserData() {
-    return [this.num, this.gender, this.ethnicity, this.age]
+    return [this.Q1, this.Q2, this.Q3, this.Q4, this.Q5, this.Q6, this.Q7, this.Q8, this.Q9 ]
   }
 
   @computed get currentUserDataObject() {
     return {
-      num: this.num,
-      id: this.id,
-      gender: this.gender,
-      ethnicity: this.ethnicity,
-      age: this.age,
+      Q1: this.Q1,
+      Q2: this.Q2,
+      Q3: this.Q3,
+      Q4: this.Q4,
+      Q5: this.Q5,
+      Q6: this.Q6,
+      Q7: this.Q7,
+      Q8: this.Q8,
+      Q9: this.Q9,
     }
   }
 
   @computed get currentUserAngle() {
-    const currentGender = GENDERS.find(gender => gender.name === this.gender)
-    return currentGender ? currentGender.angle : null
+    // const currentGender = GENDERS.find(gender => gender.name === this.gender)
+    return null
   }
 
   @computed get currentUserColor() {
-    const currentEthnicity = ETHNICITY.find(ethnicity => ethnicity.name === this.ethnicity)
-    return currentEthnicity ? currentEthnicity.color : '#818190'
+    // const currentEthnicity = ETHNICITY.find(ethnicity => ethnicity.name === this.ethnicity)
+    return '#818190'
   }
 }

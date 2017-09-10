@@ -1,68 +1,53 @@
-export const GENDERS = [
+export const IDENTITY = [
   {
-    name: 'Male',
-    angle: 0,
+    name: 'Q1',
+    label: 'Question Name',
+    color: '#EE575A',
   },
   {
-    name: 'Female',
-    angle: 90,
+    name: 'Q2',
+    label: 'Question Name',
+    color: '#EE575A',
   },
   {
-    name: 'Non Binary',
-    angle: 45,
+    name: 'Q3',
+    label: 'Question Name',
+    color: '#EE575A',
   },
   {
-    name: 'Do not wish to disclose',
-    angle: 135,
+    name: 'Q4',
+    label: 'Question Name',
+    color: '#EE575A',
   },
-]
-
-export const Q1 = [
   {
-    name: 'Question Name',
+    name: 'Q5',
+    label: 'Question Name',
     color: '#EE575A',
   },
 ]
 
-export const ETHNICITY = [
+export const VALUES = [
   {
-    name: 'White',
+    name: 'Q6',
+    label: 'Question Name',
     color: '#EE575A',
   },
   {
-    name: 'Arab',
-    color: '#8CD454',
+    name: 'Q7',
+    label: 'Question Name',
+    color: '#EE575A',
   },
   {
-    name: 'Asian',
-    color: '#7C97EB',
+    name: 'Q8',
+    label: 'Question Name',
+    color: '#EE575A',
   },
+]
+
+export const COLLECTIVE = [
   {
-    name: 'Indian',
-    color: '#CE69F9',
-  },
-  {
-    name: 'Black or african american',
-    color: '#FFCF00',
-  },
-  {
-    name: 'Amerindian',
-    color: '#FF8052',
-  },
-  {
-    name: 'Hispanic',
-    color: '#49EAAC',
-  },
-  {
-    name: 'Multiethnic',
-    color: '#FF93FF',
-  },
-  {
-    name: 'Other',
-    color: '#A7C6D8',
-  },
-  {
-    name: 'Do not wish to disclose',
-    color: '#CCCCCC',
+    name: 'Q9',
+    label: 'Question Name',
+    color: '#EE575A',
   },
 ]

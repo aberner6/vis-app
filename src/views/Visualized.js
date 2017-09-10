@@ -10,11 +10,6 @@ import { trackMyLine } from '../api'
 @inject('currentUserState')
 @observer
 export default class Visualized extends Component {
-  trackMe = () => {
-    const { id, currentUserDataObject } = this.props.currentUserState
-    trackMyLine(id)
-    highlightElement(currentUserDataObject)
-  }
 
   render() {
     const { surveyCompleted } = this.props.currentUserState

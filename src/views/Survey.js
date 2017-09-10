@@ -11,7 +11,7 @@ import RadioInput from '../ui/RadioInput'
 import SliderInput from '../ui/SliderInput'
 import YearInput from '../ui/YearInput'
 import Button from '../ui/Button'
-import { Q1, ETHNICITY, GENDERS } from '../CONSTANTS'
+import { IDENTITY, VALUES, COLLECTIVE } from '../CONSTANTS'
 import { saveUser, newUser } from '../api'
 
 @inject('currentUserState')
@@ -57,40 +57,34 @@ export default class Survey extends Component {
               {currentUserState.surveyCompletitionIndex === 0 &&
                 <SurveyCard title="Which number do you identify with?" validateOnSubmit={currentUserState.num} key="0">
                   {
-                    Q1.map((el, i) => (
-                      <SliderInput key={i} name="num" data={el} value={currentUserState.num} onChange={currentUserState.updateNum}/>
+                    IDENTITY.map((el, i) => (
+                      <SliderInput key={i} data={el} value={currentUserState.q1} onChange={currentUserState.updateNum}/>
                     ))
                   }
                 </SurveyCard>
               }
               {currentUserState.surveyCompletitionIndex === 1 &&
-                <SurveyCard title="Which gender do you identify with?" validateOnSubmit={currentUserState.gender} key="1">
+                <SurveyCard title="Which number do you identify with?" validateOnSubmit={currentUserState.num} key="0">
                   {
-                    GENDERS.map((el, i) => (
-                      <RadioInput key={i} name="gender" data={el} value={currentUserState.gender} onChange={currentUserState.updateGender}/>
+                    VLUES.map((el, i) => (
+                      <SliderInput key={i} data={el} value={currentUserState.q1} onChange={currentUserState.updateNum}/>
                     ))
                   }
                 </SurveyCard>
               }
 
               {currentUserState.surveyCompletitionIndex === 2 &&
-                <SurveyCard title="Which ethnic group do you belong to?" validateOnSubmit={currentUserState.ethnicity} key="2">
+                <SurveyCard title="Which number do you identify with?" validateOnSubmit={currentUserState.num} key="0">
                   {
-                    ETHNICITY.map((el, i) => (
-                      <RadioInput key={i} name="ethnicity" data={el} value={currentUserState.ethnicity} onChange={currentUserState.updateEthnicity}/>
+                    COLLECTIVE.map((el, i) => (
+                      <SliderInput key={i} data={el} value={currentUserState.q1} onChange={currentUserState.updateNum}/>
                     ))
                   }
                 </SurveyCard>
               }
 
               {currentUserState.surveyCompletitionIndex === 3 &&
-                <SurveyCard title="When where you born?" validateOnSubmit={currentUserState.age} key="3">
-                  <YearInput name="age" value={currentUserState.age} onChange={currentUserState.updateAge}/>
-                </SurveyCard>
-              }
-
-              {currentUserState.surveyCompletitionIndex === 4 &&
-                <div key="4">
+                <div key="3">
                   <h3 className="tc f5 f4-l fw4">Thank you for your participation</h3>
                   <Button onClick={this.submitSurvey}>ADD YOURSELF</Button>
                 </div>

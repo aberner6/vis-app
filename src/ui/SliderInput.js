@@ -10,10 +10,10 @@ export default class SliderInput extends Component {
   delayEvent = _.debounce((e) => {
     console.log(e)
     this.props.onChange(e.target.value)
-    if(e.target.value > 0){
-      console.log("yes")
-      $('.react-audio-player').play()
-    }
+    // if(e.target.value > 0){
+    //   console.log("yes")
+    //   $('.react-audio-player').play()
+    // }
   },200)
 
   handleChange = (e) => {
@@ -22,11 +22,12 @@ export default class SliderInput extends Component {
   }
 
   render() {
-    const { name, data, value } = this.props
-
+    const { data, value } = this.props
+    console.log(data)
     return (
       <label className="slider relative db tc ttu fw4 f6 f5-l pa2 pa3-l pr3 pl3 truncate pointer bg-transparent z-1 user-select-none">
-        <input type="range" id="slider" value={this.value} onChange={this.handleChange}   />
+        {data.label}<br/>
+        <input type="range" id={data.name} name={data.name} value={value} onChange={this.handleChange}   />
       </label>
     )
   }

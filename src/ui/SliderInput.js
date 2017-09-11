@@ -12,7 +12,6 @@ export default class SliderInput extends Component {
     this.props.onChange(e.target.value)
     if(e.target.value > 0){
       console.log("yes")
-      $('.react-audio-player').play()
     }
   },200)
 

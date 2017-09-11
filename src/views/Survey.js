@@ -41,8 +41,6 @@ export default class Survey extends Component {
           <div className="w-50 center m-25">
             <UserLine/>
           </div>
-
-          <SurveyRecap className={`dn-landscape f5 mt3 transition-standard transition-delay-big ${currentUserState.num === null ? '0' : ''}`}/>
         </div>
 
 

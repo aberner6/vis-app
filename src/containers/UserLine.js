@@ -9,10 +9,12 @@ export default class UserLine extends Component {
     super(props)
   }
 
+  componentDidMount() {
+    renderUser(this.props.currentUserState, 100, true)
+  }
+
   render() {
     console.log(this.props.currentUserState.currentUserData)
-    renderUser(this.props.currentUserState, 100, true)
-
 
     return (
       <div className="relative transition-standard">

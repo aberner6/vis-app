@@ -66,6 +66,7 @@ export default class Survey extends Component {
                   }
                 </SurveyCard>
               }
+
               {currentUserState.surveyCompletitionIndex === 1 &&
                 <SurveyCard title="Which number do you identify with?" button="Next" name="values">
                   {

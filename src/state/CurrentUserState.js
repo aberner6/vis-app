@@ -41,8 +41,11 @@ export default class CurrentUserState {
     //   this.Q9 = fetchLocalStorageData('Q9')
     //   this.uID = fetchLocalStorageData('uID')
     // } else {
-      this.uID = newUser()
     // }
+  }
+
+  newUser() {
+    this.uID = newUser()
   }
 
   @action.bound

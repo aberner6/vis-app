@@ -8,6 +8,7 @@ import { ETHNICITY } from '../CONSTANTS'
 export default class UserLine extends Component {
   constructor(props) {
     super(props)
+
     this.state = { scale: 0 }
   }
 
@@ -30,6 +31,11 @@ export default class UserLine extends Component {
     return (
       <div className="relative transition-standard" style={{ height: '5px', transform, WebkitTransform: transform }}>
         <div className="absolute absolute--fill bg-white"></div>
+        {
+          ETHNICITY.map((el, i) => (
+            <div key={i} className={`ethnicity-color absolute absolute--fill ${currentUserColor === el.color ? 'active' : ''}`} style={{ backgroundColor: el.color }}></div>
+          ))
+        }
       </div>
     )
   }

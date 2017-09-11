@@ -59,8 +59,11 @@ export function fetchUsers() {
 
 export function fetchUser(uID) {
   return new Promise((resolve, reject) => {
-    console.log('participants/'+uID)
-    firebase.database().ref('/participants/'+uID).on('value', (snap) => resolve(normalize(snap.val())))
+    if (uID == "latest") {
+      firebase.database().ref('/participants').limitToLast(1).on('value', (snap) => resolve(normalize(snap.val())))
+    } else {
+      firebase.database().ref('/participants/'+uID).on('value', (snap) => resolve(normalize(snap.val())))
+    }
   })
 }
 

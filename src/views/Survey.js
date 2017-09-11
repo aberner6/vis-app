@@ -6,12 +6,9 @@ import SurveyCard from '../containers/SurveyCard'
 import UserLine from '../containers/UserLine'
 import SurveyRecap from '../containers/SurveyRecap'
 import AnimatedBackground from '../ui/AnimatedBackground'
-import RadioInput from '../ui/RadioInput'
 import SliderInput from '../ui/SliderInput'
-import YearInput from '../ui/YearInput'
 import Button from '../ui/Button'
 import { IDENTITY, VALUES, COLLECTIVE } from '../CONSTANTS'
-import { saveUser, newUser } from '../api'
 
 @inject('currentUserState')
 @observer
@@ -19,10 +16,6 @@ export default class Survey extends Component {
 
   componentWillMount() {
     const currentUserState = this.props.currentUserState
-    if (!currentUserState.surveyCompleted) {
-      currentUserState.uID = newUser()
-      console.log(currentUserState.uID)
-    }
   }
 
   componentWillUnmount() {
@@ -41,7 +34,7 @@ export default class Survey extends Component {
     const currentUserState = this.props.currentUserState
     return (
 
-      <div className={`survey ${currentUserState.surveyCompleted ? 'survey-complete' : ''} flex h-100`}>
+      <div className={`survey ${currentUserState.surveyCompletitionIndex >= 2 ? 'survey-show-viz' : ''} flex h-100`}>
 
         <div className="survey-viz-results flex-auto flex-auto-50 flex flex-column justify-center overflow-hidden">
           <div className="w-50 center m-25">

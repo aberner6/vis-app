@@ -1,6 +1,6 @@
 import { observable, computed, action } from 'mobx'
 import { IDENTITY, VALUES, COLLECTIVE } from '../CONSTANTS'
-import { updateUser } from '../api'
+import { fetchUser, updateUser, newUser } from '../api'
 
 function fetchLocalStorageData(key = null) {
   if (localStorage.getItem('currentUserData') === null) {
@@ -12,20 +12,38 @@ function fetchLocalStorageData(key = null) {
 }
 
 export default class CurrentUserState {
-  @observable uID = fetchLocalStorageData('uID')
+  @observable uID = ""
 
-  @observable Q1 = fetchLocalStorageData('Q1')
-  @observable Q2 = fetchLocalStorageData('Q2')
-  @observable Q3 = fetchLocalStorageData('Q3')
-  @observable Q4 = fetchLocalStorageData('Q4')
-  @observable Q5 = fetchLocalStorageData('Q5')
-  @observable Q6 = fetchLocalStorageData('Q6')
-  @observable Q7 = fetchLocalStorageData('Q7')
-  @observable Q8 = fetchLocalStorageData('Q8')
-  @observable Q9 = fetchLocalStorageData('Q9')
+  @observable Q1 = 0
+  @observable Q2 = 0
+  @observable Q3 = 0
+  @observable Q4 = 0
+  @observable Q5 = 0
+  @observable Q6 = 0
+  @observable Q7 = 0
+  @observable Q8 = 0
+  @observable Q9 = 0
 
   @observable surveyCompletitionIndex = 0
   @observable surveyCompleted = Boolean(localStorage.getItem('currentUserData'))
+
+  constructor() {
+    //console.log(localStorage.getItem('currentUserData'))
+    // if (localStorage.getItem('currentUserData')) {
+    //   this.Q1 = fetchLocalStorageData('Q1')
+    //   this.Q2 = fetchLocalStorageData('Q2')
+    //   this.Q3 = fetchLocalStorageData('Q3')
+    //   this.Q4 = fetchLocalStorageData('Q4')
+    //   this.Q5 = fetchLocalStorageData('Q5')
+    //   this.Q6 = fetchLocalStorageData('Q6')
+    //   this.Q7 = fetchLocalStorageData('Q7')
+    //   this.Q8 = fetchLocalStorageData('Q8')
+    //   this.Q9 = fetchLocalStorageData('Q9')
+    //   this.uID = fetchLocalStorageData('uID')
+    // } else {
+      this.uID = newUser()
+    // }
+  }
 
   @action.bound
   updateuID(id) {
@@ -37,6 +55,22 @@ export default class CurrentUserState {
     const data = new Object()
     this[qNum] = val
     data[qNum] = val
+
+    const userData = {
+      Q1: this.Q1,
+      Q2: this.Q2,
+      Q3: this.Q3,
+      Q4: this.Q4,
+      Q5: this.Q5,
+      Q6: this.Q6,
+      Q7: this.Q7,
+      Q8: this.Q8,
+      Q9: this.Q9,
+      uID: this.uID,
+    }
+
+    localStorage.setItem('currentUserData', JSON.stringify(userData))
+
     updateUser(this.uID, data)
   }
 

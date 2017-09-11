@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
+import { observer, inject } from 'mobx-react'
 import ReactAudioPlayer from 'react-audio-player'
 import CurrentUserState from '../state/CurrentUserState'
 
-const currentUserState = new CurrentUserState()
-
-const userData = JSON.parse(localStorage.getItem('currentUserData'))
+@inject('currentUserState')
 
 // console.log(userData.age)
 // if(userData.age>0){

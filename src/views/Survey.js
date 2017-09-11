@@ -3,7 +3,7 @@ import { observer, inject } from 'mobx-react'
 import { Redirect } from 'react-router-dom'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import SurveyCard from '../containers/SurveyCard'
-import UserLineFirebase from '../containers/UserLineFirebase'
+import UserLine from '../containers/UserLine'
 import SurveyRecap from '../containers/SurveyRecap'
 import AnimatedBackground from '../ui/AnimatedBackground'
 import SliderInput from '../ui/SliderInput'
@@ -39,7 +39,7 @@ export default class Survey extends Component {
 
         <div className="survey-viz-results flex-auto flex-auto-50 flex flex-column justify-center overflow-hidden">
           <div className="w-50 center m-25">
-            <UserLineFirebase/>
+            <UserLine/>
           </div>
 
           <SurveyRecap className={`dn-landscape f5 mt3 transition-standard transition-delay-big ${currentUserState.num === null ? '0' : ''}`}/>

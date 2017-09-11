@@ -42,7 +42,6 @@ a {
   -webkit-overflow-scrolling: touch;
 }
 .unclick {
-  /* TODO handle IE10 not supporting this property */
   pointer-events: none;
 }
 .flex-auto-50 {
@@ -194,19 +193,13 @@ a {
   }
 }
 
-
-/* RADIO INPUT COMPONENT */
-.radio-input .active-bg {
-  opacity: 0;
-  transition: opacity 0.1s ease;
-}
-.radio-input:hover .active-bg {
-  opacity: 0.05;
-}
-.radio-input input[type="radio"]:checked ~ .active-bg {
-  opacity: 0.12;
+.survey-viz-results {
+  display: none;
 }
 
+.survey-show-viz .survey-viz-results {
+  display: block;
+}
 
 /* BUTTON COMPONENT */
 .button::after {
@@ -229,38 +222,6 @@ a {
 .button:active::after {
   opacity: 0.12;
 }
-
-/* HAMBURGER MENU COMPONENT */
-.hamburger-menu .hamburger-link {
-  transform: translate3d(-100%, 0, 0);
-  opacity: 0;
-  transition: all 0.2s ease-out;
-}
-.hamburger-menu .hamburger-link:nth-child(3) {
-  transition-delay: 0.05s;
-}
-.hamburger-menu .hamburger-link:nth-child(4) {
-  transition-delay: 0.1s;
-}
-.hamburger-menu .hamburger-icon-closed, .hamburger-menu .hamburger-icon {
-  transition: opacity 0.2s ease;
-}
-.hamburger-menu .hamburger-icon-closed {
-  opacity: 0;
-}
-/* opened status */
-.hamburger-menu.hamburger-menu--open .hamburger-link {
-  transform: translate3d(0, 0, 0);
-  opacity: 1;
-}
-.hamburger-menu.hamburger-menu--open .hamburger-icon-closed {
-  opacity: 1;
-}
-.hamburger-menu.hamburger-menu--open .hamburger-icon {
-  opacity: 0;
-}
-
-
 
 
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */

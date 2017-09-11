@@ -1,5 +1,5 @@
 import firebase from 'firebase'
-import { GENDERS, ETHNICITY } from './CONSTANTS'
+import { IDENTITY, VALUES, COLLECTIVE } from './CONSTANTS'
 import axios from 'axios'
 import map from 'lodash/map'
 
@@ -31,14 +31,20 @@ export function newUser() {
   const newKey = participants.push().key;
 
   const timestamp = Date.now()
-  const user = {
-    created: timestamp,
-    updated: timestamp,
-    num: 0,
-    gender: 0,
-    ethnicity: 0,
-    age: 0,
-  }
+  const user = new Object();
+
+  IDENTITY.map((el, i) => (
+    user[el.name] = 0
+  ))
+  VALUES.map((el, i) => (
+    user[el.name] = 0
+  ))
+  COLLECTIVE.map((el, i) => (
+    user[el.name] = 0
+  ))
+
+  user.created = timestamp
+  user.updated = timestamp
 
   firebase.database().ref('participants/'+newKey).set(user)
 
@@ -53,8 +59,11 @@ export function fetchUsers() {
 
 export function fetchUser(uID) {
   return new Promise((resolve, reject) => {
-    console.log('participants/'+uID)
-    firebase.database().ref('/participants/'+uID).on('value', (snap) => resolve(normalize(snap.val())))
+    if (uID == "latest") {
+      firebase.database().ref('/participants').limitToLast(1).on('value', (snap) => resolve(normalize(snap.val())))
+    } else {
+      firebase.database().ref('/participants/'+uID).on('value', (snap) => resolve(normalize(snap.val())))
+    }
   })
 }
 
@@ -87,24 +96,19 @@ export function stopListeningForUpdatedUsers() {
   participants.off('child_changed')
 }
 
-export function saveUser(num, gender, ethnicity, age) {
+export function saveUser(data) {
   return new Promise((resolve, reject) => {
     const timestamp = Date.now()
-    const user = {
-      created: timestamp,
-      updated: timestamp,
-      num,
-      gender,
-      ethnicity,
-      age,
-    }
+    const user = data
+    user.created = timestamp
+    user.updated = timestamp
     participants.push(user).then((data) => resolve(data.key))
   })
 }
 
 export function updateUser(uID, data) {
   return new Promise((resolve, reject) => {
-    console.log("updates- "+uID)
+    console.log("updates- "+uID, data)
     const userData = data
     userData.updated = Date.now()
     firebase.database().ref('/participants/'+uID).update(userData)
@@ -134,24 +138,4 @@ export function listenForLooping(callback) {
 
 export function setLooping(loopingValue) {
   looping.set(loopingValue)
-}
-
-// TODO remove this outside of development
-export function addRandom() {
-  const timestamp = Date.now()
-  const random = {
-    created: timestamp,
-    updated: timestamp,
-    age: Math.floor(Math.random() * 99) + 1, // random between 1 and 99
-    gender: GENDERS[Math.floor(Math.random() * GENDERS.length)].name,
-    ethnicity: ETHNICITY[Math.floor(Math.random() * ETHNICITY.length)].name,
-  }
-
-  participants.push(random)
-}
-
-// TODO remove this outside of development
-export function clear() {
-  participants.remove()
-  addRandom()
 }

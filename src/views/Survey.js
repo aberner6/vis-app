@@ -2,17 +2,13 @@ import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 import { Redirect } from 'react-router-dom'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
-
 import SurveyCard from '../containers/SurveyCard'
-// import UserLine from '../containers/UserLine'
+import UserLine from '../containers/UserLine'
 import SurveyRecap from '../containers/SurveyRecap'
 import AnimatedBackground from '../ui/AnimatedBackground'
-import RadioInput from '../ui/RadioInput'
 import SliderInput from '../ui/SliderInput'
-import YearInput from '../ui/YearInput'
 import Button from '../ui/Button'
-import { Q1, ETHNICITY, GENDERS } from '../CONSTANTS'
-import { saveUser, newUser } from '../api'
+import { IDENTITY, VALUES, COLLECTIVE } from '../CONSTANTS'
 
 @inject('currentUserState')
 @observer
@@ -20,10 +16,7 @@ export default class Survey extends Component {
 
   componentWillMount() {
     const currentUserState = this.props.currentUserState
-    if (!currentUserState.surveyCompleted) {
-      currentUserState.uID = newUser()
-      console.log(currentUserState.uID)
-    }
+    currentUserState.newUser()
   }
 
   componentWillUnmount() {
@@ -35,13 +28,21 @@ export default class Survey extends Component {
   }
 
   submitSurvey = (e) => {
-    completeSurvey()
+    this.props.currentUserState.surveyCompleted = true
   }
 
   render() {
     const currentUserState = this.props.currentUserState
     return (
-      <div className="survey flex h-100">
+
+      <div className={`survey ${currentUserState.surveyCompletitionIndex >= 2 ? 'survey-show-viz' : ''} flex h-100`}>
+
+        <div className="survey-viz-results flex-auto flex-auto-50 flex flex-column justify-center overflow-hidden">
+          <div className="w-50 center m-25">
+            <UserLine/>
+          </div>
+        </div>
+
 
         <div className="survey-second-half flex-auto flex-auto-50 relative">
         <SurveyRecap className={`dn-landscape f5 mt3 transition-standard transition-delay-big ${currentUserState.num === null ? '0' : ''}`}/>
@@ -55,51 +56,43 @@ export default class Survey extends Component {
             <ReactCSSTransitionGroup component="div" className={`h-100 flex flex-column justify-center items-center  overflow-scrolling-touch transition-slow will-change-transform`} transitionName="fade-in-up" transitionEnterTimeout={300} transitionLeaveTimeout={300}>
 
               {currentUserState.surveyCompletitionIndex === 0 &&
-                <SurveyCard title="Which number do you identify with?" validateOnSubmit={currentUserState.num} key="0">
+                <SurveyCard title="Which number do you identify with?" button="Next" name="identity">
                   {
-                    Q1.map((el, i) => (
-                      <SliderInput key={i} name="num" data={el} value={currentUserState.num} onChange={currentUserState.updateNum}/>
+                    IDENTITY.map((el, i) => (
+                      <SliderInput key={i} data={el} value={currentUserState[el.name]} onChange={currentUserState.updateValue}/>
                     ))
                   }
                 </SurveyCard>
               }
+
               {currentUserState.surveyCompletitionIndex === 1 &&
-                <SurveyCard title="Which gender do you identify with?" validateOnSubmit={currentUserState.gender} key="1">
+                <SurveyCard title="Which number do you identify with?" button="Next" name="values">
                   {
-                    GENDERS.map((el, i) => (
-                      <RadioInput key={i} name="gender" data={el} value={currentUserState.gender} onChange={currentUserState.updateGender}/>
+                    VALUES.map((el, i) => (
+                      <SliderInput key={i} data={el} value={currentUserState[el.name]} onChange={currentUserState.updateValue}/>
                     ))
                   }
                 </SurveyCard>
               }
 
               {currentUserState.surveyCompletitionIndex === 2 &&
-                <SurveyCard title="Which ethnic group do you belong to?" validateOnSubmit={currentUserState.ethnicity} key="2">
+                <SurveyCard title="Which number do you identify with?" button="Next" name="collective">
                   {
-                    ETHNICITY.map((el, i) => (
-                      <RadioInput key={i} name="ethnicity" data={el} value={currentUserState.ethnicity} onChange={currentUserState.updateEthnicity}/>
+                    COLLECTIVE.map((el, i) => (
+                      <SliderInput key={i} data={el} value={currentUserState[el.name]} onChange={currentUserState.updateValue}/>
                     ))
                   }
                 </SurveyCard>
               }
 
-              {currentUserState.surveyCompletitionIndex === 3 &&
-                <SurveyCard title="When where you born?" validateOnSubmit={currentUserState.age} key="3">
-                  <YearInput name="age" value={currentUserState.age} onChange={currentUserState.updateAge}/>
+              {currentUserState.surveyCompletitionIndex === 3 && !currentUserState.surveyCompleted &&
+                <SurveyCard title="Thank you for your participation" button="Finish Survey" name="complete">
                 </SurveyCard>
               }
 
-              {currentUserState.surveyCompletitionIndex === 4 &&
-                <div key="4">
-                  <h3 className="tc f5 f4-l fw4">Thank you for your participation</h3>
-                  <Button onClick={this.submitSurvey}>ADD YOURSELF</Button>
-                </div>
-              }
-
               {currentUserState.surveyCompleted &&
-                <div key="finished">
-                  <h3>Finished</h3>
-                </div>
+                <SurveyCard title="Finished" name="completed">
+                </SurveyCard>
               }
 
             </ReactCSSTransitionGroup>

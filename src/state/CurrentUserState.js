@@ -1,6 +1,6 @@
 import { observable, computed, action } from 'mobx'
-import { ETHNICITY, GENDERS } from '../CONSTANTS'
-import { updateUser } from '../api'
+import { IDENTITY, VALUES, COLLECTIVE } from '../CONSTANTS'
+import { fetchUser, updateUser, newUser } from '../api'
 
 function fetchLocalStorageData(key = null) {
   if (localStorage.getItem('currentUserData') === null) {
@@ -12,17 +12,41 @@ function fetchLocalStorageData(key = null) {
 }
 
 export default class CurrentUserState {
-  @observable num = fetchLocalStorageData('num')
+  @observable uID = ""
 
-  @observable uID = fetchLocalStorageData('uID')
-
-  @observable id = fetchLocalStorageData('id')
-  @observable gender = fetchLocalStorageData('gender')
-  @observable ethnicity = fetchLocalStorageData('ethnicity')
-  @observable age = fetchLocalStorageData('age')
+  @observable Q1 = 0
+  @observable Q2 = 0
+  @observable Q3 = 0
+  @observable Q4 = 0
+  @observable Q5 = 0
+  @observable Q6 = 0
+  @observable Q7 = 0
+  @observable Q8 = 0
+  @observable Q9 = 0
 
   @observable surveyCompletitionIndex = 0
   @observable surveyCompleted = Boolean(localStorage.getItem('currentUserData'))
+
+  constructor() {
+    //console.log(localStorage.getItem('currentUserData'))
+    // if (localStorage.getItem('currentUserData')) {
+    //   this.Q1 = fetchLocalStorageData('Q1')
+    //   this.Q2 = fetchLocalStorageData('Q2')
+    //   this.Q3 = fetchLocalStorageData('Q3')
+    //   this.Q4 = fetchLocalStorageData('Q4')
+    //   this.Q5 = fetchLocalStorageData('Q5')
+    //   this.Q6 = fetchLocalStorageData('Q6')
+    //   this.Q7 = fetchLocalStorageData('Q7')
+    //   this.Q8 = fetchLocalStorageData('Q8')
+    //   this.Q9 = fetchLocalStorageData('Q9')
+    //   this.uID = fetchLocalStorageData('uID')
+    // } else {
+    // }
+  }
+
+  newUser() {
+    this.uID = newUser()
+  }
 
   @action.bound
   updateuID(id) {
@@ -30,34 +54,40 @@ export default class CurrentUserState {
   }
 
   @action.bound
-  updateNum(num) {
-    this.num = num
-    updateUser(this.uID, { num: num })
+  updateValue(qNum, val) {
+    const data = new Object()
+    this[qNum] = val
+    data[qNum] = val
+
+    const userData = {
+      Q1: this.Q1,
+      Q2: this.Q2,
+      Q3: this.Q3,
+      Q4: this.Q4,
+      Q5: this.Q5,
+      Q6: this.Q6,
+      Q7: this.Q7,
+      Q8: this.Q8,
+      Q9: this.Q9,
+      uID: this.uID,
+    }
+
+    localStorage.setItem('currentUserData', JSON.stringify(userData))
+
+    updateUser(this.uID, data)
   }
 
   @action.bound
-  updateGender(gender) {
-    this.gender = gender
-    updateUser(this.uID, { gender: gender })
-  }
-
-  @action.bound
-  updateEthnicity(ethnicity) {
-    this.ethnicity = ethnicity
-  }
-
-  @action.bound
-  updateAge(age) {
-    this.age = age
-  }
-
-  @action.bound
-  emptySurveyData(age) {
-    this.num = null
-    this.gender = null
-    this.ethnicity = null
-    this.age = null
-    this.surveyCompletitionIndex = 0
+  emptySurveyData() {
+    IDENTITY.map((el, i) => (
+      this[el.name] = 0
+    ))
+    VALUES.map((el, i) => (
+      this[el.name] = 0
+    ))
+    COLLECTIVE.map((el, i) => (
+      this[el.name] = 0
+    ))
   }
 
   @action.bound
@@ -72,26 +102,30 @@ export default class CurrentUserState {
 
   // get the displayable data of the current user
   @computed get currentUserData() {
-    return [this.num, this.gender, this.ethnicity, this.age]
+    return [this.Q1, this.Q2, this.Q3, this.Q4, this.Q5, this.Q6, this.Q7, this.Q8, this.Q9 ]
   }
 
   @computed get currentUserDataObject() {
     return {
-      num: this.num,
-      id: this.id,
-      gender: this.gender,
-      ethnicity: this.ethnicity,
-      age: this.age,
+      Q1: this.Q1,
+      Q2: this.Q2,
+      Q3: this.Q3,
+      Q4: this.Q4,
+      Q5: this.Q5,
+      Q6: this.Q6,
+      Q7: this.Q7,
+      Q8: this.Q8,
+      Q9: this.Q9,
     }
   }
 
   @computed get currentUserAngle() {
-    const currentGender = GENDERS.find(gender => gender.name === this.gender)
-    return currentGender ? currentGender.angle : null
+    // const currentGender = GENDERS.find(gender => gender.name === this.gender)
+    return null
   }
 
   @computed get currentUserColor() {
-    const currentEthnicity = ETHNICITY.find(ethnicity => ethnicity.name === this.ethnicity)
-    return currentEthnicity ? currentEthnicity.color : '#818190'
+    // const currentEthnicity = ETHNICITY.find(ethnicity => ethnicity.name === this.ethnicity)
+    return '#818190'
   }
 }

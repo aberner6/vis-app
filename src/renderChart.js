@@ -88,12 +88,13 @@ export function renderChart(data, delay = 0, firstRender = false, order = 'snake
 
     cellsEnter
       .append('line')
-      .style('stroke', d => ETHNICITY.find(ethnicity => ethnicity.name === d.ethnicity).color)
+      .style('stroke', '#ffffff')//d => ETHNICITY.find(ethnicity => ethnicity.name === d.ethnicity).color)
       .style('stroke-width', strokeWidth)
       .attr('y1', 0)
       .attr('y2', 0)
       .attr('transform', d => {
-        const rotation = GENDERS.find(gender => gender.name === d.gender).angle
+        console.log(d)
+        const rotation = 20 //GENDERS.find(gender => gender.name === d.gender).angle
         return `rotate(${rotation})`
       })
       .transition()

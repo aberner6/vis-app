@@ -43,7 +43,6 @@ export default class Survey extends Component {
           </div>
         </div>
 
-
         <div className="survey-second-half flex-auto flex-auto-50 relative">
         <SurveyRecap className={`dn-landscape f5 mt3 transition-standard transition-delay-big ${currentUserState.num === null ? '0' : ''}`}/>
 

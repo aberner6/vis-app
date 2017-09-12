@@ -10,7 +10,7 @@ export default class UserLine extends Component {
   }
 
   componentDidMount() {
-    renderUser(this.props.currentUserState, 100, true)
+    //renderUser(this.props.currentUserState, 100, true)
   }
 
   render() {

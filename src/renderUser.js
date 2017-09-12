@@ -1,129 +1,90 @@
-import { select } from 'd3-selection'
-import { scaleBand } from 'd3-scale'
-import { interpolateRgb } from 'd3-interpolate'
-import { ETHNICITY, GENDERS } from './CONSTANTS'
-import { range } from 'd3-array'
-import { squareGetCoordinates, squareSpiralGetCoordinates, snakeGetCoordinates } from './dispositionFunctions'
-import 'd3-transition'
+import { select, selectAll } from 'd3-selection'
+// import { scaleBand } from 'd3-scale'
+// import { interpolateRgb } from 'd3-interpolate'
+// import { range } from 'd3-array'
+import { arc as d3Arc } from 'd3-shape'
 
-export function renderUser(data, delay = 0, firstRender = false, order = 'snake') {
-  return new Promise((resolve, reject) => {
-    const svg = document.querySelector('#lines-grid')
-    const participantCount = data.length
-    const cols = Math.ceil(Math.sqrt(participantCount))
-    const rows = Math.ceil(participantCount / cols)
-    const containerSize = svg.getBoundingClientRect() // TODO this is expensive, do it on resize debounced not every render
-    const containerWidth = Math.min(containerSize.width, containerSize.height)
-    const xRange = order === 'spiral' ? range(-Math.floor(cols / 2), Math.floor(cols / 2)) : range(cols)
-    const yRange = order === 'spiral' ? range(-Math.floor(rows / 2), Math.floor(rows / 2)) : range(rows)
-    const xScale = scaleBand()
-      .domain(xRange)
-      .range([0, containerWidth])
-    const yScale = scaleBand()
-      .domain(yRange)
-      .range([0, containerWidth])
+function arc2Tween(d, indx) {
+    var interp = d3.interpolate(this._current, d);    // this will return an interpolater
+                                                      //  function that returns values
+                                                      //  between 'this._current' and 'd'
+                                                      //  given an input between 0 and 1
 
-    const lineWidth = xScale.bandwidth()
-    let strokeWidth = cols > 4 ? 2 : 3
-    strokeWidth = (window.innerWidth < 500) && (cols > 8) ? 1 : strokeWidth
+    this._current = d;                    // update this._current to match the new value
 
-    const calculatePosition = (d, i) => {
-      const center = lineWidth / 2
-      const [ x, y ] = do {
-        if (order === 'square') {
-          squareGetCoordinates(i, cols)
-        } else if (order === 'spiral') {
-          squareSpiralGetCoordinates(cols ** 2 - i)
-        } else if (order === 'snake') {
-          snakeGetCoordinates(i, cols)
-        }
-      }
-      return `translate(${xScale(x) + center} ${yScale(y) + center})`
+    return function(t) {                  // returns a function that attrTween calls with
+                                          //  a time input between 0-1; 0 as the start time,
+                                          //  and 1 being the end of the animation
+
+      var tmp = interp(t);                // use the time to get an interpolated value
+                                          //  (between this._current and d)
+
+      return arcData(tmp, indx);          // pass this new information to the accessor
+                                          //  function to calculate the path points.
+                                          //  make sure sure you return this.
+
+                                          // n.b. we need to manually pass along the
+                                          //  index to drawArc so since the calculation of
+                                          //  the radii depend on knowing the index. if your
+                                          //  accessor function does not require knowing the
+                                          //  index, you can omit this argument
     }
+  };
 
-    const duration = 1000
-    strokeWidth = lineWidth > 8 ? strokeWidth : 1
-    select(svg)
-      .select('#grid-container')
-      .transition()
-      .duration(firstRender ? 0 : duration)
-      .attr('transform', () => {
-        const { width, height } = containerSize
-        if (containerSize.width >= containerSize.height) {
-          return `translate(${(width - height) / 2} 0)`
-        } else {
-          return `translate(0 ${(height - width) / 2})`
-        }
-      })
+export function renderUser(data) {
 
-    const cells = select(svg)
-      .select('#grid-container')
-      .selectAll('g.cells')
-      .data(data, d => d.id)
+  return new Promise((resolve, reject) => {
 
-    const cellsExit = cells.exit()
-      .transition().duration(duration)
+    const svg = select(document.querySelector('#lines-grid'))
 
-    cellsExit.selectAll('line')
-      .attr('x1', 0)
-      .attr('x2', 0)
+    const dimensions = svg.node().parentNode.getBoundingClientRect()
 
-    cellsExit.on('end', function () {
-      select(this).remove()
+    const w = dimensions.width;
+    const h = dimensions.height;
+
+    svg
+      .style('height', h)
+      .style('width', w)
+
+    const dataArray = [
+      data.Q1,
+      data.Q2,
+      data.Q3,
+      data.Q4,
+      data.Q5,
+      data.Q6,
+      data.Q7,
+      data.Q8,
+      data.Q9,
+      data.Q10
+    ]
+
+    const g = svg.select('#grid-container').attr("transform", "translate(" + w / 2 + "," + h / 2 + ")");
+
+    var tau = 2 * Math.PI; // http://tauday.com/tau-manifesto
+
+    var arcData = d3Arc()
+    .innerRadius(function(d,i) {
+      return 20 + i * 5 + 2
+    })
+    .outerRadius(function(d,i) {
+      return 20 + (i+1)*(5)
+    })
+    .startAngle(0 * (Math.PI/180))
+    .endAngle(function(d,i) {
+      return d/100 * tau
     })
 
-    const cellsEnter = cells.enter()
-      .append('g')
-      .classed('cells', true)
-      .attr('transform', calculatePosition)
+    const arcs = g.selectAll('path')
+      .data(dataArray)
+      .attr('d', arcData)
 
-    cellsEnter
-      .append('rect')
-      .attr('x', -lineWidth / 2)
-      .attr('y', -lineWidth / 2)
-      .attr('width', lineWidth)
-      .attr('height', lineWidth)
-      .style('stroke', 'transparent')
-      .style('fill', 'transparent')
+    arcs.enter()
+        .insert('path')
+        .attr('class', 'arc-path')
+        .style("fill", "#ddd")
+        .attr("d", arcData)
+        .merge(arcs)
 
-    cellsEnter
-      .append('line')
-      .style('stroke', '#FFFFFF')
-      .style('stroke-width', strokeWidth)
-      .attr('y1', 0)
-      .attr('y2', 0)
-      .attr('transform', d => {
-        const rotation = 20
-        return `rotate(${rotation})`
-      })
-      .transition()
-      .delay(delay)
-      .duration(duration)
-      .attr('x1', -lineWidth / 2)
-      .attr('x2', lineWidth / 2)
-      .on('end', resolve)
-
-    cells
-      .transition().duration(duration)
-      .delay(delay)
-      .attr('transform', calculatePosition)
-
-    cells
-      .selectAll('rect')
-      .transition().duration(duration)
-      .delay(delay)
-      .attr('x', -lineWidth / 2)
-      .attr('y', -lineWidth / 2)
-      .attr('width', lineWidth)
-      .attr('height', lineWidth)
-
-    cells
-      .selectAll('line')
-      .style('stroke-width', strokeWidth)
-      .transition().duration(duration)
-      .delay(delay)
-      .attr('x1', -lineWidth / 2)
-      .attr('x2', lineWidth / 2)
-      .on('end', resolve)
   })
 }

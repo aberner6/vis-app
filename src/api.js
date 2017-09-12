@@ -20,6 +20,7 @@ const looping = firebase.database().ref('looping')
 // this function takes the object returned from firebase and transforms it into an array with every element having an id
 function normalize(data) {
   return map(data, (el, id) => {
+    console.log('mapping', el, id)
     return {
       ...el,
       id,
@@ -59,10 +60,19 @@ export function fetchUsers() {
 
 export function fetchUser(uID) {
   return new Promise((resolve, reject) => {
+    console.log('fetching single user', uID);
     if (uID == "latest") {
-      firebase.database().ref('/participants').limitToLast(1).on('value', (snap) => resolve(normalize(snap.val())))
+      firebase.database().ref('/participants').limitToLast(1).on('value', (snap) => {
+        console.log('firebase got latest', snap.val());
+        return resolve(normalize(snap.val()))
+      })
     } else {
-      firebase.database().ref('/participants/'+uID).on('value', (snap) => resolve(normalize(snap.val())))
+      firebase.database().ref('/participants/'+uID).on('value', function(snap) {
+        const fixedData = new Object()
+        fixedData[uID] = snap.val()
+        console.log('firebase got this', fixedData);
+        return resolve(snap.val())
+      })
     }
   })
 }

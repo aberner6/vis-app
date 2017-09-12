@@ -2,25 +2,14 @@ import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 import { reaction } from 'mobx'
 import { maxBy } from 'lodash'
-import { renderUser } from '../renderUser'
+import { renderUser, updateUser } from '../renderUser'
 import { fetchUser, listenForNewUsers, listenForUpdatedUsers, stopListeningForNewUsers, stopListeningForUpdatedUsers } from '../api'
 import SurveyRecap from '../containers/SurveyRecap'
 
-function onResizeWindow(fn) {
-  window.addEventListener('resize', fn)
-  return () => window.removeEventListener('resize', fn)
-}
-
-@inject('currentUserState')
-export default class LinesGridFirebase extends Component {
-  currentUser = new Object()
+export default class UserLineFirebase extends Component {
 
   static defaultProps = {
-    trackUsers: true,
-    isStatic: false,
-    oneShotFetch: false,
-    data: [],
-    renderDelay: 0,
+    userToViz: 'latest'
   }
   // TODO add a state that hides/shows the lines for the transaction
   constructor(props) {
@@ -32,79 +21,43 @@ export default class LinesGridFirebase extends Component {
   }
 
   componentDidMount() {
-    if (this.props.isStatic) {
-      renderChart(this.props.data, this.props.renderDelay, true)
-    } else {
-      this.startRealtimeFetching()
-    }
+    this.startRealtimeFetching()
   }
-  componentDidUpdate(prevProps) {
-    if (this.props.isStatic) {
-      if (prevProps.isStatic !== this.props.isStatic) {
-        this.stopRealtimeFetching()
-      }
-      renderChart(this.props.data, this.props.renderDelay)
-    } else {
-      if (prevProps.isStatic !== this.props.isStatic) {
-        this.startRealtimeFetching()
-      }
-    }
-  }
+
   componentWillUnmount() {
-    if (!this.props.isStatic) {
-      this.stopRealtimeFetching()
-    }
+    this.stopRealtimeFetching()
   }
 
   startRealtimeFetching = () => {
-    const { trackUsers } = this.props
-    fetchUser('latest')
+    fetchUser(this.props.userToViz)
       .then(user => {
-        console.log(user)
-        // allUsersState.addUsers(users)
-        // console.info(`Fetched ${users.length} users...`)
-        // console.log(allUsersState)
-        // this.setState({ loading: false })
-        // console.log(allUsersState.allUsersSorted)
-        // if (this.props.oneShotFetch) {
-        //   return
-        // }
-        // const latest = maxBy(users, d => d.created)
-        // console.log(latest)
-        renderUser(user, this.props.renderDelay, true)
 
-        listenForNewUsers(user[0].created + 1, user => {
+        if (user[0]) {
+          user = user[0]
+        }
+
+        console.log('user to viz', user);
+
+        this.currentUser = user
+
+        renderUser(this.currentUser)
+
+        listenForNewUsers(user.created + 1, user => {
           this.currentUser = user
-          renderUser(user, this.props.renderDelay, true)
         })
 
-        if (trackUsers) {
-          listenForUpdatedUsers(data => {
-            renderUser([data], this.props.renderDelay, true)
-          })
-        }
+        listenForUpdatedUsers(data => {
+          this.currentUser = data
+          renderUser(this.currentUser)
+        })
       })
-
-      // watch the first element of the queue, and call when is added to allUsers
-    // this.reactionDisposer = reaction(() => {
-    //   const allUsersState = this.props.allUsersState
-    //   return allUsersState.userQueue.length && allUsersState.userQueue[0]
-    // }, (firstOfQueue) => {
-    //   if (!firstOfQueue) {
-    //     return
-    //   }
-    //
-    //   allUsersState.allUsers.push(firstOfQueue)
-    //
-    //   renderUser(allUsersState.allUsersSorted, this.props.renderDelay)
-    //   .then(() => allUsersState.userQueue.shift()) // we shift it at the end to trigger the reaction
-    // })
   }
+
   stopRealtimeFetching = () => {
     stopListeningForNewUsers()
     stopListeningForUpdatedUsers()
-    // this.reactionDisposer()
   }
+
   render() {
     return (
       <svg className="flex-auto" id="lines-grid">
@@ -112,4 +65,5 @@ export default class LinesGridFirebase extends Component {
       </svg>
     )
   }
+
 }

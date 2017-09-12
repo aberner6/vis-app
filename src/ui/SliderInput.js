@@ -7,7 +7,6 @@ export default class SliderInput extends Component {
     this.props.onChange(e.target.name, e.target.value)
   }, 100)
 
-
   handleChange = (e) => {
     e.persist()
     this.delayEvent(e)

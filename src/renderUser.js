@@ -8,7 +8,7 @@ export function renderUser(data) {
 
   return new Promise((resolve, reject) => {
 
-    const svg = document.querySelector('#lines-grid')
+    const svg = document.querySelector('#grid-container')
 
     const w = window.innerWidth;
     const h = window.innerHeight;
@@ -25,19 +25,43 @@ export function renderUser(data) {
       data.Q9
     ]
 
-    var marc = d3Arc()
-    .innerRadius(180)
-    .outerRadius(240)
-    .startAngle(0)
-    .endAngle(2*Math.PI)
+    const g = select(svg).attr("transform", "translate(" + w / 2 + "," + h / 2 + ")");
 
-    console.log(marc());
+    var tau = 2 * Math.PI; // http://tauday.com/tau-manifesto
 
+    var arcData = d3Arc()
+    .innerRadius(function(d,i) {
+      return 20 + i * 5 + 2
+    })
+    .outerRadius(function(d,i) {
+      return 20 + (i+1)*(5)
+    })
+    .startAngle(0 * (Math.PI/180))
+    .endAngle(function(d,i) {
+      return d/100 * tau
+    })
 
-    const arcs = select(svg)
-      .append('path')
+    // .innerRadius(function(d, i) {
+    //   return  arcMin + i*(arcWidth) + arcPad;
+    // })
+    // .outerRadius(function(d, i) {
+    //   return arcMin + (i+1)*(arcWidth);
+    // })
+    // .startAngle(0 * (PI/180))
+    // .endAngle(function(d, i) {
+    //   return Math.floor((d*6 * (PI/180))*1000)/1000;
+    // });
+
+    const arcs = g.selectAll('path')
+      .data(dataArray)
+      .attr('d', arcData)
+
+    arcs.enter()
+        .insert('path')
+        .attr('class', 'arc-path')
         .style("fill", "#ddd")
-        .attr("d", marc);
+        .attr("d", arcData)
+        .merge(arcs)
 
     // const circles = select(svg).selectAll('circle')
     //   .data(dataArray)

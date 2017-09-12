@@ -1,53 +1,68 @@
 export const IDENTITY = [
   {
     name: 'Q1',
-    label: 'Question Name',
+    label1: 'Female',
+    label2: 'Male',
     color: '#EE575A',
   },
   {
     name: 'Q2',
-    label: 'Question Name',
+    label1: 'Rational',
+    label2: 'Emotional',
     color: '#EE575A',
   },
   {
     name: 'Q3',
-    label: 'Question Name',
+    label1: 'Physical',
+    label2: 'Virtual',
     color: '#EE575A',
   },
   {
     name: 'Q4',
-    label: 'Question Name',
+    label1: 'Private',
+    label2: 'Public',
     color: '#EE575A',
   },
   {
     name: 'Q5',
-    label: 'Question Name',
+    label1: 'Control',
+    label2: 'Fate',
+    color: '#EE575A',
+  },
+  {
+    name: 'Q6',
+    label1: 'Nationalist',
+    label2: 'Europeanist',
     color: '#EE575A',
   },
 ]
 
 export const VALUES = [
   {
-    name: 'Q6',
-    label: 'Question Name',
-    color: '#EE575A',
-  },
-  {
     name: 'Q7',
-    label: 'Question Name',
+    label1: 'Inclusion',
+    label2: 'Protection',
     color: '#EE575A',
   },
   {
     name: 'Q8',
-    label: 'Question Name',
+    label1: 'Autonomy',
+    label2: 'Collaboration',
+    color: '#EE575A',
+  },
+  {
+    name: 'Q9',
+    label1: 'Sustainability',
+    label2: 'Acceleration',
     color: '#EE575A',
   },
 ]
 
 export const COLLECTIVE = [
   {
-    name: 'Q9',
-    label: 'Question Name',
+    name: 'Q10',
+    label1: 'Label',
+    label2: 'Label',
     color: '#EE575A',
   },
 ]

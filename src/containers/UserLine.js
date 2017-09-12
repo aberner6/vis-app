@@ -10,18 +10,14 @@ export default class UserLine extends Component {
   }
 
   componentDidMount() {
-    //renderUser(this.props.currentUserState, 100, true)
+    renderUser(this.props.currentUserState)
   }
 
   render() {
-    console.log(this.props.currentUserState.currentUserData)
-
     return (
-      <div className="relative transition-standard">
-        <svg className="flex-auto" id="lines-grid">
-          <g id="grid-container"></g>
-        </svg>
-      </div>
+      <svg className="flex-auto" id="lines-grid">
+        <g id="grid-container"></g>
+      </svg>
     )
   }
 }

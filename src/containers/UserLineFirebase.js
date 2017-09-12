@@ -9,11 +9,7 @@ import SurveyRecap from '../containers/SurveyRecap'
 export default class UserLineFirebase extends Component {
 
   static defaultProps = {
-    trackUsers: true,
-    isStatic: false,
-    oneShotFetch: false,
-    data: [],
-    renderDelay: 0,
+    userToViz: 'latest'
   }
   // TODO add a state that hides/shows the lines for the transaction
   constructor(props) {
@@ -29,21 +25,25 @@ export default class UserLineFirebase extends Component {
   }
 
   componentWillUnmount() {
-    if (!this.props.isStatic) {
-      this.stopRealtimeFetching()
-    }
+    this.stopRealtimeFetching()
   }
 
   startRealtimeFetching = () => {
-    fetchUser('latest')
+    fetchUser(this.props.userToViz)
       .then(user => {
 
-        this.currentUser = user[0]
+        if (user[0]) {
+          user = user[0]
+        }
+
+        console.log('user to viz', user);
+
+        this.currentUser = user
 
         renderUser(this.currentUser)
 
-        listenForNewUsers(user[0].created + 1, user => {
-          this.currentUser = user[0]
+        listenForNewUsers(user.created + 1, user => {
+          this.currentUser = user
         })
 
         listenForUpdatedUsers(data => {

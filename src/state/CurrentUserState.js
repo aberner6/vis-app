@@ -23,6 +23,7 @@ export default class CurrentUserState {
   @observable Q7 = 0
   @observable Q8 = 0
   @observable Q9 = 0
+  @observable Q10 = 0
 
   @observable surveyCompletitionIndex = 0
   @observable surveyCompleted = Boolean(localStorage.getItem('currentUserData'))
@@ -46,6 +47,8 @@ export default class CurrentUserState {
 
   newUser() {
     this.uID = newUser()
+    this.surveyCompletitionIndex = 0
+    this.surveyCompleted = false
   }
 
   @action.bound
@@ -69,6 +72,7 @@ export default class CurrentUserState {
       Q7: this.Q7,
       Q8: this.Q8,
       Q9: this.Q9,
+      Q10: this.Q10,
       uID: this.uID,
     }
 
@@ -102,7 +106,7 @@ export default class CurrentUserState {
 
   // get the displayable data of the current user
   @computed get currentUserData() {
-    return [this.Q1, this.Q2, this.Q3, this.Q4, this.Q5, this.Q6, this.Q7, this.Q8, this.Q9 ]
+    return [this.Q1, this.Q2, this.Q3, this.Q4, this.Q5, this.Q6, this.Q7, this.Q8, this.Q9, this.Q10 ]
   }
 
   @computed get currentUserDataObject() {
@@ -116,6 +120,7 @@ export default class CurrentUserState {
       Q7: this.Q7,
       Q8: this.Q8,
       Q9: this.Q9,
+      Q10: this.Q10,
     }
   }
 

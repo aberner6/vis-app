@@ -3,7 +3,7 @@ import { observer, inject } from 'mobx-react'
 import { Redirect } from 'react-router-dom'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import SurveyCard from '../containers/SurveyCard'
-import UserLine from '../containers/UserLine'
+import UserLineFirebase from '../containers/UserLineFirebase'
 import SurveyRecap from '../containers/SurveyRecap'
 import AnimatedBackground from '../ui/AnimatedBackground'
 import SliderInput from '../ui/SliderInput'
@@ -38,24 +38,19 @@ export default class Survey extends Component {
       <div className={`survey ${currentUserState.surveyCompletitionIndex >= 2 ? 'survey-show-viz' : ''} flex h-100`}>
 
         <div className="survey-viz-results flex-auto flex-auto-50 flex flex-column justify-center overflow-hidden">
-          <div className="w-50 center m-25">
-            <UserLine/>
-          </div>
+          {currentUserState.surveyCompletitionIndex >= 2 &&
+          <UserLineFirebase userToViz={currentUserState.uID} />
+          }
         </div>
 
         <div className="survey-second-half flex-auto flex-auto-50 relative">
-        <SurveyRecap className={`dn-landscape f5 mt3 transition-standard transition-delay-big ${currentUserState.num === null ? '0' : ''}`}/>
-
-          <AnimatedBackground activeColor={currentUserState.currentUserColor} className={currentUserState.num === null ? 'survey-canvas-expanded' : ''}/>
-
-          <SurveyRecap className={`dn-portrait w-60 absolute bb b--white-opacity ttu f6 f5-l pb2 transition-standard transition-delay-standard`} style={{ top: '10%', left: '20%' }}/>
 
           <div className="absolute absolute--fill h-100 w-100">
 
             <ReactCSSTransitionGroup component="div" className={`h-100 flex flex-column justify-center items-center  overflow-scrolling-touch transition-slow will-change-transform`} transitionName="fade-in-up" transitionEnterTimeout={300} transitionLeaveTimeout={300}>
 
               {currentUserState.surveyCompletitionIndex === 0 &&
-                <SurveyCard title="Which number do you identify with?" button="Next" name="identity">
+                <SurveyCard title="New Identity" button="Next" name="identity">
                   {
                     IDENTITY.map((el, i) => (
                       <SliderInput key={i} data={el} value={currentUserState[el.name]} onChange={currentUserState.updateValue}/>
@@ -65,7 +60,7 @@ export default class Survey extends Component {
               }
 
               {currentUserState.surveyCompletitionIndex === 1 &&
-                <SurveyCard title="Which number do you identify with?" button="Next" name="values">
+                <SurveyCard title="Values Selection" button="Next" name="values">
                   {
                     VALUES.map((el, i) => (
                       <SliderInput key={i} data={el} value={currentUserState[el.name]} onChange={currentUserState.updateValue}/>
@@ -75,7 +70,7 @@ export default class Survey extends Component {
               }
 
               {currentUserState.surveyCompletitionIndex === 2 &&
-                <SurveyCard title="Which number do you identify with?" button="Next" name="collective">
+                <SurveyCard title="???" button="Next" name="collective">
                   {
                     COLLECTIVE.map((el, i) => (
                       <SliderInput key={i} data={el} value={currentUserState[el.name]} onChange={currentUserState.updateValue}/>

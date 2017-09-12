@@ -105,6 +105,9 @@ a {
   .fade-in-up-enter {
     display: none;
   }
+  .fade-in-up-appear {
+    display: none;
+  }
   .survey-card {
     animation: fade-in-up 0.3s ease-in-out;
     animation-fill-mode: forwards;
@@ -113,8 +116,15 @@ a {
     animation: fade-out-down 0.3s ease-in-out;
     animation-fill-mode: forwards;
   }
+  .survey-viz-results {
+    animation: size-in-down 1s ease-in-out;
+    animation-fill-mode: forwards;
+  }
 }
 @supports not (animation-fill-mode: forwards) {
+  .fade-in-up-appear {
+    display: block;
+  }
   .fade-in-up-enter {
     display: block;
   }
@@ -133,6 +143,19 @@ a {
     transform: translate3d(0, 0, 0);
   }
 }
+@keyframes size-in-down {
+  from {
+    opacity: 0;
+    height: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+
+  to {
+    opacity: 1;
+    height: 340px;
+    transform: translate3d(0, 0, 0);
+  }
+}
 @keyframes fade-out-down {
   from {
     opacity: 1;
@@ -145,6 +168,9 @@ a {
   }
 }
 
+.survey-viz-results {
+  height: 340px;
+}
 
 /* SURVEY COMPONENT */
 /* (orientation: landscape) */
@@ -190,14 +216,6 @@ a {
     transform-origin: center bottom;
     transform: scaleY(2) translateZ(0);
   }
-}
-
-.survey-viz-results {
-  display: none;
-}
-
-.survey-show-viz .survey-viz-results {
-  display: block;
 }
 
 /* BUTTON COMPONENT */

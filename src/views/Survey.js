@@ -35,13 +35,16 @@ export default class Survey extends Component {
     const currentUserState = this.props.currentUserState
     return (
 
-      <div className={`survey ${currentUserState.surveyCompletitionIndex >= 2 ? 'survey-show-viz' : ''} flex h-100`}>
+      <div className={`survey flex h-100`}>
 
-        <div className="survey-viz-results flex-auto flex-auto-50 flex flex-column justify-center overflow-hidden">
-          {currentUserState.surveyCompletitionIndex >= 2 &&
-          <UserLineFirebase userToViz={currentUserState.uID} />
-          }
-        </div>
+
+        {currentUserState.surveyCompletitionIndex >= 2 &&
+          <ReactCSSTransitionGroup transitionName="size-in-down" transitionEnterTimeout={300} transitionLeaveTimeout={300}>
+              <div className="survey-viz-results justify-center overflow-hidden survey-first-half">
+                <UserLineFirebase userToViz={currentUserState.uID} />
+              </div>
+          </ReactCSSTransitionGroup>
+        }
 
         <div className="survey-second-half flex-auto flex-auto-50 relative">
 

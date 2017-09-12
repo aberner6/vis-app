@@ -44,6 +44,7 @@ export default class UserLineFirebase extends Component {
 
         listenForNewUsers(user.created + 1, user => {
           this.currentUser = user
+          renderUser(this.currentUser)
         })
 
         listenForUpdatedUsers(data => {

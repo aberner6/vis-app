@@ -1,35 +1,8 @@
 import { select, selectAll } from 'd3-selection'
 // import { scaleBand } from 'd3-scale'
-// import { interpolateRgb } from 'd3-interpolate'
+import { interpolate as d3Interpolate } from 'd3-interpolate'
 // import { range } from 'd3-array'
 import { arc as d3Arc } from 'd3-shape'
-
-function arc2Tween(d, indx) {
-    var interp = d3.interpolate(this._current, d);    // this will return an interpolater
-                                                      //  function that returns values
-                                                      //  between 'this._current' and 'd'
-                                                      //  given an input between 0 and 1
-
-    this._current = d;                    // update this._current to match the new value
-
-    return function(t) {                  // returns a function that attrTween calls with
-                                          //  a time input between 0-1; 0 as the start time,
-                                          //  and 1 being the end of the animation
-
-      var tmp = interp(t);                // use the time to get an interpolated value
-                                          //  (between this._current and d)
-
-      return arcData(tmp, indx);          // pass this new information to the accessor
-                                          //  function to calculate the path points.
-                                          //  make sure sure you return this.
-
-                                          // n.b. we need to manually pass along the
-                                          //  index to drawArc so since the calculation of
-                                          //  the radii depend on knowing the index. if your
-                                          //  accessor function does not require knowing the
-                                          //  index, you can omit this argument
-    }
-  };
 
 export function renderUser(data) {
 
@@ -40,7 +13,7 @@ export function renderUser(data) {
     const dimensions = svg.node().parentNode.getBoundingClientRect()
 
     const w = dimensions.width;
-    const h = dimensions.height;
+    const h = 340; //dimensions.height;
 
     svg
       .style('height', h)
@@ -75,9 +48,22 @@ export function renderUser(data) {
       return d/100 * tau
     })
 
+    function arc2Tween(d, indx) {
+      var interp = d3Interpolate(this._current, d)
+      this._current = d
+
+      return function(t) {
+        var tmp = interp(t)
+        return arcData(tmp, indx)
+      }
+    }
+
     const arcs = g.selectAll('path')
       .data(dataArray)
-      .attr('d', arcData)
+
+    arcs.transition()
+      .duration(300)
+      .attrTween('d', arc2Tween)
 
     arcs.enter()
         .insert('path')

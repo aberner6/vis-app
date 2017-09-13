@@ -10,7 +10,7 @@ const FIREBASE_CONFIG = {
   databaseURL: 'https://cohere-d61af.firebaseio.com',
   projectId: 'cohere-d61af',
   storageBucket: 'cohere-d61af.appspot.com',
-  messagingSenderId: '256182960111'
+  messagingSenderId: '256182960111',
 }
 
 firebase.initializeApp(FIREBASE_CONFIG)
@@ -20,7 +20,7 @@ const looping = firebase.database().ref('looping')
 // this function takes the object returned from firebase and transforms it into an array with every element having an id
 function normalize(data) {
   return map(data, (el, id) => {
-    console.log('mapping', el, id)
+    // console.log('mapping', el, id)
     return {
       ...el,
       id,
@@ -29,10 +29,10 @@ function normalize(data) {
 }
 
 export function newUser() {
-  const newKey = participants.push().key;
+  const newKey = participants.push().key
 
   const timestamp = Date.now()
-  const user = new Object();
+  const user = {}
 
   IDENTITY.map((el, i) => (
     user[el.name] = 0
@@ -47,7 +47,7 @@ export function newUser() {
   user.created = timestamp
   user.updated = timestamp
 
-  firebase.database().ref('participants/'+newKey).set(user)
+  firebase.database().ref('participants/' + newKey).set(user)
 
   return newKey
 }
@@ -60,17 +60,17 @@ export function fetchUsers() {
 
 export function fetchUser(uID) {
   return new Promise((resolve, reject) => {
-    console.log('fetching single user', uID);
-    if (uID == "latest") {
+    // console.log('fetching single user', uID);
+    if (uID === 'latest') {
       firebase.database().ref('/participants').limitToLast(1).on('value', (snap) => {
-        console.log('firebase got latest', snap.val());
+        // console.log('firebase got latest', snap.val());
         return resolve(normalize(snap.val()))
       })
     } else {
-      firebase.database().ref('/participants/'+uID).on('value', function(snap) {
-        const fixedData = new Object()
+      firebase.database().ref('/participants/' + uID).on('value', (snap) => {
+        const fixedData = {}
         fixedData[uID] = snap.val()
-        console.log('firebase got this', fixedData);
+        // console.log('firebase got this', fixedData);
         return resolve(snap.val())
       })
     }
@@ -80,7 +80,7 @@ export function fetchUser(uID) {
 export function listenForNewUsers(startAt, callback) {
   // filter out the elements created before now
   participants.orderByChild('created').startAt(startAt).on('child_added', (data) => {
-    console.log('listenForNewUsers child_added', data.key, data.val().created)
+    // console.log('listenForNewUsers child_added', data.key, data.val().created)
     callback({
       ...data.val(),
       id: data.key,
@@ -91,7 +91,7 @@ export function listenForNewUsers(startAt, callback) {
 export function listenForUpdatedUsers(callback) {
   // filter out the elements created before now
   participants.on('child_changed', (data) => {
-    console.log('child_changed', data.val())
+    // console.log('child_changed', data.val())
     callback({
       ...data.val(),
       id: data.key,
@@ -118,10 +118,10 @@ export function saveUser(data) {
 
 export function updateUser(uID, data) {
   return new Promise((resolve, reject) => {
-    console.log("updates- "+uID, data)
+    // console.log("updates- "+uID, data)
     const userData = data
     userData.updated = Date.now()
-    firebase.database().ref('/participants/'+uID).update(userData)
+    firebase.database().ref('/participants/' + uID).update(userData)
   })
 }
 

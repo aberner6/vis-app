@@ -71,8 +71,8 @@ export default class LinesGridFirebase extends Component {
     fetchUsers()
       .then(users => {
         allUsersState.addUsers(users)
-        console.info(`Fetched ${users.length} users...`)
-        console.log(allUsersState)
+        // console.info(`Fetched ${users.length} users...`)
+        // console.log(allUsersState)
         this.setState({ loading: false })
         renderChart(allUsersState.allUsersSorted, this.props.renderDelay, true)
         if (this.props.oneShotFetch) {

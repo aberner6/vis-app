@@ -36,7 +36,7 @@ export default class UserLineFirebase extends Component {
           user = user[0]
         }
 
-        console.log('user to viz', user);
+        // console.log('user to viz', user);
 
         this.currentUser = user
 
@@ -44,6 +44,7 @@ export default class UserLineFirebase extends Component {
 
         listenForNewUsers(user.created + 1, user => {
           this.currentUser = user
+          renderUser(this.currentUser)
         })
 
         listenForUpdatedUsers(data => {

@@ -36,37 +36,6 @@ export function renderChart(data, delay = 0, firstRender = false, order = 'snake
       return `translate(${xScale(x) + center} ${yScale(y) + center})`
     }
 
-    const duration = 1000
-    select(svg)
-      .select('#grid-container')
-      .transition()
-      .duration(firstRender ? 0 : duration)
-      .attr('transform', () => {
-        const { width, height } = containerSize
-        if (containerSize.width >= containerSize.height) {
-          return `translate(${(width - height) / 2} 0)`
-        } else {
-          return `translate(0 ${(height - width) / 2})`
-        }
-      })
-
-    const cells = select(svg)
-      .select('#grid-container')
-      .selectAll('g.cells')
-      .data(data, d => d.id)
-
-    const cellsExit = cells.exit()
-      .transition().duration(duration)
-
-    cellsExit.on('end', function () {
-      select(this).remove()
-    })
-
-    const cellsEnter = cells.enter()
-      .append('g')
-      .classed('cells', true)
-      .attr('transform', calculatePosition)
-
     var tau = 2 * Math.PI // http://tauday.com/tau-manifesto
 
     var arcMin = 10
@@ -95,7 +64,59 @@ export function renderChart(data, delay = 0, firstRender = false, order = 'snake
       }
     }
 
-    const arcs = cellsEnter.selectAll('path')
+    const duration = 1000
+
+    select(svg)
+      .select('#grid-container')
+      .transition()
+      .duration(firstRender ? 0 : duration)
+      .attr('transform', () => {
+        const { width, height } = containerSize
+        if (containerSize.width >= containerSize.height) {
+          return `translate(${(width - height) / 2} 0)`
+        } else {
+          return `translate(0 ${(height - width) / 2})`
+        }
+      })
+
+    const cells = select(svg)
+      .select('#grid-container')
+      .selectAll('g.cells')
+      .data(data, d => d.id)
+
+    const arcs = cells.selectAll('path')
+        .data(function (d) {
+          const dataArray = [
+            d.Q1,
+            d.Q2,
+            d.Q3,
+            d.Q4,
+            d.Q5,
+            d.Q6,
+            d.Q7,
+            d.Q8,
+            d.Q9,
+            d.Q10,
+          ]
+          return dataArray
+        })
+        .transition()
+          .duration(300)
+          .attrTween('d', arc2Tween)
+
+    // const cellsExit = cells.exit()
+    //   .transition().duration(duration)
+    //
+    // cellsExit.on('end', function () {
+    //   select(this).remove()
+    // })
+
+    const cellsEnter = cells.enter()
+      .append('g')
+      .classed('cells', true)
+      .attr('transform', calculatePosition)
+
+    const arcsEnter = cellsEnter.selectAll('path')
       .data(function (d) {
         const dataArray = [
           d.Q1,
@@ -111,12 +132,7 @@ export function renderChart(data, delay = 0, firstRender = false, order = 'snake
         ]
         return dataArray
       })
-
-    arcs.transition()
-      .duration(300)
-      .attrTween('d', arc2Tween)
-
-    arcs.enter()
+      .enter()
         .insert('path')
         .attr('class', 'arc-path')
         .style('fill', '#ddd')

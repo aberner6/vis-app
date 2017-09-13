@@ -1,10 +1,11 @@
-import { select } from 'd3-selection'
 import { scaleBand } from 'd3-scale'
-import { interpolateRgb } from 'd3-interpolate'
-import { ETHNICITY, GENDERS } from './CONSTANTS'
+import { interpolate as d3Interpolate, interpolateRgb } from 'd3-interpolate'
 import { range } from 'd3-array'
 import { squareGetCoordinates, squareSpiralGetCoordinates, snakeGetCoordinates } from './dispositionFunctions'
 import 'd3-transition'
+import { select } from 'd3-selection'
+// import { interpolate as d3Interpolate } from 'd3-interpolate'
+import { arc as d3Arc } from 'd3-shape'
 
 export function renderChart(data, delay = 0, firstRender = false, order = 'snake') {
   return new Promise((resolve, reject) => {
@@ -24,8 +25,6 @@ export function renderChart(data, delay = 0, firstRender = false, order = 'snake
       .range([0, containerWidth])
 
     const lineWidth = xScale.bandwidth()
-    let strokeWidth = cols > 4 ? 2 : 3
-    strokeWidth = (window.innerWidth < 500) && (cols > 8) ? 1 : strokeWidth
 
     const calculatePosition = (d, i) => {
       const center = lineWidth / 2
@@ -42,7 +41,6 @@ export function renderChart(data, delay = 0, firstRender = false, order = 'snake
     }
 
     const duration = 1000
-    strokeWidth = lineWidth > 8 ? strokeWidth : 1
     select(svg)
       .select('#grid-container')
       .transition()
@@ -77,55 +75,107 @@ export function renderChart(data, delay = 0, firstRender = false, order = 'snake
       .classed('cells', true)
       .attr('transform', calculatePosition)
 
-    cellsEnter
-      .append('rect')
-      .attr('x', -lineWidth / 2)
-      .attr('y', -lineWidth / 2)
-      .attr('width', lineWidth)
-      .attr('height', lineWidth)
-      .style('stroke', 'transparent')
-      .style('fill', 'transparent')
+    var tau = 2 * Math.PI // http://tauday.com/tau-manifesto
 
-    cellsEnter
-      .append('line')
-      .style('stroke', '#ffffff')//d => ETHNICITY.find(ethnicity => ethnicity.name === d.ethnicity).color)
-      .style('stroke-width', strokeWidth)
-      .attr('y1', 0)
-      .attr('y2', 0)
-      .attr('transform', d => {
-        console.log(d)
-        const rotation = 20 //GENDERS.find(gender => gender.name === d.gender).angle
-        return `rotate(${rotation})`
+    var arcData = d3Arc()
+    .innerRadius(function (d, i) {
+      return 20 + i * 5 + 2
+    })
+    .outerRadius(function (d, i) {
+      return 20 + (i + 1) * (5)
+    })
+    .startAngle(0 * (Math.PI/180))
+    .endAngle(function (d, i) {
+      return d / 100 * tau
+    })
+
+    function arc2Tween (d, indx) {
+      var interp = d3Interpolate(this._current, d)
+      this._current = d
+
+      return function (t) {
+        var tmp = interp(t)
+        return arcData(tmp, indx)
+      }
+    }
+
+    const arcs = cellsEnter.selectAll('path')
+      .data(function (d) {
+        const dataArray = [
+          d.Q1,
+          d.Q2,
+          d.Q3,
+          d.Q4,
+          d.Q5,
+          d.Q6,
+          d.Q7,
+          d.Q8,
+          d.Q9,
+          d.Q10,
+        ]
+        return dataArray
       })
-      .transition()
-      .delay(delay)
-      .duration(duration)
-      .attr('x1', -lineWidth / 2)
-      .attr('x2', lineWidth / 2)
-      .on('end', resolve)
 
-    cells
-      .transition().duration(duration)
-      .delay(delay)
-      .attr('transform', calculatePosition)
+    arcs.transition()
+      .duration(300)
+      .attrTween('d', arc2Tween)
 
-    cells
-      .selectAll('rect')
-      .transition().duration(duration)
-      .delay(delay)
-      .attr('x', -lineWidth / 2)
-      .attr('y', -lineWidth / 2)
-      .attr('width', lineWidth)
-      .attr('height', lineWidth)
+    arcs.enter()
+        .insert('path')
+        .attr('class', 'arc-path')
+        .style('fill', '#ddd')
+        .attr('d', arcData)
+        .merge(arcs)
 
-    cells
-      .selectAll('line')
-      .style('stroke-width', strokeWidth)
-      .transition().duration(duration)
-      .delay(delay)
-      .attr('x1', -lineWidth / 2)
-      .attr('x2', lineWidth / 2)
-      .on('end', resolve)
+  //   cellsEnter
+  //     .append('rect')
+  //     .attr('x', -lineWidth / 2)
+  //     .attr('y', -lineWidth / 2)
+  //     .attr('width', lineWidth)
+  //     .attr('height', lineWidth)
+  //     .style('stroke', 'transparent')
+  //     .style('fill', 'transparent')
+  //
+  //   cellsEnter
+  //     .append('line')
+  //     .style('stroke', '#ffffff')//d => ETHNICITY.find(ethnicity => ethnicity.name === d.ethnicity).color)
+  //     .style('stroke-width', strokeWidth)
+  //     .attr('y1', 0)
+  //     .attr('y2', 0)
+  //     .attr('transform', d => {
+  //       console.log(d)
+  //       const rotation = 20 //GENDERS.find(gender => gender.name === d.gender).angle
+  //       return `rotate(${rotation})`
+  //     })
+  //     .transition()
+  //     .delay(delay)
+  //     .duration(duration)
+  //     .attr('x1', -lineWidth / 2)
+  //     .attr('x2', lineWidth / 2)
+  //     .on('end', resolve)
+  //
+  //   cells
+  //     .transition().duration(duration)
+  //     .delay(delay)
+  //     .attr('transform', calculatePosition)
+  //
+  //   cells
+  //     .selectAll('rect')
+  //     .transition().duration(duration)
+  //     .delay(delay)
+  //     .attr('x', -lineWidth / 2)
+  //     .attr('y', -lineWidth / 2)
+  //     .attr('width', lineWidth)
+  //     .attr('height', lineWidth)
+  //
+  //   cells
+  //     .selectAll('line')
+  //     .style('stroke-width', strokeWidth)
+  //     .transition().duration(duration)
+  //     .delay(delay)
+  //     .attr('x1', -lineWidth / 2)
+  //     .attr('x2', lineWidth / 2)
+  //     .on('end', resolve)
   })
 }
 
@@ -135,8 +185,7 @@ export function highlightElement(user) {
     const selected = select(svg)
       .selectAll('g.cells')
       .filter(d => d.id === user.id)
-    const data = selected.data()[0]
-    const color = ETHNICITY.find(ethnicity => ethnicity.name === data.ethnicity).color
+    // const data = selected.data()[0]
     user.pulseFillLock = user.pulseFillLock || {}
     user.pulseStrokeLock = user.pulseStrokeLock || {}
     function pulseFill(path, duration) {

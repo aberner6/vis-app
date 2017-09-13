@@ -36,7 +36,7 @@ export default class UserLineFirebase extends Component {
           user = user[0]
         }
 
-        console.log('user to viz', user);
+        // console.log('user to viz', user);
 
         this.currentUser = user
 

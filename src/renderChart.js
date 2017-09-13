@@ -9,14 +9,16 @@ import { arc as d3Arc } from 'd3-shape'
 
 export function renderChart(data, delay = 0, firstRender = false, order = 'snake') {
   return new Promise((resolve, reject) => {
+    console.log('drawing for data', data)
     const svg = document.querySelector('#lines-grid')
     const participantCount = data.length
     const cols = Math.ceil(Math.sqrt(participantCount))
     const rows = Math.ceil(participantCount / cols)
     const containerSize = svg.getBoundingClientRect() // TODO this is expensive, do it on resize debounced not every render
+    console.log("containerSize", containerSize);
     const containerWidth = Math.min(containerSize.width, containerSize.height)
-    const xRange = order === 'spiral' ? range(-Math.floor(cols / 2), Math.floor(cols / 2)) : range(cols)
-    const yRange = order === 'spiral' ? range(-Math.floor(rows / 2), Math.floor(rows / 2)) : range(rows)
+    const xRange = range(cols)
+    const yRange = range(rows)
     const xScale = scaleBand()
       .domain(xRange)
       .range([0, containerWidth])
@@ -29,13 +31,7 @@ export function renderChart(data, delay = 0, firstRender = false, order = 'snake
     const calculatePosition = (d, i) => {
       const center = lineWidth / 2
       const [ x, y ] = do {
-        if (order === 'square') {
-          squareGetCoordinates(i, cols)
-        } else if (order === 'spiral') {
-          squareSpiralGetCoordinates(cols ** 2 - i)
-        } else if (order === 'snake') {
-          snakeGetCoordinates(i, cols)
-        }
+        squareGetCoordinates(i, cols)
       }
       return `translate(${xScale(x) + center} ${yScale(y) + center})`
     }
@@ -62,10 +58,6 @@ export function renderChart(data, delay = 0, firstRender = false, order = 'snake
     const cellsExit = cells.exit()
       .transition().duration(duration)
 
-    cellsExit.selectAll('line')
-      .attr('x1', 0)
-      .attr('x2', 0)
-
     cellsExit.on('end', function () {
       select(this).remove()
     })
@@ -77,12 +69,16 @@ export function renderChart(data, delay = 0, firstRender = false, order = 'snake
 
     var tau = 2 * Math.PI // http://tauday.com/tau-manifesto
 
+    var arcMin = 10
+    var arcWidth = 5
+    var arcPad = 2
+
     var arcData = d3Arc()
     .innerRadius(function (d, i) {
-      return 20 + i * 5 + 2
+      return arcMin + i * arcWidth + arcPad
     })
     .outerRadius(function (d, i) {
-      return 20 + (i + 1) * (5)
+      return arcMin + (i + 1) * (arcWidth)
     })
     .startAngle(0 * (Math.PI/180))
     .endAngle(function (d, i) {
@@ -181,48 +177,48 @@ export function renderChart(data, delay = 0, firstRender = false, order = 'snake
 
 export function highlightElement(user) {
   return new Promise((resolve, reject) => {
-    const svg = document.querySelector('#lines-grid')
-    const selected = select(svg)
-      .selectAll('g.cells')
-      .filter(d => d.id === user.id)
-    // const data = selected.data()[0]
-    user.pulseFillLock = user.pulseFillLock || {}
-    user.pulseStrokeLock = user.pulseStrokeLock || {}
-    function pulseFill(path, duration) {
-      select(user.pulseFillLock)
-        .transition()
-        .duration(duration)
-        .tween('style:fill', function (d) {
-          return function (t) { path.style('fill', interpolateRgb(path.style('fill'), color)(t)) }
-        })
-        .transition()
-        .duration(duration)
-        .tween('style:fill', function () {
-          const i = interpolateRgb(color, 'transparent')
-          return function (t) { path.style('fill', i(t)) }
-        })
-    }
-    function pulseStroke(path, duration) {
-      select(user.pulseStrokeLock)
-        .transition()
-        .duration(duration)
-        .tween('style:stroke', function () {
-          return function (t) { path.style('stroke', interpolateRgb(path.style('stroke'), '#030321')(t)) }
-        })
-        .transition()
-        .duration(duration)
-        .tween('style:stroke', function () {
-          const i = interpolateRgb('#030321', color)
-          return function (t) { path.style('stroke', i(t)) }
-        })
-    }
-
-    selected
-      .select('rect')
-      .call(pulseFill, 1000)
-
-    selected
-      .select('line')
-      .call(pulseStroke, 1000)
+  //   const svg = document.querySelector('#lines-grid')
+  //   const selected = select(svg)
+  //     .selectAll('g.cells')
+  //     .filter(d => d.id === user.id)
+  //   // const data = selected.data()[0]
+  //   user.pulseFillLock = user.pulseFillLock || {}
+  //   user.pulseStrokeLock = user.pulseStrokeLock || {}
+  //   function pulseFill(path, duration) {
+  //     select(user.pulseFillLock)
+  //       .transition()
+  //       .duration(duration)
+  //       .tween('style:fill', function (d) {
+  //         return function (t) { path.style('fill', interpolateRgb(path.style('fill'), color)(t)) }
+  //       })
+  //       .transition()
+  //       .duration(duration)
+  //       .tween('style:fill', function () {
+  //         const i = interpolateRgb(color, 'transparent')
+  //         return function (t) { path.style('fill', i(t)) }
+  //       })
+  //   }
+  //   function pulseStroke(path, duration) {
+  //     select(user.pulseStrokeLock)
+  //       .transition()
+  //       .duration(duration)
+  //       .tween('style:stroke', function () {
+  //         return function (t) { path.style('stroke', interpolateRgb(path.style('stroke'), '#030321')(t)) }
+  //       })
+  //       .transition()
+  //       .duration(duration)
+  //       .tween('style:stroke', function () {
+  //         const i = interpolateRgb('#030321', color)
+  //         return function (t) { path.style('stroke', i(t)) }
+  //       })
+  //   }
+  //
+  //   selected
+  //     .select('rect')
+  //     .call(pulseFill, 1000)
+  //
+  //   selected
+  //     .select('line')
+  //     .call(pulseStroke, 1000)
   })
 }

@@ -55,7 +55,7 @@ export default class VisualizedProjection extends Component {
     return (
       <div className="flex flex-column h-100 tc">
 
-        <div className="relative flex-auto flex ma5">
+        <div className="relative flex-auto flex">
           <LinesGridFirebase
             renderDelay={100}
             isStatic={isStatic}

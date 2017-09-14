@@ -72,5 +72,22 @@ export function renderUser(data) {
         .attr("d", arcData)
         .merge(arcs)
 
+    var x = document.getElementById("audio1")
+    var y = document.getElementById("audio2")
+
+    console.log(x)
+    console.log(data.Q1)
+    //have to find a way to make it so the active slider 
+    //is the one triggering audio
+    //and if slider is inactive, it goes down to a low murmur for example
+    //https://www.w3schools.com/jsref/dom_obj_audio.asp
+    if(data.Q1>10){
+      x.play()
+    } 
+    if(data.Q2>10){
+      x.pause()
+      y.play()
+      //OR x.volume = 0.2
+    }
   })
 }

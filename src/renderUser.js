@@ -72,22 +72,51 @@ export function renderUser(data) {
         .attr("d", arcData)
         .merge(arcs)
 
-    var x = document.getElementById("audio1")
-    var y = document.getElementById("audio2")
 
-    console.log(x)
-    console.log(data.Q1)
+    //hello matt, i am being evil and inserting audio 
+    //into your beautiful arcs
+    //these elements are loaded in the index.html (public) file
+    //seems to be the best / easiest way so far
+    //if it's wrong, we find a different way
+    //yes, i know it's complete hacky
+    var a = document.getElementById("audio1")
+    var b = document.getElementById("audio2")
+    var c = document.getElementById("audio3")
+
+    console.log(data)
     //have to find a way to make it so the active slider 
-    //is the one triggering audio
-    //and if slider is inactive, it goes down to a low murmur for example
+    //is the one triggering audio?
+
+    //and if slider is inactive, it goes down to pause 
+    //or to experiment with: a low murmur for example
     //https://www.w3schools.com/jsref/dom_obj_audio.asp
-    if(data.Q1>10){
-      x.play()
-    } 
-    if(data.Q2>10){
-      x.pause()
-      y.play()
-      //OR x.volume = 0.2
+
+    //could there be a way that we know that we are in the "values" zone
+    //not sure where this is in the data :)
+    //clearly i operate only on if statements
+
+    if(data.Q7>0 && data.Q7<40){
+      a.play()
+      b.pause()
+      c.pause()
+      //OR a.volume = 0.2
     }
+    if(data.Q7>40 && data.Q7<80){
+      a.pause()
+      b.play()
+      c.pause()
+    }
+    if(data.Q7>80 && data.Q7<=100){
+      a.pause()
+      b.pause()
+      c.play()
+    }
+    //continue with q8, q9?
+    //i know, it's crappy-sketchy
+    // if(data.Q9>10){
+    //   b.pause()
+    //   c.play()
+    // }
+
   })
 }

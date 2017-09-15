@@ -75,20 +75,21 @@ export default class LinesGridFirebase extends Component {
         // console.log(allUsersState)
         this.setState({ loading: false })
         renderChart(allUsersState.allUsersSorted, this.props.renderDelay, true)
-        if (this.props.oneShotFetch) {
-          return
-        }
+
         const latest = maxBy(users, d => d.created)
         listenForNewUsers(latest.created + 1, user => {
-          allUsersState.queueUser(user)
+          console.log("NEW USER ADDED")
+          allUsersState.addUser(user)
+          renderChart(allUsersState.allUsersSorted, this.props.renderDelay, true)
         })
 
-        if (trackUsers) {
-          listenForUpdatedUsers(data => {
-            allUsersState.updateUser(data)
-            highlightElement(data)
-          })
-        }
+        listenForUpdatedUsers(data => {
+          allUsersState.updateUser(data)
+          //highlightElement(data)
+          console.log('updated user',data);
+          console.log('new all users', allUsersState.allUsersSorted);
+          renderChart(allUsersState.allUsersSorted, this.props.renderDelay, true)
+        })
       })
 
       // watch the first element of the queue, and call when is added to allUsers

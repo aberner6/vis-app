@@ -32,8 +32,8 @@ export function renderUser(data) {
       data.Q10
     ]
 
-    const g = svg.select('#grid-container').attr("transform", "translate(" + w / 2 + "," + h / 2 + ")");
-
+    const g = svg.select('#grid-container').attr("transform", "translate(" + w/2 + "," + h/2 + ")"); 
+    
     var tau = 2 * Math.PI; // http://tauday.com/tau-manifesto
 
     var arcData = d3Arc()

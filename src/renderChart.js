@@ -85,6 +85,10 @@ export function renderChart(data, delay = 0, firstRender = false, order = 'snake
       .selectAll('g.cells')
       .data(data, d => d.id)
 
+    cells.transition()
+        .duration(300)
+        .attr('transform', calculatePosition)
+
     const arcs = cells.selectAll('path')
         .data(function (d) {
           const dataArray = [

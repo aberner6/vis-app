@@ -11,7 +11,6 @@ export default class UserLine extends Component {
 
   componentDidMount() {
     renderUser(this.props.currentUserState)
-    renderSound(this.props.currentUserState)
   }
 
   render() {

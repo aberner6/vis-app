@@ -75,9 +75,6 @@ export default class LinesGridFirebase extends Component {
         // console.log(allUsersState)
         this.setState({ loading: false })
         renderChart(allUsersState.allUsersSorted, this.props.renderDelay, true)
-        if (this.props.oneShotFetch) {
-          return
-        }
 
         const latest = maxBy(users, d => d.created)
         listenForNewUsers(latest.created + 1, user => {

@@ -86,7 +86,7 @@ export function renderChart(data, delay = 0, firstRender = false, order = 'snake
       .data(data, d => d.id)
 
     const arcs = cells.selectAll('path')
-        .data(function (d) {        
+        .data(function (d) {
           const dataArray = [
             d.Q1,
             d.Q2,

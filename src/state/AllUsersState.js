@@ -31,7 +31,18 @@ export default class AllUsersState {
   @action.bound
   updateUser(userData) {
     const toUpdate = this.allUsers.find(d => d.id === userData.id)
+    console.log('UPDATING THIS USER', toUpdate, userData);
     if (toUpdate) {
+      toUpdate.Q1 = userData.Q1
+      toUpdate.Q2 = userData.Q2
+      toUpdate.Q3 = userData.Q3
+      toUpdate.Q4 = userData.Q4
+      toUpdate.Q5 = userData.Q5
+      toUpdate.Q6 = userData.Q6
+      toUpdate.Q7 = userData.Q7
+      toUpdate.Q8 = userData.Q8
+      toUpdate.Q9 = userData.Q9
+      toUpdate.Q10 = userData.Q10
       toUpdate.updated = userData.updated
     }
   }

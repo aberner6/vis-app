@@ -54,11 +54,12 @@ export function renderChart(data, delay = 0, firstRender = false, order = 'snake
       return d / 100 * tau
     })
 
-    function arc2Tween (d, indx) {
-      var interp = d3Interpolate(this._current, d)
+    function arc2Tween(d, indx) {
+      var currentVal = (!this._current) ? 0 : this._current
+      var interp = d3Interpolate(currentVal, d)
       this._current = d
 
-      return function (t) {
+      return function(t) {
         var tmp = interp(t)
         return arcData(tmp, indx)
       }
@@ -85,7 +86,7 @@ export function renderChart(data, delay = 0, firstRender = false, order = 'snake
       .data(data, d => d.id)
 
     const arcs = cells.selectAll('path')
-        .data(function (d) {
+        .data(function (d) {        
           const dataArray = [
             d.Q1,
             d.Q2,

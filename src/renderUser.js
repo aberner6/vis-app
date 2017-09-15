@@ -49,7 +49,8 @@ export function renderUser(data) {
     })
 
     function arc2Tween(d, indx) {
-      var interp = d3Interpolate(this._current, d)
+      var currentVal = (!this._current) ? 0 : this._current
+      var interp = d3Interpolate(currentVal, d)
       this._current = d
 
       return function(t) {
@@ -73,7 +74,7 @@ export function renderUser(data) {
         .merge(arcs)
 
 
-    //hello matt, i am being evil and inserting audio 
+    //hello matt, i am being evil and inserting audio
     //into your beautiful arcs
     //these elements are loaded in the index.html (public) file
     //seems to be the best / easiest way so far
@@ -83,11 +84,10 @@ export function renderUser(data) {
     var b = document.getElementById("audio2")
     var c = document.getElementById("audio3")
 
-    console.log(data)
-    //have to find a way to make it so the active slider 
+    //have to find a way to make it so the active slider
     //is the one triggering audio?
 
-    //and if slider is inactive, it goes down to pause 
+    //and if slider is inactive, it goes down to pause
     //or to experiment with: a low murmur for example
     //https://www.w3schools.com/jsref/dom_obj_audio.asp
 

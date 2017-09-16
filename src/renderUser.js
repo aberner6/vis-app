@@ -91,28 +91,49 @@ export function renderUser(data) {
         .attr("d", arcData)
         .merge(arcs)
 
+    // // hello matt, this is for you
+    // // we will just have to make the /viz version different 
+    // // from the mobile version... so it can be big on the /viz version
+    // // hm
+    // var spacer = 15
+    // const circs = g.selectAll('circle')
+    //   .data(dataArray)
+    //   .enter()
+    //   .insert('circle')
+    //   .attr('class','circ')
+    //   .attr('cx', 0)
+    //   .attr('cy', 0)
+    //   .attr('r', function(d,i){
+    //     return 20 + (i+1)*spacer
+    //   })
+    //   .style("fill","none")
+    //   .style("stroke","grey")
+    //   .style("stroke-width",1)
 
-    //hello matt, i am being evil and inserting audio
-    //into your beautiful arcs
-    //these elements are loaded in the index.html (public) file
-    //seems to be the best / easiest way so far
-    //if it's wrong, we find a different way
-    //yes, i know it's complete hacky
 
-    //have to find a way to make it so the active slider
-    //is the one triggering audio?
 
-    //and if slider is inactive, it goes down to pause
-    //or to experiment with: a low murmur for example
-    //like a.volume = 0.2
-    //https://www.w3schools.com/jsref/dom_obj_audio.asp
 
-    //could there be a way that we know that we are in the "values" zone
-    //not sure where this is in the data :)
-    //clearly i operate only on if statements
-    var timeAdjust = scaleLinear()
-      .domain([0, 100])
-      .range([0, 200])
+
+
+
+    // //hello matt, i am being evil and inserting audio
+    // //into your beautiful arcs
+    // //these elements are loaded in the index.html (public) file
+    // //seems to be the best / easiest way so far
+    // //if it's wrong, we find a different way
+    // //yes, i know it's complete hacky
+
+    // //have to find a way to make it so the active slider
+    // //is the one triggering audio?
+
+    // //and if slider is inactive, it goes down to pause
+    // //or to experiment with: a low murmur for example
+    // //like a.volume = 0.2
+    // //https://www.w3schools.com/jsref/dom_obj_audio.asp
+
+    // //could there be a way that we know that we are in the "values" zone
+    // //not sure where this is in the data :)
+    // //clearly i operate only on if statements
  
     var tracks = ["audio0","audio1","audio2","audio3","audio4","audio5"]
     //we get errors because it still evaluates that it should play the sliders that have input

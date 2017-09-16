@@ -3,6 +3,7 @@ import { select, selectAll } from 'd3-selection'
 import { interpolate as d3Interpolate } from 'd3-interpolate'
 // import { range } from 'd3-array'
 import { arc as d3Arc } from 'd3-shape'
+import { scaleLinear } from 'd3-scale'
 
 export function renderUser(data) {
 
@@ -80,43 +81,65 @@ export function renderUser(data) {
     //seems to be the best / easiest way so far
     //if it's wrong, we find a different way
     //yes, i know it's complete hacky
-    var a = document.getElementById("audio1")
-    var b = document.getElementById("audio2")
-    var c = document.getElementById("audio3")
 
     //have to find a way to make it so the active slider
     //is the one triggering audio?
 
     //and if slider is inactive, it goes down to pause
     //or to experiment with: a low murmur for example
+    //like a.volume = 0.2
     //https://www.w3schools.com/jsref/dom_obj_audio.asp
 
     //could there be a way that we know that we are in the "values" zone
     //not sure where this is in the data :)
     //clearly i operate only on if statements
+    var timeAdjust = scaleLinear()
+      .domain([0, 100])
+      .range([0, 200])
+ 
+    var tracks = ["audio0","audio1","audio2","audio3","audio4","audio5"]
+    //we get errors because it still evaluates that it should play the sliders that have input
+    //but i dont feel like dealing with this
+    function playPause(active, num){
+      for (var j=0; j<tracks.length; j++){
+        if(tracks[j]!=("audio"+active)){
+          var pausedTrack = document.getElementById("audio"+j)
+          pausedTrack.pause();
+        }else{
+          var activeTrack = document.getElementById("audio"+active)
+          console.log(active)
+          //maybe only play for 10 seconds?
+          activeTrack.currentTime = num //timeAdjust(data.Q1)
+          activeTrack.play()
+        }
+      }
+    }
+    if(data.Q7>0 && data.Q7<50){
+      playPause(0, data.Q7)
+    }
+    if(data.Q7>50 && data.Q7<100){
+      playPause(1, data.Q7)
+    }   
 
-    if(data.Q7>0 && data.Q7<40){
-      a.play()
-      b.pause()
-      c.pause()
-      //OR a.volume = 0.2
+    if(data.Q8>0 && data.Q8<50){
+      playPause(2, data.Q8)
     }
-    if(data.Q7>40 && data.Q7<80){
-      a.pause()
-      b.play()
-      c.pause()
+    if(data.Q8>50 && data.Q8<100){
+      playPause(3, data.Q8)
+    }  
+
+    if(data.Q9>0 && data.Q9<50){
+      playPause(4, data.Q9)
+    }  
+    if(data.Q9>50 && data.Q9<100){
+      playPause(5, data.Q9)
     }
-    if(data.Q7>80 && data.Q7<=100){
-      a.pause()
-      b.pause()
-      c.play()
-    }
-    //continue with q8, q9?
-    //i know, it's crappy-sketchy
-    // if(data.Q9>10){
-    //   b.pause()
-    //   c.play()
-    // }
+    //i'd like to change this to - "if you are at the last section"
+    //but not sure where that is formally recorded in the data 
+    //as in, where is "next" activated
+    if(data.Q10>0){
+      playPause(6, 0)
+    }  
 
   })
 }

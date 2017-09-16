@@ -17,18 +17,33 @@ a {
   text-decoration: none;
 }
 
-/* COLORS */
-.bg-black-russian {
-  background-color: #030321;
+body {
+  background: #000;
 }
-.b--black-russian {
-  border-color: #030321;
+
+label {
+  cursor: pointer;
+  position: relative;
+  width: 225px;
 }
-.bg-waterloo {
-  background-color: #818190;
+
+.slider {
+  font-size: .8rem;
+  margin: 0.25rem 0 0.5rem 0;
 }
-.b--waterloo {
-  border-color: #818190;
+
+.slider .slider-label {
+  display: block;
+  float: left;
+}
+
+.slider .slider-label-second {
+  float: right;
+}
+
+.slider input {
+  margin: 0.5rem 0 0.25rem 0;
+  width: 80%;
 }
 
 /* HELPERS */
@@ -86,18 +101,6 @@ a {
 }
 .transition-delay-big {
   transition-delay: 1s;
-}
-
-.ethnicity-color {
-  transform: scaleX(0);
-  transition: transform 0s ease;
-  transition-delay: 0.3s;
-}
-.ethnicity-color.active {
-  transform: scaleX(1);
-  transition: transform 0.3s ease;
-  transition-delay: 0;
-  z-index: 10;
 }
 
 /* SURVEY QUESTIONS TRANSITIONS */

@@ -33,8 +33,8 @@ export function renderUser(data) {
       data.Q10
     ]
 
-    const g = svg.select('#grid-container').attr("transform", "translate(" + w/2 + "," + h/2 + ")"); 
-    
+    const g = svg.select('#grid-container').attr("transform", "translate(" + w/2 + "," + h/2 + ")");
+
     var tau = 2 * Math.PI; // http://tauday.com/tau-manifesto
 
     var arcData = d3Arc()
@@ -60,6 +60,19 @@ export function renderUser(data) {
       }
     }
 
+    const arcColorCode = {
+      Q1: '#FFF',
+      Q2: '#FFF',
+      Q3: '#FFF',
+      Q4: '#FFF',
+      Q5: '#FFF',
+      Q6: '#FFF',
+      Q7: '#FFF',
+      Q8: '#FFF',
+      Q9: '#FFF',
+      Q10: '#FFF',
+    }
+
     const arcs = g.selectAll('path')
       .data(dataArray)
 
@@ -70,7 +83,11 @@ export function renderUser(data) {
     arcs.enter()
         .insert('path')
         .attr('class', 'arc-path')
-        .style("fill", "#ddd")
+        .style("fill", function(d, i) {
+          console.log('COLORING DATA', d);
+          return '#FFF'
+          //return arcColorCode[]
+        })
         .attr("d", arcData)
         .merge(arcs)
 

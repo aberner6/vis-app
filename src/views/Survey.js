@@ -161,7 +161,7 @@ export default class Survey extends Component {
               }
 
               {currentUserState.surveyCompletitionIndex === 13 &&
-                <SurveyCard title="Thank you for your participation" button="Tap" name="complete">
+                <SurveyCard title="" button="Tap to see yourself" name="complete">
                   <p>We heard you. Did you hear each other yet?<br/>
                   Go lie down in the nets of your New Europe.<br/>
                   Gaze at the big picture of all the creatures created so far.<br/>

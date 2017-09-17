@@ -35,16 +35,20 @@ export function renderUser(data) {
 
     const g = svg.select('#grid-container').attr("transform", "translate(" + w/2 + "," + h/2 + ")");
 
+    var arcMin = 20
+    var arcWidth = 5
+    var arcPad = 2
+
     var arcData = d3Arc()
-    .innerRadius(function(d,i) {
-      return 20 + i * 5 + 2
+    .innerRadius(function (d, i) {
+      return arcMin + i * arcWidth + arcPad
     })
-    .outerRadius(function(d,i) {
-      return 20 + (i+1)*(5)
+    .outerRadius(function (d, i) {
+      return arcMin + (i + 1) * (arcWidth)
     })
     .startAngle(0 * (Math.PI/180))
-    .endAngle(function(d,i) {
-      return (d/100 * Math.PI)
+    .endAngle(function (d, i) {
+      return d/100 * Math.PI
     })
 
     function arc2Tween(d, indx) {
@@ -76,7 +80,10 @@ export function renderUser(data) {
 
     arcsRight.transition()
       .duration(300)
-      .style('opacity', '100')
+      .style('opacity', function(d){
+        var op = (d == 50) ? '0.5' : '1'
+        return op
+      })
       .attrTween('d', arc2Tween)
 
     arcsRight.enter()
@@ -100,7 +107,10 @@ export function renderUser(data) {
 
     arcsLeft.transition()
       .duration(300)
-      .style('opacity', '100')
+      .style('opacity', function(d){
+        var op = (d == 50) ? '0.5' : '1'
+        return op
+      })
       .attrTween('d', arc2Tween)
 
     arcsLeft.enter()
@@ -121,7 +131,7 @@ export function renderUser(data) {
       .attr('cx', 0)
       .attr('cy', 0)
       .attr('r', function(d,i){
-        return 20 + (i+1)*spacer
+        return arcMin + (i+1)*spacer
       })
       .style("fill","none")
       .style("stroke","grey")
@@ -163,7 +173,7 @@ export function renderUser(data) {
           pausedTrack.pause();
         }else{
           var activeTrack = document.getElementById("audio"+active)
-          console.log(active)
+          //console.log(active)
           //maybe only play for 10 seconds?
           activeTrack.currentTime = num //timeAdjust(data.Q1)
           activeTrack.play()

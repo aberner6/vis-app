@@ -15,7 +15,6 @@ export function renderChart(data, delay = 0, firstRender = false, order = 'snake
     const cols = Math.ceil(Math.sqrt(participantCount))
     const rows = Math.ceil(participantCount / cols)
     const containerSize = svg.getBoundingClientRect() // TODO this is expensive, do it on resize debounced not every render
-    console.log("containerSize", containerSize);
     const containerWidth = Math.min(containerSize.width, containerSize.height)
     const xRange = range(cols)
     const yRange = range(rows)
@@ -36,9 +35,7 @@ export function renderChart(data, delay = 0, firstRender = false, order = 'snake
       return `translate(${xScale(x) + center} ${yScale(y) + center})`
     }
 
-    var tau = 2 * Math.PI // http://tauday.com/tau-manifesto
-
-    var arcMin = 10
+    var arcMin = 5
     var arcWidth = 5
     var arcPad = 2
 
@@ -51,7 +48,7 @@ export function renderChart(data, delay = 0, firstRender = false, order = 'snake
     })
     .startAngle(0 * (Math.PI/180))
     .endAngle(function (d, i) {
-      return d / 100 * tau
+      return d/100 * Math.PI
     })
 
     function arc2Tween(d, indx) {
@@ -65,12 +62,26 @@ export function renderChart(data, delay = 0, firstRender = false, order = 'snake
       }
     }
 
-    const duration = 1000
+    function parseDataArray(d) {
+      const dataArray = [
+        d.Q1,
+        d.Q2,
+        d.Q3,
+        d.Q4,
+        d.Q5,
+        d.Q6,
+        d.Q7,
+        d.Q8,
+        d.Q9,
+        d.Q10,
+      ]
+      return dataArray
+    }
 
     select(svg)
       .select('#grid-container')
       .transition()
-      .duration(firstRender ? 0 : duration)
+      .duration(firstRender ? 0 : 1000)
       .attr('transform', () => {
         const { width, height } = containerSize
         if (containerSize.width >= containerSize.height) {
@@ -89,157 +100,179 @@ export function renderChart(data, delay = 0, firstRender = false, order = 'snake
         .duration(300)
         .attr('transform', calculatePosition)
 
-    const arcs = cells.selectAll('path')
-        .data(function (d) {
-          const dataArray = [
-            d.Q1,
-            d.Q2,
-            d.Q3,
-            d.Q4,
-            d.Q5,
-            d.Q6,
-            d.Q7,
-            d.Q8,
-            d.Q9,
-            d.Q10,
-          ]
-          return dataArray
-        })
-        .transition()
-          .duration(300)
-          .attrTween('d', arc2Tween)
-
-    // const cellsExit = cells.exit()
-    //   .transition().duration(duration)
-    //
-    // cellsExit.on('end', function () {
-    //   select(this).remove()
-    // })
+    const arcsRight = cells.selectAll('path.arcRight')
+      .data(function(d) {
+        return parseDataArray(d)
+      })
+      .transition()
+      .duration(300)
+      .style('opacity', function(d){
+        var op = (d == 50) ? '0.5' : '1'
+        return op
+      })
+      .attrTween('d', arc2Tween)
 
     const cellsEnter = cells.enter()
       .append('g')
       .classed('cells', true)
       .attr('transform', calculatePosition)
 
-    const arcsEnter = cellsEnter.selectAll('path')
-      .data(function (d) {
-        const dataArray = [
-          d.Q1,
-          d.Q2,
-          d.Q3,
-          d.Q4,
-          d.Q5,
-          d.Q6,
-          d.Q7,
-          d.Q8,
-          d.Q9,
-          d.Q10,
-        ]
-        return dataArray
+    const arcsRightEnter = cellsEnter.selectAll('path.arcRight')
+      .data(function(d) {
+        return parseDataArray(d)
       })
       .enter()
-        .insert('path')
-        .attr('class', 'arc-path')
-        .style('fill', '#ddd')
-        .attr('d', arcData)
-        .merge(arcs)
+      .insert('path')
+      .attr('class', 'arcRight')
+      .style("fill", '#FFF')
+      .style('opacity', function(d){
+        var op = (d == 50) ? '0.5' : '1'
+        return op
+      })
+      .attr("d", arcData)
+      .merge(arcsRight)
 
-  //   cellsEnter
-  //     .append('rect')
-  //     .attr('x', -lineWidth / 2)
-  //     .attr('y', -lineWidth / 2)
-  //     .attr('width', lineWidth)
-  //     .attr('height', lineWidth)
-  //     .style('stroke', 'transparent')
-  //     .style('fill', 'transparent')
-  //
-  //   cellsEnter
-  //     .append('line')
-  //     .style('stroke', '#ffffff')//d => ETHNICITY.find(ethnicity => ethnicity.name === d.ethnicity).color)
-  //     .style('stroke-width', strokeWidth)
-  //     .attr('y1', 0)
-  //     .attr('y2', 0)
-  //     .attr('transform', d => {
-  //       console.log(d)
-  //       const rotation = 20 //GENDERS.find(gender => gender.name === d.gender).angle
-  //       return `rotate(${rotation})`
-  //     })
-  //     .transition()
-  //     .delay(delay)
-  //     .duration(duration)
-  //     .attr('x1', -lineWidth / 2)
-  //     .attr('x2', lineWidth / 2)
-  //     .on('end', resolve)
-  //
-  //   cells
-  //     .transition().duration(duration)
-  //     .delay(delay)
-  //     .attr('transform', calculatePosition)
-  //
-  //   cells
-  //     .selectAll('rect')
-  //     .transition().duration(duration)
-  //     .delay(delay)
-  //     .attr('x', -lineWidth / 2)
-  //     .attr('y', -lineWidth / 2)
-  //     .attr('width', lineWidth)
-  //     .attr('height', lineWidth)
-  //
-  //   cells
-  //     .selectAll('line')
-  //     .style('stroke-width', strokeWidth)
-  //     .transition().duration(duration)
-  //     .delay(delay)
-  //     .attr('x1', -lineWidth / 2)
-  //     .attr('x2', lineWidth / 2)
-  //     .on('end', resolve)
+    const arcsLeft = cells.selectAll('path.arcLeft')
+      .data(function(d) {
+        return parseDataArray(d)
+      })
+      .transition()
+      .duration(300)
+      .style('opacity', function(d){
+        var op = (d == 50) ? '0.5' : '1'
+        return op
+      })
+      .attrTween('d', arc2Tween)
+
+    const arcsLeftEnter = cellsEnter.selectAll('path.arcLeft')
+      .data(function(d) {
+        return parseDataArray(d)
+      })
+      .enter()
+      .insert('path')
+      .attr('class', 'arcLeft')
+      .style("fill", '#FFF')
+      .style('opacity', function(d){
+        var op = (d == 50) ? '0.5' : '1'
+        return op
+      })
+      .attr('transform', 'rotate(180)')
+      .attr("d", arcData)
+      .merge(arcsLeft)
+
+    var spacer = 5
+    const circs = cellsEnter.selectAll('circle')
+      .data(function(d) {
+        return parseDataArray(d)
+      })
+      .enter()
+      .insert('circle')
+      .attr('class','circ')
+      .attr('cx', 0)
+      .attr('cy', 0)
+      .attr('r', function(d,i){
+        return arcMin + (i+1)*spacer
+      })
+      .style("fill","none")
+      .style("stroke","grey")
+      .style("stroke-width",2)
+      .style('opacity', '0.25')
+
+
+    // const arcs = cells.selectAll('path')
+    //     .data(function (d) {
+    //       const dataArray = [
+    //         d.Q1,
+    //         d.Q2,
+    //         d.Q3,
+    //         d.Q4,
+    //         d.Q5,
+    //         d.Q6,
+    //         d.Q7,
+    //         d.Q8,
+    //         d.Q9,
+    //         d.Q10,
+    //       ]
+    //       return dataArray
+    //     })
+    //     .transition()
+    //       .duration(300)
+    //       .attrTween('d', arc2Tween)
+    //
+    // const cellsEnter = cells.enter()
+    //   .append('g')
+    //   .classed('cells', true)
+    //   .attr('transform', calculatePosition)
+    //
+    // const arcsEnter = cellsEnter.selectAll('path')
+    //   .data(function (d) {
+    //     const dataArray = [
+    //       d.Q1,
+    //       d.Q2,
+    //       d.Q3,
+    //       d.Q4,
+    //       d.Q5,
+    //       d.Q6,
+    //       d.Q7,
+    //       d.Q8,
+    //       d.Q9,
+    //       d.Q10,
+    //     ]
+    //     return dataArray
+    //   })
+    //   .enter()
+    //     .insert('path')
+    //     .attr('class', 'arc-path')
+    //     .style('fill', '#ddd')
+    //     .attr('d', arcData)
+    //     .merge(arcs)
   })
 }
 
 export function highlightElement(user) {
   return new Promise((resolve, reject) => {
-  //   const svg = document.querySelector('#lines-grid')
-  //   const selected = select(svg)
-  //     .selectAll('g.cells')
-  //     .filter(d => d.id === user.id)
-  //   // const data = selected.data()[0]
-  //   user.pulseFillLock = user.pulseFillLock || {}
-  //   user.pulseStrokeLock = user.pulseStrokeLock || {}
-  //   function pulseFill(path, duration) {
-  //     select(user.pulseFillLock)
-  //       .transition()
-  //       .duration(duration)
-  //       .tween('style:fill', function (d) {
-  //         return function (t) { path.style('fill', interpolateRgb(path.style('fill'), color)(t)) }
-  //       })
-  //       .transition()
-  //       .duration(duration)
-  //       .tween('style:fill', function () {
-  //         const i = interpolateRgb(color, 'transparent')
-  //         return function (t) { path.style('fill', i(t)) }
-  //       })
-  //   }
-  //   function pulseStroke(path, duration) {
-  //     select(user.pulseStrokeLock)
-  //       .transition()
-  //       .duration(duration)
-  //       .tween('style:stroke', function () {
-  //         return function (t) { path.style('stroke', interpolateRgb(path.style('stroke'), '#030321')(t)) }
-  //       })
-  //       .transition()
-  //       .duration(duration)
-  //       .tween('style:stroke', function () {
-  //         const i = interpolateRgb('#030321', color)
-  //         return function (t) { path.style('stroke', i(t)) }
-  //       })
-  //   }
-  //
-  //   selected
-  //     .select('rect')
-  //     .call(pulseFill, 1000)
-  //
-  //   selected
-  //     .select('line')
-  //     .call(pulseStroke, 1000)
+    const svg = document.querySelector('#lines-grid')
+    const selected = select(svg)
+      .selectAll('g.cells')
+      .filter(d => d.id === user.id)
+    // const data = selected.data()[0]
+    user.pulseFillLock = user.pulseFillLock || {}
+    user.pulseStrokeLock = user.pulseStrokeLock || {}
+    function pulseFill(path, duration) {
+      select(user.pulseFillLock)
+        .transition()
+        .duration(duration)
+        .tween('style:fill', function (d) {
+          return function (t) { path.style('fill', interpolateRgb(path.style('fill'), color)(t)) }
+        })
+        .transition()
+        .duration(duration)
+        .tween('style:fill', function () {
+          const i = interpolateRgb(color, 'transparent')
+          return function (t) { path.style('fill', i(t)) }
+        })
+    }
+    function pulseStroke(path, duration) {
+      select(user.pulseStrokeLock)
+        .transition()
+        .duration(duration)
+        .tween('style:stroke', function () {
+          return function (t) { path.style('stroke', interpolateRgb(path.style('stroke'), '#030321')(t)) }
+        })
+        .transition()
+        .duration(duration)
+        .tween('style:stroke', function () {
+          const i = interpolateRgb('#030321', color)
+          return function (t) { path.style('stroke', i(t)) }
+        })
+    }
+
+    selected
+      .select('rect')
+      .call(pulseFill, 1000)
+
+    selected
+      .select('line')
+      .call(pulseStroke, 1000)
   })
 }

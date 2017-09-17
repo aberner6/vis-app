@@ -54,7 +54,7 @@ export function newUser() {
 
 export function fetchUsers() {
   return new Promise((resolve, reject) => {
-    firebase.database().ref('/participants').on('value', (snap) => resolve(normalize(snap.val())))
+    firebase.database().ref('/participants').limitToLast(50).on('value', (snap) => resolve(normalize(snap.val())))
   })
 }
 

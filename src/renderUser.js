@@ -5,7 +5,7 @@ import { interpolate as d3Interpolate } from 'd3-interpolate'
 import { arc as d3Arc } from 'd3-shape'
 import { scaleLinear } from 'd3-scale'
 
-export function renderUser(data) {
+export function renderUser(data, viz = false) {
 
   return new Promise((resolve, reject) => {
 
@@ -14,7 +14,7 @@ export function renderUser(data) {
     const dimensions = svg.node().parentNode.getBoundingClientRect()
 
     const w = dimensions.width;
-    const h = 340; //dimensions.height;
+    const h = dimensions.height > 0 ? dimensions.height : 290 //dimensions.height;
 
     svg
       .style('height', h)
@@ -38,6 +38,12 @@ export function renderUser(data) {
     var arcMin = 20
     var arcWidth = 5
     var arcPad = 2
+
+    if (viz) {
+      arcMin = 60
+      arcWidth = 25
+      arcPad = 5
+    }
 
     var arcData = d3Arc()
     .innerRadius(function (d, i) {
@@ -122,7 +128,6 @@ export function renderUser(data) {
       .attr('transform', 'rotate(180)')
       .merge(arcsLeft)
 
-    var spacer = 5
     const circs = g.selectAll('circle')
       .data(dataArray)
       .enter()
@@ -131,11 +136,13 @@ export function renderUser(data) {
       .attr('cx', 0)
       .attr('cy', 0)
       .attr('r', function(d,i){
-        return arcMin + (i+1)*spacer
+        return arcMin + (i + 1) * (arcWidth)
       })
       .style("fill","none")
       .style("stroke","grey")
-      .style("stroke-width",2)
+      .style("stroke-width",function() {
+        return (viz) ? 2 : 1
+      })
       .style('opacity', '0.25')
 
 

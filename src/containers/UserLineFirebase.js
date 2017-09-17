@@ -9,7 +9,8 @@ import SurveyRecap from '../containers/SurveyRecap'
 export default class UserLineFirebase extends Component {
 
   static defaultProps = {
-    userToViz: 'latest'
+    userToViz: 'latest',
+    viz: false,
   }
   // TODO add a state that hides/shows the lines for the transaction
   constructor(props) {
@@ -40,16 +41,16 @@ export default class UserLineFirebase extends Component {
 
         this.currentUser = user
 
-        renderUser(this.currentUser)
+        renderUser(this.currentUser, this.props.viz)
 
         listenForNewUsers(user.created + 1, user => {
           this.currentUser = user
-          renderUser(this.currentUser)
+          renderUser(this.currentUser, this.props.viz)
         })
 
         listenForUpdatedUsers(data => {
           this.currentUser = data
-          renderUser(this.currentUser)
+          renderUser(this.currentUser, this.props.viz)
         })
       })
   }

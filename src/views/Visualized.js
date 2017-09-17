@@ -56,7 +56,7 @@ export default class Visualized extends Component {
     return (
       <div className="flex flex-column h-100 tc">
         <div className="relative flex-auto flex">
-          <UserLineFirebase/>
+          <UserLineFirebase viz={true}/>
         </div>
       </div>
     )

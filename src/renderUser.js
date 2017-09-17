@@ -14,7 +14,7 @@ export function renderUser(data) {
     const dimensions = svg.node().parentNode.getBoundingClientRect()
 
     const w = dimensions.width;
-    const h = 340; //dimensions.height;
+    const h = 200; //changed from 340 - also changed in style.css //dimensions.height;
 
     svg
       .style('height', h)

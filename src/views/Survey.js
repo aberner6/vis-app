@@ -51,35 +51,25 @@ export default class Survey extends Component {
             <ReactCSSTransitionGroup component="div" className={`h-100 flex flex-column justify-center items-center  overflow-scrolling-touch transition-slow will-change-transform`} transitionName="fade-in-up" transitionEnterTimeout={300} transitionLeaveTimeout={300}>
 
               {currentUserState.surveyCompletitionIndex === 0 &&
-                <SurveyCard title="You are now ready to enter the New Europe" button="Enter Phase 1" name="pre1">
+                <SurveyCard title="You are now ready to enter the New Europe" button="Enter" name="pre1">
                 </SurveyCard>
               }
 
               {currentUserState.surveyCompletitionIndex === 1 &&
-                <SurveyCard title="Listen" button="Next" name="pre2">
-                  <p>After you hear the audio press next</p>
+                <SurveyCard title="LISTEN" button="LISTENED" name="pre2">
+                  <p></p>
                 </SurveyCard>
               }
 
               {currentUserState.surveyCompletitionIndex === 2 &&
-                <SurveyCard title="You are ready to experiment with your identity" button="Next" name="pre2">
-                  <p>
-                  The mechanisms of experimentation are:<br/>
-                  SLIDERS<br/>
-                  So, slide from one end to the other <br/>
-                  to explore the sides of your self.<br/>
-                  The sides are intentionally vague.<br/>
-                  All inputs are valid.<br/>
-                  You will see your inputs visualised as rings.</p>
+                <SurveyCard title="You are ready to experiment with your identity" button="Start" name="pre2">
                 </SurveyCard>
               }
 
 
               {currentUserState.surveyCompletitionIndex === 3 &&
                 <SurveyCard title="New Identity" button="Next" name="identity">
-                  <p>The labels of the sides are intentionally vague.<br/>
-                  All inputs are valid.<br/>
-                  If your input is “not applicable”, simply leave that slider alone.</p>
+                  <p>All inputs are valid, including no input.</p>
                   {
                     IDENTITY.map((el, i) => (
                       <SliderInput key={i} data={el} value={currentUserState[el.name]} onChange={currentUserState.updateValue}/>

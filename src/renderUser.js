@@ -35,8 +35,6 @@ export function renderUser(data) {
 
     const g = svg.select('#grid-container').attr("transform", "translate(" + w/2 + "," + h/2 + ")");
 
-    var tau = 2 * Math.PI; // http://tauday.com/tau-manifesto
-
     var arcData = d3Arc()
     .innerRadius(function(d,i) {
       return 20 + i * 5 + 2
@@ -46,7 +44,7 @@ export function renderUser(data) {
     })
     .startAngle(0 * (Math.PI/180))
     .endAngle(function(d,i) {
-      return d/100 * tau
+      return (d/100 * Math.PI)
     })
 
     function arc2Tween(d, indx) {
@@ -73,42 +71,62 @@ export function renderUser(data) {
       Q10: '#FFF',
     }
 
-    const arcs = g.selectAll('path')
+    const arcsRight = g.selectAll('path.arcRight')
       .data(dataArray)
 
-    arcs.transition()
+    arcsRight.transition()
       .duration(300)
+      .style('opacity', '100')
       .attrTween('d', arc2Tween)
 
-    arcs.enter()
-        .insert('path')
-        .attr('class', 'arc-path')
-        .style("fill", function(d, i) {
-          console.log('COLORING DATA', d);
-          return '#FFF'
-          //return arcColorCode[]
-        })
-        .attr("d", arcData)
-        .merge(arcs)
+    arcsRight.enter()
+      .insert('path')
+      .attr('class', 'arcRight')
+      .style("fill", '#FFF')
+      .style('opacity', '0')
+      .attr("d", arcData)
+      .merge(arcsRight)
 
-    // // hello matt, this is for you
-    // // we will just have to make the /viz version different 
-    // // from the mobile version... so it can be big on the /viz version
-    // // hm
-    // var spacer = 15
-    // const circs = g.selectAll('circle')
-    //   .data(dataArray)
-    //   .enter()
-    //   .insert('circle')
-    //   .attr('class','circ')
-    //   .attr('cx', 0)
-    //   .attr('cy', 0)
-    //   .attr('r', function(d,i){
-    //     return 20 + (i+1)*spacer
-    //   })
-    //   .style("fill","none")
-    //   .style("stroke","grey")
-    //   .style("stroke-width",1)
+    const arcsLeft = g.selectAll('path.arcLeft')
+      .data(function() {
+        const dataInverse = []
+        for (var i = 0; i < dataArray.length; i++) {
+          dataInverse[i] = 100 - dataArray[i]
+        }
+        return dataInverse
+      })
+
+    arcsLeft.exit().remove()
+
+    arcsLeft.transition()
+      .duration(300)
+      .style('opacity', '100')
+      .attrTween('d', arc2Tween)
+
+    arcsLeft.enter()
+      .insert('path')
+      .attr('class', 'arcLeft')
+      .style("fill", '#FFF')
+      .attr("d", arcData)
+      .style('opacity', '0')
+      .attr('transform', 'rotate(180)')
+      .merge(arcsLeft)
+
+    var spacer = 5
+    const circs = g.selectAll('circle')
+      .data(dataArray)
+      .enter()
+      .insert('circle')
+      .attr('class','circ')
+      .attr('cx', 0)
+      .attr('cy', 0)
+      .attr('r', function(d,i){
+        return 20 + (i+1)*spacer
+      })
+      .style("fill","none")
+      .style("stroke","grey")
+      .style("stroke-width",2)
+      .style('opacity', '0.25')
 
 
 
@@ -134,7 +152,7 @@ export function renderUser(data) {
     // //could there be a way that we know that we are in the "values" zone
     // //not sure where this is in the data :)
     // //clearly i operate only on if statements
- 
+
     var tracks = ["audio0","audio1","audio2","audio3","audio4","audio5"]
     //we get errors because it still evaluates that it should play the sliders that have input
     //but i dont feel like dealing with this
@@ -157,27 +175,27 @@ export function renderUser(data) {
     }
     if(data.Q7>50 && data.Q7<100){
       playPause(1, data.Q7)
-    }   
+    }
 
     if(data.Q8>0 && data.Q8<50){
       playPause(2, data.Q8)
     }
     if(data.Q8>50 && data.Q8<100){
       playPause(3, data.Q8)
-    }  
+    }
 
     if(data.Q9>0 && data.Q9<50){
       playPause(4, data.Q9)
-    }  
+    }
     if(data.Q9>50 && data.Q9<100){
       playPause(5, data.Q9)
     }
     //i'd like to change this to - "if you are at the last section"
-    //but not sure where that is formally recorded in the data 
+    //but not sure where that is formally recorded in the data
     //as in, where is "next" activated
     if(data.Q10>0){
       playPause(6, 0)
-    }  
+    }
 
   })
 }

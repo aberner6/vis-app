@@ -35,13 +35,13 @@ export function newUser() {
   const user = {}
 
   IDENTITY.map((el, i) => (
-    user[el.name] = 0
+    user[el.name] = 50
   ))
   VALUES.map((el, i) => (
-    user[el.name] = 0
+    user[el.name] = 50
   ))
   COLLECTIVE.map((el, i) => (
-    user[el.name] = 0
+    user[el.name] = 50
   ))
 
   user.created = timestamp

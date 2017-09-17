@@ -14,16 +14,16 @@ function fetchLocalStorageData(key = null) {
 export default class CurrentUserState {
   @observable uID = ""
 
-  @observable Q1 = 0
-  @observable Q2 = 0
-  @observable Q3 = 0
-  @observable Q4 = 0
-  @observable Q5 = 0
-  @observable Q6 = 0
-  @observable Q7 = 0
-  @observable Q8 = 0
-  @observable Q9 = 0
-  @observable Q10 = 0
+  @observable Q1 = 50
+  @observable Q2 = 50
+  @observable Q3 = 50
+  @observable Q4 = 50
+  @observable Q5 = 50
+  @observable Q6 = 50
+  @observable Q7 = 50
+  @observable Q8 = 50
+  @observable Q9 = 50
+  @observable Q10 = 50
 
   @observable surveyCompletitionIndex = 0
   @observable surveyCompleted = Boolean(localStorage.getItem('currentUserData'))

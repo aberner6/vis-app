@@ -112,6 +112,8 @@ export function renderChart(data, delay = 0, firstRender = false, order = 'snake
       })
       .attrTween('d', arc2Tween)
 
+    const cellsExit = cells.exit().remove()
+
     const cellsEnter = cells.enter()
       .append('g')
       .classed('cells', true)
@@ -178,54 +180,6 @@ export function renderChart(data, delay = 0, firstRender = false, order = 'snake
       .style("stroke-width",2)
       .style('opacity', '0.25')
 
-
-    // const arcs = cells.selectAll('path')
-    //     .data(function (d) {
-    //       const dataArray = [
-    //         d.Q1,
-    //         d.Q2,
-    //         d.Q3,
-    //         d.Q4,
-    //         d.Q5,
-    //         d.Q6,
-    //         d.Q7,
-    //         d.Q8,
-    //         d.Q9,
-    //         d.Q10,
-    //       ]
-    //       return dataArray
-    //     })
-    //     .transition()
-    //       .duration(300)
-    //       .attrTween('d', arc2Tween)
-    //
-    // const cellsEnter = cells.enter()
-    //   .append('g')
-    //   .classed('cells', true)
-    //   .attr('transform', calculatePosition)
-    //
-    // const arcsEnter = cellsEnter.selectAll('path')
-    //   .data(function (d) {
-    //     const dataArray = [
-    //       d.Q1,
-    //       d.Q2,
-    //       d.Q3,
-    //       d.Q4,
-    //       d.Q5,
-    //       d.Q6,
-    //       d.Q7,
-    //       d.Q8,
-    //       d.Q9,
-    //       d.Q10,
-    //     ]
-    //     return dataArray
-    //   })
-    //   .enter()
-    //     .insert('path')
-    //     .attr('class', 'arc-path')
-    //     .style('fill', '#ddd')
-    //     .attr('d', arcData)
-    //     .merge(arcs)
   })
 }
 

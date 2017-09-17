@@ -2,6 +2,7 @@ import { observable, computed, action } from 'mobx'
 import mapValues from 'lodash/mapValues'
 import groupBy from 'lodash/groupBy'
 import sortBy from 'lodash/sortBy'
+import slice from 'lodash/slice'
 
 import { loadJSON } from '../api'
 
@@ -11,9 +12,6 @@ export default class AllUsersState {
 
   // the queue of the user that still have to be inserted in the grid
   @observable userQueue = []
-
-  // the sorting of allUsers to display
-  @observable sorting = 'age'
 
   staticDataContainer = observable.shallowMap()
 
@@ -27,6 +25,7 @@ export default class AllUsersState {
   addUser(userData) {
     this.allUsers.push(userData)
   }
+
   // populate the allUsers array
   @action.bound
   updateUser(userData) {
@@ -72,7 +71,15 @@ export default class AllUsersState {
   }
 
   @computed get allUsersSorted() {
-    return sortBy(this.allUsers, this.sorting)
+    console.log('all users', this.allUsers, this.allUsersCount)
+
+    var usersToReturn = this.allUsers
+
+    if (this.allUsersCount > 49) {
+      usersToReturn = slice(this.allUsers, this.allUsersCount-49, this.allUsersCount)
+    }
+
+    return usersToReturn
   }
 
   // get the number of users

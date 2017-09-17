@@ -100,6 +100,17 @@ export function renderChart(data, delay = 0, firstRender = false, order = 'snake
         .duration(300)
         .attr('transform', calculatePosition)
 
+
+    const cellsExit = cells.exit().remove()
+
+    const cellsEnter = cells.enter()
+      .append('g')
+      .classed('cells', true)
+      .attr('id', function(d) {
+        return d.id
+      })
+      .attr('transform', calculatePosition)
+
     const arcsRight = cells.selectAll('path.arcRight')
       .data(function(d) {
         return parseDataArray(d)
@@ -111,13 +122,6 @@ export function renderChart(data, delay = 0, firstRender = false, order = 'snake
         return op
       })
       .attrTween('d', arc2Tween)
-
-    const cellsExit = cells.exit().remove()
-
-    const cellsEnter = cells.enter()
-      .append('g')
-      .classed('cells', true)
-      .attr('transform', calculatePosition)
 
     const arcsRightEnter = cellsEnter.selectAll('path.arcRight')
       .data(function(d) {
@@ -184,49 +188,65 @@ export function renderChart(data, delay = 0, firstRender = false, order = 'snake
 }
 
 export function highlightElement(user) {
+  console.log('TRACKING', user);
   return new Promise((resolve, reject) => {
+
     const svg = document.querySelector('#lines-grid')
-    const selected = select(svg)
-      .selectAll('g.cells')
-      .filter(d => d.id === user.id)
-    // const data = selected.data()[0]
-    user.pulseFillLock = user.pulseFillLock || {}
-    user.pulseStrokeLock = user.pulseStrokeLock || {}
-    function pulseFill(path, duration) {
-      select(user.pulseFillLock)
-        .transition()
-        .duration(duration)
-        .tween('style:fill', function (d) {
-          return function (t) { path.style('fill', interpolateRgb(path.style('fill'), color)(t)) }
-        })
-        .transition()
-        .duration(duration)
-        .tween('style:fill', function () {
-          const i = interpolateRgb(color, 'transparent')
-          return function (t) { path.style('fill', i(t)) }
-        })
-    }
-    function pulseStroke(path, duration) {
-      select(user.pulseStrokeLock)
-        .transition()
-        .duration(duration)
-        .tween('style:stroke', function () {
-          return function (t) { path.style('stroke', interpolateRgb(path.style('stroke'), '#030321')(t)) }
-        })
-        .transition()
-        .duration(duration)
-        .tween('style:stroke', function () {
-          const i = interpolateRgb('#030321', color)
-          return function (t) { path.style('stroke', i(t)) }
-        })
-    }
 
-    selected
-      .select('rect')
-      .call(pulseFill, 1000)
+    const cellsToHighlight = select(svg).selectAll('g.cells')
+      .data([user])
+      .insert('circle')
+      .attr('r', 200)
+      .attr('fill', '#FFFFFF')
 
-    selected
-      .select('line')
-      .call(pulseStroke, 1000)
+    const removeHighlight = cellsToHighlight.exit()
+      .select('circle').remove()
+
+    const newHighlight = cellsToHighlight.enter()
+      .insert('circle')
+      .attr('fill', '#FFFF00')
+
+    // const selected = select(svg)
+    //   .selectAll('g.cells')
+    //   .filter(d => d.id === user.id)
+    // // const data = selected.data()[0]
+    // user.pulseFillLock = user.pulseFillLock || {}
+    // user.pulseStrokeLock = user.pulseStrokeLock || {}
+    // function pulseFill(path, duration) {
+    //   select(user.pulseFillLock)
+    //     .transition()
+    //     .duration(duration)
+    //     .tween('style:fill', function (d) {
+    //       return function (t) { path.style('fill', interpolateRgb(path.style('fill'), color)(t)) }
+    //     })
+    //     .transition()
+    //     .duration(duration)
+    //     .tween('style:fill', function () {
+    //       const i = interpolateRgb(color, 'transparent')
+    //       return function (t) { path.style('fill', i(t)) }
+    //     })
+    // }
+    // function pulseStroke(path, duration) {
+    //   select(user.pulseStrokeLock)
+    //     .transition()
+    //     .duration(duration)
+    //     .tween('style:stroke', function () {
+    //       return function (t) { path.style('stroke', interpolateRgb(path.style('stroke'), '#030321')(t)) }
+    //     })
+    //     .transition()
+    //     .duration(duration)
+    //     .tween('style:stroke', function () {
+    //       const i = interpolateRgb('#030321', color)
+    //       return function (t) { path.style('stroke', i(t)) }
+    //     })
+    // }
+    //
+    // selected
+    //   .select('rect')
+    //   .call(pulseFill, 1000)
+    //
+    // selected
+    //   .select('line')
+    //   .call(pulseStroke, 1000)
   })
 }

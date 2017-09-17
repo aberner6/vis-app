@@ -44,6 +44,7 @@ export function newUser() {
     user[el.name] = 50
   ))
 
+  user.trackme = false
   user.created = timestamp
   user.updated = timestamp
 
@@ -127,9 +128,16 @@ export function updateUser(uID, data) {
 
 export function trackMyLine(currentUserId) {
   return new Promise((resolve, reject) => {
-    participants.child(currentUserId).update({
-      updated: Date.now(),
-    }).then((data) => resolve())
+    firebase.database().ref('/trackme/').update({id: currentUserId}).then((data) => resolve())
+  })
+}
+
+export function checkTrackMyLine() {
+  return new Promise((resolve, reject) => {
+    firebase.database().ref('/trackme/').on('value', (snap) => {
+      console.log('user to track', snap.val().id);
+      return resolve(snap.val().id)
+    })
   })
 }
 

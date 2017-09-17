@@ -51,7 +51,7 @@ export default class Survey extends Component {
             <ReactCSSTransitionGroup component="div" className={`h-100 flex flex-column justify-center items-center  overflow-scrolling-touch transition-slow will-change-transform`} transitionName="fade-in-up" transitionEnterTimeout={300} transitionLeaveTimeout={300}>
 
               {currentUserState.surveyCompletitionIndex === 0 &&
-                <SurveyCard title="You are now ready to enter the New Europe" button="Enter" name="pre1">
+                <SurveyCard title="You are now ready to enter The New Europe" button="Enter" name="pre1">
                 </SurveyCard>
               }
 
@@ -69,7 +69,6 @@ export default class Survey extends Component {
 
               {currentUserState.surveyCompletitionIndex === 3 &&
                 <SurveyCard title="New Identity" button="Next" name="identity">
-                  <p>All inputs are valid, including no input.</p>
                   {
                     IDENTITY.map((el, i) => (
                       <SliderInput key={i} data={el} value={currentUserState[el.name]} onChange={currentUserState.updateValue}/>
@@ -79,23 +78,17 @@ export default class Survey extends Component {
               }
 
               {currentUserState.surveyCompletitionIndex === 4 &&
-                <SurveyCard title="" button="Next" name="pre2">
-                  <p>Your new identity has been registered to the New Europe</p>
-                  <p>Move to the next room to continue evolution</p>
+                <SurveyCard title="Your new identity has been registered to The New Europe" button="Next Room" name="pre2">
                 </SurveyCard>
               }
 
               {currentUserState.surveyCompletitionIndex === 5 &&
-                <SurveyCard title="Listen" button="Next" name="pre2">
-                  <p>After you hear the audio press next</p>
+                <SurveyCard title="Listen" button="LISTENED" name="pre2">
                 </SurveyCard>
               }
 
               {currentUserState.surveyCompletitionIndex === 6 &&
-                <SurveyCard title="Listen" button="I'm in" name="pre2">
-                  <p>In this space, you will explore different viewpoints and values<br/>
-                  See your identity rings visualised at the top of the dome</p>
-                  <p>Now, go inside the dome.</p>
+                <SurveyCard title="GO INSIDE THE DOME" button="I'm in" name="pre2">
                 </SurveyCard>
               }
 

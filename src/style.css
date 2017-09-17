@@ -21,13 +21,15 @@ label.slider{
 }
 h3{
   -webkit-margin-after: 0em;
+  margin-left:10%;
+  margin-right:10%;
 }
 
 html, body, #root {
   height: 100%;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h4, h5, h6 {
   /*font-family: $heading-font;*/
   margin-left: 0.5em;
   margin-right: 0.5em;
@@ -50,7 +52,7 @@ label {
 
 .slider {
   font-size: .8rem;
-  margin: 0.25rem 0 0.5rem 0;
+  /*margin: 0.25rem 0 0.5rem 0;*/
 }
 
 .slider .slider-label {
@@ -61,9 +63,12 @@ label {
 .slider .slider-label-second {
   float: right;
 }
+.pa2{
+  padding:0rem;
+}
 
 .slider input {
-  margin: 0.5rem 0 0.25rem 0;
+  /*margin: 0.5rem 0 0.25rem 0;*/
   width: 80%;
 }
 

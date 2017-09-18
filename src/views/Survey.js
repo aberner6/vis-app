@@ -4,11 +4,10 @@ import { Redirect } from 'react-router-dom'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import SurveyCard from '../containers/SurveyCard'
 import UserLineFirebase from '../containers/UserLineFirebase'
-import SurveyRecap from '../containers/SurveyRecap'
-import AnimatedBackground from '../ui/AnimatedBackground'
 import SliderInput from '../ui/SliderInput'
 import Button from '../ui/Button'
 import { IDENTITY, VALUES, COLLECTIVE } from '../CONSTANTS'
+import { trackMyLine } from '../api'
 
 @inject('currentUserState')
 @observer
@@ -29,6 +28,11 @@ export default class Survey extends Component {
 
   submitSurvey = (e) => {
     this.props.currentUserState.surveyCompleted = true
+  }
+
+  highlightUser = (e) => {
+    console.log('showing user', this.props.currentUserState.uID)
+    trackMyLine(this.props.currentUserState.uID)
   }
 
   render() {
@@ -57,7 +61,6 @@ export default class Survey extends Component {
 
               {currentUserState.surveyCompletitionIndex === 1 &&
                 <SurveyCard title="LISTEN" button="LISTENED" name="pre2">
-                  <p></p>
                 </SurveyCard>
               }
 
@@ -108,27 +111,24 @@ export default class Survey extends Component {
               }
 
               {currentUserState.surveyCompletitionIndex === 9 &&
-                <SurveyCard title="Values Selection" button="Next" name="values">
-                  <p>Your values have been added to the New Europe<br/>
-                  Move to the next room to continue evolution</p>
+                <SurveyCard title="Values Selected" button="Onward" name="survey">
                 </SurveyCard>
               }
 
               {currentUserState.surveyCompletitionIndex === 10 &&
-                <SurveyCard title="Listen" button="Next" name="pre2">
-                  <p>After you hear the audio press next</p>
+                <SurveyCard title="Listen" button="LISTENED" name="survey">
                 </SurveyCard>
               }
 
               {currentUserState.surveyCompletitionIndex === 11 &&
-                <SurveyCard title="" button="Ready" name="pre2">
+                <SurveyCard title="" button="Ready" name="survey">
                   <p>Give your input to one last question to complete your new self.</p>
                   <p>Ready?</p>
                 </SurveyCard>
               }
 
               {currentUserState.surveyCompletitionIndex === 12 &&
-                <SurveyCard title="???" button="Next" name="collective">
+                <SurveyCard title="???" button="Next" name="survey">
                   {
                     COLLECTIVE.map((el, i) => (
                       <SliderInput key={i} data={el} value={currentUserState[el.name]} onChange={currentUserState.updateValue}/>
@@ -138,11 +138,16 @@ export default class Survey extends Component {
               }
 
               {currentUserState.surveyCompletitionIndex === 13 &&
-                <SurveyCard title="Thank you for your participation" button="Tap" name="complete">
+                <SurveyCard title="" button="" name="survey">
                   <p>We heard you. Did you hear each other yet?<br/>
                   Go lie down in the nets of your New Europe.<br/>
                   Gaze at the big picture of all the creatures created so far.<br/>
-                  Tap your screen - you will see your imprint glow (the rings that reflect all of your inputs so far)</p>
+                  See if you can find yourself</p>
+
+                  {/*Tap your screen - you will see your imprint glow (the rings that reflect all of your inputs so far)</p>*/}
+
+                  {/*<Button type="" onClick={this.highlightUser} className={`mt3 mb3 transition-standard`}>See youself</Button>*/}
+
                 </SurveyCard>
               }
 

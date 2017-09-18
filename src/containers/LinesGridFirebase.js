@@ -3,7 +3,7 @@ import { inject } from 'mobx-react'
 import { reaction } from 'mobx'
 import { maxBy } from 'lodash'
 import { renderChart, highlightElement } from '../renderChart'
-import { fetchUsers, listenForNewUsers, listenForUpdatedUsers, stopListeningForNewUsers, stopListeningForUpdatedUsers } from '../api'
+import { checkTrackMyLine, fetchUsers, listenForNewUsers, listenForUpdatedUsers, stopListeningForNewUsers, stopListeningForUpdatedUsers } from '../api'
 
 function onResizeWindow(fn) {
   window.addEventListener('resize', fn)
@@ -68,6 +68,11 @@ export default class LinesGridFirebase extends Component {
   startRealtimeFetching = () => {
     const allUsersState = this.props.allUsersState
     const { trackUsers } = this.props
+
+    // checkTrackMyLine().then(function(d) {
+    //   highlightElement(d)
+    // })
+
     fetchUsers()
       .then(users => {
         allUsersState.addUsers(users)

@@ -44,10 +44,14 @@ body {
   background: #000;
 }
 
+form {
+  overflow: scroll;
+}
+
 label {
   cursor: pointer;
   position: relative;
-  width: 225px;
+  /*width: 225px;*/
 }
 
 .slider {
@@ -181,7 +185,7 @@ label {
 
   to {
     opacity: 1;
-    height: 200px;
+    height: 300px;
     transform: translate3d(0, 0, 0);
   }
 }
@@ -198,7 +202,7 @@ label {
 }
 
 .survey-viz-results {
-  height: 200px;
+  height: 300px;
 }
 
 /* SURVEY COMPONENT */
@@ -222,6 +226,11 @@ label {
 .survey-canvas-expanded {
   transform-origin: left center;
   transform: scaleX(2) translateZ(0);
+}
+
+.survey-card {
+  width: 100%;
+  padding: 0 1rem;
 }
 /* (orientation: portrait) */
 @media (max-aspect-ratio: 13/9) and (max-width: 1020px) {

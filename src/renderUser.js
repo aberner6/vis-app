@@ -5,7 +5,7 @@ import { interpolate as d3Interpolate } from 'd3-interpolate'
 import { arc as d3Arc } from 'd3-shape'
 import { scaleLinear } from 'd3-scale'
 
-export function renderUser(data) {
+export function renderUser(data, viz = false) {
 
   return new Promise((resolve, reject) => {
 
@@ -14,7 +14,8 @@ export function renderUser(data) {
     const dimensions = svg.node().parentNode.getBoundingClientRect()
 
     const w = dimensions.width;
-    const h = 200; //changed from 340 - also changed in style.css //dimensions.height;
+
+    const h = dimensions.height > 0 ? dimensions.height : 300 //dimensions.height;
 
     svg
       .style('height', h)
@@ -35,16 +36,26 @@ export function renderUser(data) {
 
     const g = svg.select('#grid-container').attr("transform", "translate(" + w/2 + "," + h/2 + ")");
 
+    var arcMin = 15
+    var arcWidth = 12
+    var arcPad = 4
+
+    if (viz) {
+      arcMin = 60
+      arcWidth = 25
+      arcPad = 5
+    }
+
     var arcData = d3Arc()
-    .innerRadius(function(d,i) {
-      return 20 + i * 5 + 2
+    .innerRadius(function (d, i) {
+      return arcMin + i * arcWidth + arcPad
     })
-    .outerRadius(function(d,i) {
-      return 20 + (i+1)*(5)
+    .outerRadius(function (d, i) {
+      return arcMin + (i + 1) * (arcWidth)
     })
     .startAngle(0 * (Math.PI/180))
-    .endAngle(function(d,i) {
-      return (d/100 * Math.PI)
+    .endAngle(function (d, i) {
+      return d/100 * Math.PI
     })
 
     function arc2Tween(d, indx) {
@@ -58,31 +69,36 @@ export function renderUser(data) {
       }
     }
 
-    const arcColorCode = {
-      Q1: '#FFF',
-      Q2: '#FFF',
-      Q3: '#FFF',
-      Q4: '#FFF',
-      Q5: '#FFF',
-      Q6: '#FFF',
-      Q7: '#FFF',
-      Q8: '#FFF',
-      Q9: '#FFF',
-      Q10: '#FFF',
-    }
+    const arcColorCode = [
+      '#ee2a7b',
+      '#f48ca8',
+      '#fbd6dd',
+      '#607aa5',
+      '#9bc2e7',
+      '#c7e4f7',
+      '#c4c4c4',
+      '#c4c4c4',
+      '#c4c4c4',
+      '#FFF',
+    ]
 
     const arcsRight = g.selectAll('path.arcRight')
       .data(dataArray)
 
     arcsRight.transition()
       .duration(300)
-      .style('opacity', '100')
+      .style('opacity', function(d){
+        var op = (d == 50) ? '0.25' : '1'
+        return op
+      })
       .attrTween('d', arc2Tween)
 
     arcsRight.enter()
       .insert('path')
       .attr('class', 'arcRight')
-      .style("fill", '#FFF')
+      .style("fill", function(d, i) {
+        return arcColorCode[i]
+      })
       .style('opacity', '0')
       .attr("d", arcData)
       .merge(arcsRight)
@@ -100,19 +116,23 @@ export function renderUser(data) {
 
     arcsLeft.transition()
       .duration(300)
-      .style('opacity', '100')
+      .style('opacity', function(d){
+        var op = (d == 50) ? '0.25' : '1'
+        return op
+      })
       .attrTween('d', arc2Tween)
 
     arcsLeft.enter()
       .insert('path')
       .attr('class', 'arcLeft')
-      .style("fill", '#FFF')
+      .style("fill", function(d, i) {
+        return arcColorCode[i]
+      })
       .attr("d", arcData)
       .style('opacity', '0')
       .attr('transform', 'rotate(180)')
       .merge(arcsLeft)
 
-    var spacer = 5
     const circs = g.selectAll('circle')
       .data(dataArray)
       .enter()
@@ -121,11 +141,13 @@ export function renderUser(data) {
       .attr('cx', 0)
       .attr('cy', 0)
       .attr('r', function(d,i){
-        return 20 + (i+1)*spacer
+        return arcMin + (i + 1) * (arcWidth)
       })
       .style("fill","none")
-      .style("stroke","grey")
-      .style("stroke-width",2)
+      .style("stroke","#6d6e71")
+      .style("stroke-width",function() {
+        return (viz) ? 2 : 1
+      })
       .style('opacity', '0.25')
 
 
@@ -163,7 +185,7 @@ export function renderUser(data) {
           pausedTrack.pause();
         }else{
           var activeTrack = document.getElementById("audio"+active)
-          console.log(active)
+          //console.log(active)
           //maybe only play for 10 seconds?
           activeTrack.currentTime = num //timeAdjust(data.Q1)
           activeTrack.play()

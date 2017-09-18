@@ -179,6 +179,7 @@ export function renderUser(data, viz = false) {
     //but i dont feel like dealing with this
     function playPause(active, num){
       console.log(active)
+      var active = active;
       for (var j=0; j<tracks.length; j++){
         if(tracks[j]!=("audio"+active)){
           var pausedTrack = document.getElementById("audio"+j)
@@ -191,10 +192,16 @@ export function renderUser(data, viz = false) {
             //maybe only play for 10 seconds?
             activeTrack.currentTime = num //timeAdjust(data.Q1)
             activeTrack.play()
+            console.log(active)
+                setTimeout(function(){
+                    activeTrack.pause();
+                    // active = true;
+                }, 8000);
           }
         }
       }
     }
+
     if(data.Q7>0 && data.Q7<50){
       playPause(0, data.Q7)
     }

@@ -14,7 +14,7 @@ export function renderUser(data, viz = false) {
     const dimensions = svg.node().parentNode.getBoundingClientRect()
 
     const w = dimensions.width;
-    const h = dimensions.height > 0 ? dimensions.height : 300 //dimensions.height;
+    const h = dimensions.height > 0 ? dimensions.height : 280 //dimensions.height;
 
     svg
       .style('height', h)
@@ -36,8 +36,8 @@ export function renderUser(data, viz = false) {
     const g = svg.select('#grid-container').attr("transform", "translate(" + w/2 + "," + h/2 + ")");
 
     var arcMin = 15
-    var arcWidth = 12
-    var arcPad = 4
+    var arcWidth = 10
+    var arcPad = 3
 
     if (viz) {
       arcMin = 60

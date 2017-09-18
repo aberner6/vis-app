@@ -35,9 +35,9 @@ export function renderChart(data, delay = 0, firstRender = false, order = 'snake
       return `translate(${xScale(x) + center} ${yScale(y) + center})`
     }
 
-    var arcMin = 5
+    var arcMin = 1
     var arcWidth = 5
-    var arcPad = 2
+    var arcPad = 0
 
     var arcData = d3Arc()
     .innerRadius(function (d, i) {

@@ -40,8 +40,8 @@ export function renderUser(data, viz = false) {
     var arcPad = 3
 
     if (viz) {
-      arcMin = 60
-      arcWidth = 25
+      arcMin = 40
+      arcWidth = 30
       arcPad = 5
     }
 

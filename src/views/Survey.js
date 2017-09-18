@@ -51,7 +51,7 @@ export default class Survey extends Component {
             <ReactCSSTransitionGroup component="div" className={`h-100 flex flex-column justify-center items-center  overflow-scrolling-touch transition-slow will-change-transform`} transitionName="fade-in-up" transitionEnterTimeout={300} transitionLeaveTimeout={300}>
 
               {currentUserState.surveyCompletitionIndex === 0 &&
-                <SurveyCard title="You are now ready to enter The New Europe" button="Enter" name="pre1">
+                <SurveyCard title="You are now ready to enter the New Europe" button="Enter" name="pre1">
                 </SurveyCard>
               }
 
@@ -78,7 +78,7 @@ export default class Survey extends Component {
               }
 
               {currentUserState.surveyCompletitionIndex === 4 &&
-                <SurveyCard title="Your new identity has been registered to The New Europe" button="Next Room" name="pre2">
+                <SurveyCard title="Your new identity has been registered to the New Europe" button="Next Room" name="pre2">
                 </SurveyCard>
               }
 
@@ -93,18 +93,12 @@ export default class Survey extends Component {
               }
 
               {currentUserState.surveyCompletitionIndex === 7 &&
-                <SurveyCard title="Listen" button="I'm in" name="pre2">
-                  <p>Slide from one end to the other to hear different voices expressing potential values
-                  <br/>Listen, slide, then leave the slider at the voice whose values you share
-                  You will see your value inputs visualised as new rings under the identity rings above you</p>
+                <SurveyCard title="Slide, Listen, Slide" button="Ready" name="pre2">
                 </SurveyCard>
               }
 
               {currentUserState.surveyCompletitionIndex === 8 &&
-                <SurveyCard title="Values Selection" button="Next" name="values">
-                  <p>The labels of the sides are intentionally vague.<br/>
-                  All inputs are valid.<br/>
-                  If your input is “not applicable”, simply leave that slider alone.</p>
+                <SurveyCard title="Select Values" button="Next" name="values">
                   {
                     VALUES.map((el, i) => (
                       <SliderInput key={i} data={el} value={currentUserState[el.name]} onChange={currentUserState.updateValue}/>

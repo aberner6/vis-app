@@ -55,34 +55,23 @@ export default class Survey extends Component {
             <ReactCSSTransitionGroup component="div" className={`h-100 flex flex-column justify-center items-center  overflow-scrolling-touch transition-slow will-change-transform`} transitionName="fade-in-up" transitionEnterTimeout={300} transitionLeaveTimeout={300}>
 
               {currentUserState.surveyCompletitionIndex === 0 &&
-                <SurveyCard title="You are now ready to enter the New Europe" button="Enter Phase 1" name="survey">
+                <SurveyCard title="You are now ready to enter the New Europe" button="Enter" name="pre1">
                 </SurveyCard>
               }
 
               {currentUserState.surveyCompletitionIndex === 1 &&
-                <SurveyCard title="Listen" button="Next" name="survey">
-                  <p>After you hear the audio press next</p>
+                <SurveyCard title="LISTEN" button="LISTENED" name="pre2">
                 </SurveyCard>
               }
 
               {currentUserState.surveyCompletitionIndex === 2 &&
-                <SurveyCard title="You are ready to experiment with your identity" button="Next" name="survey">
-                  <p>The mechanisms of experimentation are:<br/>
-                  SLIDERS<br/>
-                  So, slide from one end to the other <br/>
-                  to explore the sides of your self.<br/>
-                  The sides are intentionally vague.<br/>
-                  All inputs are valid.<br/>
-                  You will see your inputs visualised as rings.</p>
+                <SurveyCard title="You are ready to experiment with your identity" button="Start" name="pre2">
                 </SurveyCard>
               }
 
 
               {currentUserState.surveyCompletitionIndex === 3 &&
-                <SurveyCard title="New Identity" button="Next" name="survey">
-                  <p>The labels of the sides are intentionally vague.<br/>
-                  All inputs are valid.<br/>
-                  If your input is “not applicable”, simply leave that slider alone.</p>
+                <SurveyCard title="New Identity" button="Next" name="identity">
                   {
                     IDENTITY.map((el, i) => (
                       <SliderInput key={i} data={el} value={currentUserState[el.name]} onChange={currentUserState.updateValue}/>
@@ -92,39 +81,27 @@ export default class Survey extends Component {
               }
 
               {currentUserState.surveyCompletitionIndex === 4 &&
-                <SurveyCard title="" button="Next" name="survey">
-                  <p>Your new identity has been registered to the New Europe</p>
-                  <p>Move to the next room to continue evolution</p>
+                <SurveyCard title="Your new identity has been registered to the New Europe" button="Next Room" name="pre2">
                 </SurveyCard>
               }
 
               {currentUserState.surveyCompletitionIndex === 5 &&
-                <SurveyCard title="Listen" button="Next" name="survey">
-                  <p>After you hear the audio press next</p>
+                <SurveyCard title="Listen" button="LISTENED" name="pre2">
                 </SurveyCard>
               }
 
               {currentUserState.surveyCompletitionIndex === 6 &&
-                <SurveyCard title="Listen" button="I'm in" name="survey">
-                  <p>In this space, you will explore different viewpoints and values<br/>
-                  See your identity rings visualised at the top of the dome</p>
-                  <p>Now, go inside the dome.</p>
+                <SurveyCard title="GO INSIDE THE DOME" button="I'm in" name="pre2">
                 </SurveyCard>
               }
 
               {currentUserState.surveyCompletitionIndex === 7 &&
-                <SurveyCard title="Listen" button="Ok" name="survey">
-                  <p>Slide from one end to the other to hear different voices expressing potential values</p>
-                  <p>Listen, slide, then leave the slider at the voice whose values you share</p>
-                  <p>You will see your value inputs visualised as new rings under the identity rings above you</p>
+                <SurveyCard title="Slide, Listen, Slide" button="Ready" name="pre2">
                 </SurveyCard>
               }
 
               {currentUserState.surveyCompletitionIndex === 8 &&
-                <SurveyCard title="Values Selection" button="Next" name="survey">
-                  <p>The labels of the sides are intentionally vague.<br/>
-                  All inputs are valid.<br/>
-                  If your input is “not applicable”, simply leave that slider alone.</p>
+                <SurveyCard title="Select Values" button="Next" name="values">
                   {
                     VALUES.map((el, i) => (
                       <SliderInput key={i} data={el} value={currentUserState[el.name]} onChange={currentUserState.updateValue}/>
@@ -134,15 +111,12 @@ export default class Survey extends Component {
               }
 
               {currentUserState.surveyCompletitionIndex === 9 &&
-                <SurveyCard title="Values Selection" button="Next" name="survey">
-                  <p>Your values have been added to the New Europe<br/>
-                  Move to the next room to continue evolution</p>
+                <SurveyCard title="Values Selected" button="Onward" name="survey">
                 </SurveyCard>
               }
 
               {currentUserState.surveyCompletitionIndex === 10 &&
-                <SurveyCard title="Listen" button="Next" name="survey">
-                  <p>After you hear the audio press next</p>
+                <SurveyCard title="Listen" button="LISTENED" name="survey">
                 </SurveyCard>
               }
 

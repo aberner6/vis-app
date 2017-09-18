@@ -154,8 +154,12 @@ export function renderChart(data, delay = 0, firstRender = false, order = 'snake
       .merge(arcsRight)
 
     const arcsLeft = cells.selectAll('path.arcLeft')
-      .data(function(d) {
-        return parseDataArray(d)
+      .data(function() {
+        const dataInverse = []
+        for (var i = 0; i < dataArray.length; i++) {
+          dataInverse[i] = 100 - dataArray[i]
+        }
+        return dataInverse
       })
       .transition()
       .duration(300)

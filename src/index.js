@@ -34,9 +34,6 @@ const allUsersState = new AllUsersState()
 //   }
 // })
 
-const themeColorMeta = document.querySelector('[name="theme-color"]')
-themeColorMeta.setAttribute('content', currentUserState.currentUserColor)
-
 ReactDOM.render(
   <Router>
     <Provider currentUserState={currentUserState} allUsersState={allUsersState}>

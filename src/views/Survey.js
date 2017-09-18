@@ -60,18 +60,18 @@ export default class Survey extends Component {
               }
 
               {currentUserState.surveyCompletitionIndex === 1 &&
-                <SurveyCard title="LISTEN" button="LISTENED" name="pre2">
+                <SurveyCard title="LISTEN" button="Listened" name="pre2">
                 </SurveyCard>
               }
 
               {currentUserState.surveyCompletitionIndex === 2 &&
-                <SurveyCard title="You are ready to experiment with your identity" button="Start" name="pre2">
+                <SurveyCard title="You will start by experimenting with your identity. Ready?" button="Ready" name="pre2">
                 </SurveyCard>
               }
 
 
               {currentUserState.surveyCompletitionIndex === 3 &&
-                <SurveyCard title="New Identity" button="Next" name="identity">
+                <SurveyCard title="Create Your New Identity" button="Submit" name="identity">
                   {
                     IDENTITY.map((el, i) => (
                       <SliderInput key={i} data={el} value={currentUserState[el.name]} onChange={currentUserState.updateValue}/>
@@ -86,22 +86,23 @@ export default class Survey extends Component {
               }
 
               {currentUserState.surveyCompletitionIndex === 5 &&
-                <SurveyCard title="Listen" button="LISTENED" name="pre2">
+                <SurveyCard title="Listen" button="Listened" name="pre2">
                 </SurveyCard>
               }
 
               {currentUserState.surveyCompletitionIndex === 6 &&
-                <SurveyCard title="GO INSIDE THE DOME" button="I'm in" name="pre2">
+                <SurveyCard title="Go inside the dome" button="I'm in" name="pre2">
                 </SurveyCard>
               }
 
               {currentUserState.surveyCompletitionIndex === 7 &&
-                <SurveyCard title="Slide, Listen, Slide" button="Ready" name="pre2">
+                <SurveyCard title="Are you ready to choose the values for the New Europe?" button="Ready" name="pre2">
                 </SurveyCard>
               }
 
               {currentUserState.surveyCompletitionIndex === 8 &&
-                <SurveyCard title="Select Values" button="Next" name="values">
+                <SurveyCard title="Select the Values You Share" button="Submit" name="values">
+                  <p>Slide and Listen</p>
                   {
                     VALUES.map((el, i) => (
                       <SliderInput key={i} data={el} value={currentUserState[el.name]} onChange={currentUserState.updateValue}/>
@@ -111,24 +112,22 @@ export default class Survey extends Component {
               }
 
               {currentUserState.surveyCompletitionIndex === 9 &&
-                <SurveyCard title="Values Selected" button="Onward" name="survey">
+                <SurveyCard title="Your values have been registered to the New Europe" button="Onward" name="survey">
                 </SurveyCard>
               }
 
               {currentUserState.surveyCompletitionIndex === 10 &&
-                <SurveyCard title="Listen" button="LISTENED" name="survey">
+                <SurveyCard title="Listen" button="Listened" name="survey">
                 </SurveyCard>
               }
 
               {currentUserState.surveyCompletitionIndex === 11 &&
-                <SurveyCard title="" button="Ready" name="survey">
-                  <p>Give your input to one last question to complete your new self.</p>
-                  <p>Ready?</p>
+                <SurveyCard title="You are 1 question away from completing your full self. Ready?" button="Ready" name="survey">
                 </SurveyCard>
               }
 
               {currentUserState.surveyCompletitionIndex === 12 &&
-                <SurveyCard title="???" button="Next" name="survey">
+                <SurveyCard title="Which way should the New Europe move?" button="Submit" name="survey">
                   {
                     COLLECTIVE.map((el, i) => (
                       <SliderInput key={i} data={el} value={currentUserState[el.name]} onChange={currentUserState.updateValue}/>
@@ -138,12 +137,11 @@ export default class Survey extends Component {
               }
 
               {currentUserState.surveyCompletitionIndex === 13 &&
-                <SurveyCard title="" button="" name="survey">
-                  <p>We heard you. Did you hear each other yet?<br/>
-                  Go lie down in the nets of your New Europe.<br/>
-                  Gaze at the big picture of all the creatures created so far.<br/>
-                  See if you can find yourself</p>
-
+                <SurveyCard title="We Heard You" button="" name="survey">
+                  <p>Go lie down in the nets of your New Europe</p><br/>
+                  <p>See the bigger picture</p><br/>
+                  <p>Can you find yourself?</p>
+                  <p>And can you find someone to share your experience with?</p>
                   {/*Tap your screen - you will see your imprint glow (the rings that reflect all of your inputs so far)</p>*/}
 
                   {/*<Button type="" onClick={this.highlightUser} className={`mt3 mb3 transition-standard`}>See youself</Button>*/}

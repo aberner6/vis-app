@@ -178,16 +178,20 @@ export function renderUser(data, viz = false) {
     //we get errors because it still evaluates that it should play the sliders that have input
     //but i dont feel like dealing with this
     function playPause(active, num){
+      console.log(active)
       for (var j=0; j<tracks.length; j++){
         if(tracks[j]!=("audio"+active)){
           var pausedTrack = document.getElementById("audio"+j)
           pausedTrack.pause();
-        }else{
-          var activeTrack = document.getElementById("audio"+active)
-          //console.log(active)
-          //maybe only play for 10 seconds?
-          activeTrack.currentTime = num //timeAdjust(data.Q1)
-          activeTrack.play()
+        }
+        else{
+          if(active!=6){
+            var activeTrack = document.getElementById("audio"+active)
+            //console.log(active)
+            //maybe only play for 10 seconds?
+            activeTrack.currentTime = num //timeAdjust(data.Q1)
+            activeTrack.play()
+          }
         }
       }
     }
@@ -214,9 +218,9 @@ export function renderUser(data, viz = false) {
     //i'd like to change this to - "if you are at the last section"
     //but not sure where that is formally recorded in the data
     //as in, where is "next" activated
-    if(data.Q10>0){
-      playPause(6, 0)
-    }
+    // if(data.Q10<50 || data.Q10>50){
+    //   playPause(6, 0)
+    // }
 
   })
 }

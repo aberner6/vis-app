@@ -101,7 +101,7 @@ export default class Survey extends Component {
               }
 
               {currentUserState.surveyCompletitionIndex === 8 &&
-                <SurveyCard title="Select the Values You Share" button="Submit" name="values">
+                <SurveyCard title="Find Values You Share" button="Submit" name="values">
                   <p>Slide and Listen</p>
                   {
                     VALUES.map((el, i) => (
@@ -138,14 +138,10 @@ export default class Survey extends Component {
 
               {currentUserState.surveyCompletitionIndex === 13 &&
                 <SurveyCard title="We Heard You" button="" name="survey">
-                  <p>Go lie down in the nets of your New Europe</p><br/>
-                  <p>See the bigger picture</p><br/>
+                  <p>Go lie down in the nets of your New Europe</p>
+                  <p>See the bigger picture</p>
                   <p>Can you find yourself?</p>
                   <p>And can you find someone to share your experience with?</p>
-                  {/*Tap your screen - you will see your imprint glow (the rings that reflect all of your inputs so far)</p>*/}
-
-                  {/*<Button type="" onClick={this.highlightUser} className={`mt3 mb3 transition-standard`}>See youself</Button>*/}
-
                 </SurveyCard>
               }
 

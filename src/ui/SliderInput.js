@@ -16,9 +16,9 @@ export default class SliderInput extends Component {
     const { data } = this.props
     return (
       <label className="slider relative db tc ttu fw4 f6 f5-l pa2 pa3-l pr3 pl3 truncate pointer bg-transparent z-1 user-select-none">
-        <span className="slider-label">{data.label1}</span><span className="slider-label-second">{data.label2}</span>
-        <br/>
+        <span className="slider-label-second">{data.label1}</span>
         <input type="range" id={data.name} name={data.name} onChange={this.handleChange} />
+        <span className="slider-label">{data.label2}</span>        
       </label>
     )
   }

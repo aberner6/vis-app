@@ -18,11 +18,14 @@ form {
 }
 label.slider{
   font-size:.5rem;
+  padding-top:1em;
+  cursor:none;
 }
 h3{
+margin-left: 9%;
+    margin-right: 9%;
+    -webkit-margin-before: 0em;
   -webkit-margin-after: 0em;
-  margin-left:10%;
-  margin-right:10%;
 }
 
 html, body, #root {
@@ -55,27 +58,65 @@ label {
   /*width: 225px;*/
 }
 
+.pt1{
+  pointer-events: none;
+}
+input{
+  pointer-events: all;
+}
 .slider {
   font-size: .8rem;
+  /*pointer-events: */
   /*margin: 0.25rem 0 0.5rem 0;*/
 }
 
-.slider .slider-label {
+/*.slider .slider-label {
   display: block;
   float: left;
-}
+}*/
 
 .slider .slider-label-second {
   float: right;
+  margin-right:77%;
+  /*cursor:not-allowed;*/
 }
+
+
+.slider .slider-label {
+    display: block;
+    margin-left: 77%;
+    /*pointer-events:none;*/
+    /*cursor:not-allowed;*/
+}
+
+.ttu{
+    text-transform: none;
+}
+
+
+
+
+
 .pa2{
   padding:0rem;
 }
 
 .slider input {
   /*margin: 0.5rem 0 0.25rem 0;*/
-  width: 80%;
+  width: 50%;
+  left: 25%;
+  position: absolute;
 }
+
+.slider .slider-label{
+    vertical-align: middle
+  }
+
+
+
+
+
+
 
 /* HELPERS */
 .mh-100 {

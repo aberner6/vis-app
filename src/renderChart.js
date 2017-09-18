@@ -78,6 +78,19 @@ export function renderChart(data, delay = 0, firstRender = false, order = 'snake
       return dataArray
     }
 
+    const arcColorCode = [
+      '#ee2a7b',
+      '#f48ca8',
+      '#fbd6dd',
+      '#607aa5',
+      '#9bc2e7',
+      '#c7e4f7',
+      '#c4c4c4',
+      '#c4c4c4',
+      '#c4c4c4',
+      '#FFF',
+    ]
+
     select(svg)
       .select('#grid-container')
       .transition()
@@ -130,7 +143,9 @@ export function renderChart(data, delay = 0, firstRender = false, order = 'snake
       .enter()
       .insert('path')
       .attr('class', 'arcRight')
-      .style("fill", '#FFF')
+      .style("fill", function(d, i) {
+        return arcColorCode[i]
+      })
       .style('opacity', function(d){
         var op = (d == 50) ? '0.5' : '1'
         return op
@@ -157,7 +172,9 @@ export function renderChart(data, delay = 0, firstRender = false, order = 'snake
       .enter()
       .insert('path')
       .attr('class', 'arcLeft')
-      .style("fill", '#FFF')
+      .style("fill", function(d, i) {
+        return arcColorCode[i]
+      })
       .style('opacity', function(d){
         var op = (d == 50) ? '0.5' : '1'
         return op

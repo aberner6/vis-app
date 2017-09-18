@@ -14,7 +14,7 @@ export function renderUser(data, viz = false) {
     const dimensions = svg.node().parentNode.getBoundingClientRect()
 
     const w = dimensions.width;
-    const h = dimensions.height > 0 ? dimensions.height : 290 //dimensions.height;
+    const h = dimensions.height > 0 ? dimensions.height : 300 //dimensions.height;
 
     svg
       .style('height', h)
@@ -35,9 +35,9 @@ export function renderUser(data, viz = false) {
 
     const g = svg.select('#grid-container').attr("transform", "translate(" + w/2 + "," + h/2 + ")");
 
-    var arcMin = 20
-    var arcWidth = 5
-    var arcPad = 2
+    var arcMin = 15
+    var arcWidth = 12
+    var arcPad = 4
 
     if (viz) {
       arcMin = 60
@@ -68,18 +68,18 @@ export function renderUser(data, viz = false) {
       }
     }
 
-    const arcColorCode = {
-      Q1: '#FFF',
-      Q2: '#FFF',
-      Q3: '#FFF',
-      Q4: '#FFF',
-      Q5: '#FFF',
-      Q6: '#FFF',
-      Q7: '#FFF',
-      Q8: '#FFF',
-      Q9: '#FFF',
-      Q10: '#FFF',
-    }
+    const arcColorCode = [
+      '#ee2a7b',
+      '#f48ca8',
+      '#fbd6dd',
+      '#607aa5',
+      '#9bc2e7',
+      '#c7e4f7',
+      '#c4c4c4',
+      '#c4c4c4',
+      '#c4c4c4',
+      '#FFF',
+    ]
 
     const arcsRight = g.selectAll('path.arcRight')
       .data(dataArray)
@@ -87,7 +87,7 @@ export function renderUser(data, viz = false) {
     arcsRight.transition()
       .duration(300)
       .style('opacity', function(d){
-        var op = (d == 50) ? '0.5' : '1'
+        var op = (d == 50) ? '0.25' : '1'
         return op
       })
       .attrTween('d', arc2Tween)
@@ -95,7 +95,9 @@ export function renderUser(data, viz = false) {
     arcsRight.enter()
       .insert('path')
       .attr('class', 'arcRight')
-      .style("fill", '#FFF')
+      .style("fill", function(d, i) {
+        return arcColorCode[i]
+      })
       .style('opacity', '0')
       .attr("d", arcData)
       .merge(arcsRight)
@@ -114,7 +116,7 @@ export function renderUser(data, viz = false) {
     arcsLeft.transition()
       .duration(300)
       .style('opacity', function(d){
-        var op = (d == 50) ? '0.5' : '1'
+        var op = (d == 50) ? '0.25' : '1'
         return op
       })
       .attrTween('d', arc2Tween)
@@ -122,7 +124,9 @@ export function renderUser(data, viz = false) {
     arcsLeft.enter()
       .insert('path')
       .attr('class', 'arcLeft')
-      .style("fill", '#FFF')
+      .style("fill", function(d, i) {
+        return arcColorCode[i]
+      })
       .attr("d", arcData)
       .style('opacity', '0')
       .attr('transform', 'rotate(180)')
@@ -139,7 +143,7 @@ export function renderUser(data, viz = false) {
         return arcMin + (i + 1) * (arcWidth)
       })
       .style("fill","none")
-      .style("stroke","grey")
+      .style("stroke","#6d6e71")
       .style("stroke-width",function() {
         return (viz) ? 2 : 1
       })

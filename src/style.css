@@ -300,6 +300,9 @@ input{
   }
 }
 
+.mt3{
+  margin-top:0rem;
+}
 /* BUTTON COMPONENT */
 .button::after {
   content: '';

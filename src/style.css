@@ -20,12 +20,14 @@ label.slider{
   font-size:.5rem;
   padding-top:1em;
   cursor:none;
+  height:44px;
 }
 h3{
 margin-left: 9%;
     margin-right: 9%;
     -webkit-margin-before: 0em;
   -webkit-margin-after: 0em;
+  padding:30px;
 }
 
 html, body, #root {

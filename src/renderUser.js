@@ -4,17 +4,19 @@ import { interpolate as d3Interpolate } from 'd3-interpolate'
 // import { range } from 'd3-array'
 import { arc as d3Arc } from 'd3-shape'
 import { scaleLinear } from 'd3-scale'
+import { scaleOrdinal } from 'd3-scale'
 
 export function renderUser(data, viz = false) {
 
   return new Promise((resolve, reject) => {
-
     const svg = select(document.querySelector('#lines-grid'))
 
     const dimensions = svg.node().parentNode.getBoundingClientRect()
 
     const w = dimensions.width;
     const h = dimensions.height > 0 ? dimensions.height : 280 //dimensions.height;
+
+    console.log(data)
 
     svg
       .style('height', h)
@@ -154,7 +156,6 @@ export function renderUser(data, viz = false) {
 
 
 
-
     // //hello matt, i am being evil and inserting audio
     // //into your beautiful arcs
     // //these elements are loaded in the index.html (public) file
@@ -193,6 +194,7 @@ export function renderUser(data, viz = false) {
             activeTrack.currentTime = num //timeAdjust(data.Q1)
             activeTrack.play()
             console.log(active)
+              //maybe remove this timeout if we get the audio better
                 setTimeout(function(){
                     activeTrack.pause();
                     // active = true;
@@ -201,10 +203,21 @@ export function renderUser(data, viz = false) {
         }
       }
     }
+    var xAudio = scaleOrdinal()
+        .domain([0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100])
+        .range([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
 
-    if(data.Q7>0 && data.Q7<50){
-      playPause(0, data.Q7)
+
+    if(data.Q7<50 || data.Q7>50){
+      var whichAudio = xAudio(data.Q7)
+      console.log(whichAudio)
+      playPause(whichAudio, 0)
     }
+
+
+    // if(data.Q7>0 && data.Q7<50){
+    //   playPause(0, data.Q7)
+    // }
     if(data.Q7>50 && data.Q7<100){
       playPause(1, data.Q7)
     }
@@ -228,6 +241,8 @@ export function renderUser(data, viz = false) {
     // if(data.Q10<50 || data.Q10>50){
     //   playPause(6, 0)
     // }
+
+    //as you go from left to right, you hear one full voice.
 
   })
 }

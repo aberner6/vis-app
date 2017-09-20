@@ -86,7 +86,7 @@ export default class Survey extends Component {
               }
 
               {currentUserState.surveyCompletitionIndex === 5 &&
-                <SurveyCard title="Listen" button="Listened" name="pre2">
+                <SurveyCard title="Listen" button="Listening" name="pre2">
                 </SurveyCard>
               }
 

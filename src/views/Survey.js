@@ -60,7 +60,7 @@ export default class Survey extends Component {
               }
 
               {currentUserState.surveyCompletitionIndex === 1 &&
-                <SurveyCard title="You will start by experimenting with your identity. Ready?" button="Ready" name="pre2">
+                <SurveyCard title="You will start by experimenting with your identity." button="Ready?" name="pre2">
                 </SurveyCard>
               }
 
@@ -82,7 +82,8 @@ export default class Survey extends Component {
               }
 
               {currentUserState.surveyCompletitionIndex === 4 &&
-                <SurveyCard title="Now choose values for your self in the New Europe. Go in the dome" button="I'm in" name="pre2">
+                <SurveyCard title="Now choose values for your New Europe" button="Ready" name="pre2">
+                <h3>Go in the dome</h3>
                 </SurveyCard>
               }
 
@@ -108,7 +109,7 @@ export default class Survey extends Component {
               }
 
               {currentUserState.surveyCompletitionIndex === 8 &&
-                <SurveyCard title="You are 1 question away from completing your full self. Ready?" button="Ready" name="survey">
+                <SurveyCard title="Last question to complete your New Europe passport." button="Ready?" name="survey">
                 </SurveyCard>
               }
 

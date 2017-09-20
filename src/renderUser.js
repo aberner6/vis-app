@@ -16,8 +16,6 @@ export function renderUser(data, viz = false) {
     const w = dimensions.width;
     const h = dimensions.height > 0 ? dimensions.height : 280 //dimensions.height;
 
-    console.log(data)
-
     svg
       .style('height', h)
       .style('width', w)
@@ -175,66 +173,85 @@ export function renderUser(data, viz = false) {
     // //not sure where this is in the data :)
     // //clearly i operate only on if statements
 
-    var tracks = ["audio0","audio1","audio2","audio3","audio4","audio5"]
+    var tracks = ["audio0","audio1","audio2","audio3","audio4","audio5","audio6","audio7","audio8","audio9","audio10","audio11","audio12","audio13","audio14","audio15","audio16","audio17","audio18","audio19","audio20","audio21","audio22","audio23","audio24","audio25","audio26","audio27","audio28","audio29"]
     //we get errors because it still evaluates that it should play the sliders that have input
     //but i dont feel like dealing with this
     function playPause(active, num){
       console.log(active)
       var active = active;
       for (var j=0; j<tracks.length; j++){
-        if(tracks[j]!=("audio"+active)){
-          var pausedTrack = document.getElementById("audio"+j)
-          pausedTrack.pause();
-        }
-        else{
-          if(active!=6){
+        if(tracks[j]=="audio"+active){
             var activeTrack = document.getElementById("audio"+active)
             //console.log(active)
             //maybe only play for 10 seconds?
-            activeTrack.currentTime = num //timeAdjust(data.Q1)
+            // activeTrack.currentTime = num //timeAdjust(data.Q1)
             activeTrack.play()
-            console.log(active)
-              //maybe remove this timeout if we get the audio better
-                setTimeout(function(){
-                    activeTrack.pause();
-                    // active = true;
-                }, 8000);
-          }
         }
+        else{
+          var pausedTrack = document.getElementById("audio"+j)
+          pausedTrack.pause();
+        }
+        // else{
+        //     var activeTrack = document.getElementById("audio"+active)
+        //     //console.log(active)
+        //     //maybe only play for 10 seconds?
+        //     // activeTrack.currentTime = num //timeAdjust(data.Q1)
+        //     console.log(activeTrack)
+        //     activeTrack.play()
+        //     console.log(active)
+        //       //maybe remove this timeout if we get the audio better
+        //         // setTimeout(function(){
+        //         //     activeTrack.pause();
+        //         //     // active = true;
+        //         // }, 8000);
+        // }
       }
     }
-    var xAudio = scaleOrdinal()
-        .domain([0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100])
-        .range([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
-
+    var firstAudio = scaleLinear()
+        .domain([0, 100])
+        .range([0, 9]);
+    var secondAudio = scaleLinear()
+        .domain([0, 100])
+        .range([10, 19]);
+    var thirdAudio = scaleLinear()
+        .domain([0, 100])
+        .range([20, 29]);
 
     if(data.Q7<50 || data.Q7>50){
-      var whichAudio = xAudio(data.Q7)
+      var whichAudio = Math.round(firstAudio(data.Q7))
       console.log(whichAudio)
       playPause(whichAudio, 0)
     }
-
-
+    if(data.Q8<50 || data.Q8>50){
+      var whichAudio = Math.round(secondAudio(data.Q8))
+      console.log(whichAudio)
+      playPause(whichAudio, 0)
+    }
+    if(data.Q9<50 || data.Q9>50){
+      var whichAudio = Math.round(thirdAudio(data.Q9))
+      console.log(whichAudio)
+      playPause(whichAudio, 0)
+    }
     // if(data.Q7>0 && data.Q7<50){
     //   playPause(0, data.Q7)
     // }
-    if(data.Q7>50 && data.Q7<100){
-      playPause(1, data.Q7)
-    }
+    // if(data.Q7>50 && data.Q7<100){
+    //   playPause(1, data.Q7)
+    // }
 
-    if(data.Q8>0 && data.Q8<50){
-      playPause(2, data.Q8)
-    }
-    if(data.Q8>50 && data.Q8<100){
-      playPause(3, data.Q8)
-    }
+    // if(data.Q8>0 && data.Q8<50){
+    //   playPause(2, data.Q8)
+    // }
+    // if(data.Q8>50 && data.Q8<100){
+    //   playPause(3, data.Q8)
+    // }
 
-    if(data.Q9>0 && data.Q9<50){
-      playPause(4, data.Q9)
-    }
-    if(data.Q9>50 && data.Q9<100){
-      playPause(5, data.Q9)
-    }
+    // if(data.Q9>0 && data.Q9<50){
+    //   playPause(4, data.Q9)
+    // }
+    // if(data.Q9>50 && data.Q9<100){
+    //   playPause(5, data.Q9)
+    // }
     //i'd like to change this to - "if you are at the last section"
     //but not sure where that is formally recorded in the data
     //as in, where is "next" activated

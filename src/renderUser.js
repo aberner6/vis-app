@@ -49,7 +49,7 @@ export function renderUser(data, viz = false) {
     .innerRadius(function (d, i) {
       return arcMin + i * arcWidth + arcPad
     })
-    .outerRadius(function (d, i) {
+    .outerRadius(function (d, i) { //+ 1.35
       return arcMin + (i + 1) * (arcWidth)
     })
     .startAngle(0 * (Math.PI/180))
@@ -67,7 +67,66 @@ export function renderUser(data, viz = false) {
         return arcData(tmp, indx)
       }
     }
+    const circs = g.selectAll('circle')
+      .data(dataArray)
+      .enter()
+      .insert('circle')
+      .attr('class','circ')
+      .attr('cx', 0)
+      .attr('cy', 0)
+      .attr('r', function(d,i){
+        return arcMin + (i + 1) * (arcWidth)
+      })
+      .style("fill","none")
+      .style("stroke","#6d6e71")
+      .style("stroke-width",function() {
+        return (viz) ? 2 : 1
+      })
+      .style('opacity', '0.25')
 
+      // '#ee2a7b',
+      // '#f48ca8',
+      // '#fbd6dd',
+      // '#607aa5',
+      // '#9bc2e7',
+      // '#c7e4f7',
+      // '#F5BB00',
+      // '#EC9F05',
+      // '#ffe48f',
+      // '#FFF',
+      // ]
+
+      // '#ee2a7b',
+      // '#f48ca8',
+      // '#fbd6dd',
+      // '#607aa5',
+      // '#9bc2e7',
+      // '#c7e4f7',
+      // '#FF4900',
+      // '#FF9200',
+      // '#F86F38',
+      // '#FFF',
+// '#FF0090',
+// '#FF52B4',
+// '#ee2a7b',
+// '#A361FF',
+// '#6C02FF',
+// '#5D3299',
+// '#FF8652',
+// '#FF4C00',
+// '#FF7337',
+// '#FFF',
+    // const arcColorCode = [
+      // '#FF0090',
+      // '#FF52B4',
+      // '#ee2a7b',
+      // '#A361FF',
+      // '#6C02FF',
+      // '#5D3299',
+      // '#FF8652',
+      // '#ff4949',
+      // '#FF4C00',
+      // '#FFF',
     const arcColorCode = [
       '#ee2a7b',
       '#f48ca8',
@@ -99,6 +158,7 @@ export function renderUser(data, viz = false) {
         return arcColorCode[i]
       })
       .style('opacity', '0')
+      .style('stroke','none')
       .attr("d", arcData)
       .merge(arcsRight)
 
@@ -129,25 +189,11 @@ export function renderUser(data, viz = false) {
       })
       .attr("d", arcData)
       .style('opacity', '0')
+      .style('stroke','none')
       .attr('transform', 'rotate(180)')
       .merge(arcsLeft)
 
-    const circs = g.selectAll('circle')
-      .data(dataArray)
-      .enter()
-      .insert('circle')
-      .attr('class','circ')
-      .attr('cx', 0)
-      .attr('cy', 0)
-      .attr('r', function(d,i){
-        return arcMin + (i + 1) * (arcWidth)
-      })
-      .style("fill","none")
-      .style("stroke","#6d6e71")
-      .style("stroke-width",function() {
-        return (viz) ? 2 : 1
-      })
-      .style('opacity', '0.25')
+
 
 
 

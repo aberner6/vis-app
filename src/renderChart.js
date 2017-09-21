@@ -79,15 +79,15 @@ export function renderChart(data, delay = 0, firstRender = false, order = 'snake
     }
 
     const arcColorCode = [
+      '#FF0090',
+      '#FF52B4',
       '#ee2a7b',
-      '#f48ca8',
-      '#fbd6dd',
-      '#607aa5',
-      '#9bc2e7',
-      '#c7e4f7',
-      '#c4c4c4',
-      '#c4c4c4',
-      '#c4c4c4',
+      '#A361FF',
+      '#6C02FF',
+      '#5D3299',
+      '#FF8652',
+      '#ff4949',
+      '#FF4C00',
       '#FFF',
     ]
 

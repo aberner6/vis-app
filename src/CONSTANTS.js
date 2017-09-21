@@ -61,8 +61,8 @@ export const VALUES = [
 export const COLLECTIVE = [
   {
     name: 'Q10',
-    label1: 'Backwards',
-    label2: 'Forwards',
+    label1: 'Forget',
+    label2: 'Remember',
     color: '#EE575A',
   },
 ]

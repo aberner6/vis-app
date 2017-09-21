@@ -50,7 +50,7 @@ export function renderUser(data, viz = false) {
       return arcMin + i * arcWidth + arcPad
     })
     .outerRadius(function (d, i) { //+ 1.35
-      return arcMin + (i + 1) * (arcWidth)
+      return arcMin + (i + 1.35) * (arcWidth)
     })
     .startAngle(0 * (Math.PI/180))
     .endAngle(function (d, i) {
@@ -116,29 +116,30 @@ export function renderUser(data, viz = false) {
 // '#FF4C00',
 // '#FF7337',
 // '#FFF',
-    // const arcColorCode = [
-      // '#FF0090',
-      // '#FF52B4',
-      // '#ee2a7b',
-      // '#A361FF',
-      // '#6C02FF',
-      // '#5D3299',
-      // '#FF8652',
-      // '#ff4949',
-      // '#FF4C00',
-      // '#FFF',
     const arcColorCode = [
+      '#FF0090',
+      '#FF52B4',
       '#ee2a7b',
-      '#f48ca8',
-      '#fbd6dd',
-      '#607aa5',
-      '#9bc2e7',
-      '#c7e4f7',
-      '#c4c4c4',
-      '#c4c4c4',
-      '#c4c4c4',
+      '#A361FF',
+      '#6C02FF',
+      '#5D3299',
+      '#FF8652',
+      '#ff4949',
+      '#FF4C00',
       '#FFF',
-    ]
+      ]
+    // const arcColorCode = [
+    //   '#ee2a7b',
+    //   '#f48ca8',
+    //   '#fbd6dd',
+    //   '#607aa5',
+    //   '#9bc2e7',
+    //   '#c7e4f7',
+    //   '#c4c4c4',
+    //   '#c4c4c4',
+    //   '#c4c4c4',
+    //   '#FFF',
+    // ]
 
     const arcsRight = g.selectAll('path.arcRight')
       .data(dataArray)

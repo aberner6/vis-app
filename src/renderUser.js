@@ -57,11 +57,12 @@ export function renderUser(data, viz = false) {
       return d/100 * Math.PI
     })
 
+    var drop = document.getElementById("water")
     function arc2Tween(d, indx) {
       var currentVal = (!this._current) ? 0 : this._current
       var interp = d3Interpolate(currentVal, d)
       this._current = d
-
+      drop.play()
       return function(t) {
         var tmp = interp(t)
         return arcData(tmp, indx)
@@ -84,38 +85,6 @@ export function renderUser(data, viz = false) {
       })
       .style('opacity', '0.25')
 
-      // '#ee2a7b',
-      // '#f48ca8',
-      // '#fbd6dd',
-      // '#607aa5',
-      // '#9bc2e7',
-      // '#c7e4f7',
-      // '#F5BB00',
-      // '#EC9F05',
-      // '#ffe48f',
-      // '#FFF',
-      // ]
-
-      // '#ee2a7b',
-      // '#f48ca8',
-      // '#fbd6dd',
-      // '#607aa5',
-      // '#9bc2e7',
-      // '#c7e4f7',
-      // '#FF4900',
-      // '#FF9200',
-      // '#F86F38',
-      // '#FFF',
-// '#FF0090',
-// '#FF52B4',
-// '#ee2a7b',
-// '#A361FF',
-// '#6C02FF',
-// '#5D3299',
-// '#FF8652',
-// '#FF4C00',
-// '#FF7337',
-// '#FFF',
     const arcColorCode = [
       '#FF0090',
       '#FF52B4',
@@ -128,18 +97,6 @@ export function renderUser(data, viz = false) {
       '#FF4C00',
       '#FFF',
       ]
-    // const arcColorCode = [
-    //   '#ee2a7b',
-    //   '#f48ca8',
-    //   '#fbd6dd',
-    //   '#607aa5',
-    //   '#9bc2e7',
-    //   '#c7e4f7',
-    //   '#c4c4c4',
-    //   '#c4c4c4',
-    //   '#c4c4c4',
-    //   '#FFF',
-    // ]
 
     const arcsRight = g.selectAll('path.arcRight')
       .data(dataArray)
@@ -199,8 +156,6 @@ export function renderUser(data, viz = false) {
 
 
 
-
-
     // //hello matt, i am being evil and inserting audio
     // //into your beautiful arcs
     // //these elements are loaded in the index.html (public) file
@@ -229,29 +184,12 @@ export function renderUser(data, viz = false) {
       for (var j=0; j<tracks.length; j++){
         if(tracks[j]=="audio"+active){
             var activeTrack = document.getElementById("audio"+active)
-            //console.log(active)
-            //maybe only play for 10 seconds?
-            // activeTrack.currentTime = num //timeAdjust(data.Q1)
             activeTrack.play()
         }
         else{
           var pausedTrack = document.getElementById("audio"+j)
           pausedTrack.pause();
         }
-        // else{
-        //     var activeTrack = document.getElementById("audio"+active)
-        //     //console.log(active)
-        //     //maybe only play for 10 seconds?
-        //     // activeTrack.currentTime = num //timeAdjust(data.Q1)
-        //     console.log(activeTrack)
-        //     activeTrack.play()
-        //     console.log(active)
-        //       //maybe remove this timeout if we get the audio better
-        //         // setTimeout(function(){
-        //         //     activeTrack.pause();
-        //         //     // active = true;
-        //         // }, 8000);
-        // }
       }
     }
     var firstAudio = scaleLinear()
@@ -279,26 +217,6 @@ export function renderUser(data, viz = false) {
       console.log(whichAudio)
       playPause(whichAudio, 0)
     }
-    // if(data.Q7>0 && data.Q7<50){
-    //   playPause(0, data.Q7)
-    // }
-    // if(data.Q7>50 && data.Q7<100){
-    //   playPause(1, data.Q7)
-    // }
-
-    // if(data.Q8>0 && data.Q8<50){
-    //   playPause(2, data.Q8)
-    // }
-    // if(data.Q8>50 && data.Q8<100){
-    //   playPause(3, data.Q8)
-    // }
-
-    // if(data.Q9>0 && data.Q9<50){
-    //   playPause(4, data.Q9)
-    // }
-    // if(data.Q9>50 && data.Q9<100){
-    //   playPause(5, data.Q9)
-    // }
     //i'd like to change this to - "if you are at the last section"
     //but not sure where that is formally recorded in the data
     //as in, where is "next" activated

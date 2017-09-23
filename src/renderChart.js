@@ -154,10 +154,11 @@ export function renderChart(data, delay = 0, firstRender = false, order = 'snake
       .merge(arcsRight)
 
     const arcsLeft = cells.selectAll('path.arcLeft')
-      .data(function() {
+      .data(function(d) {
+        const dArray = parseDataArray(d)
         const dataInverse = []
-        for (var i = 0; i < dataArray.length; i++) {
-          dataInverse[i] = 100 - dataArray[i]
+        for (var i = 0; i < dArray.length; i++) {
+          dataInverse[i] = 100 - dArray[i]
         }
         return dataInverse
       })
@@ -171,7 +172,12 @@ export function renderChart(data, delay = 0, firstRender = false, order = 'snake
 
     const arcsLeftEnter = cellsEnter.selectAll('path.arcLeft')
       .data(function(d) {
-        return parseDataArray(d)
+        const dArray = parseDataArray(d)
+        const dataInverse = []
+        for (var i = 0; i < dArray.length; i++) {
+          dataInverse[i] = 100 - dArray[i]
+        }
+        return dataInverse
       })
       .enter()
       .insert('path')
